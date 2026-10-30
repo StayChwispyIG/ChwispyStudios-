@@ -59,8 +59,8 @@ Still to add for the placeholder projects and About page:
 
 The placeholders are `.svg` files. When you add a real `.jpg`, update the `src` path in the HTML from `.svg` to `.jpg`.
 
-### Social proof
-- 6 client logos and 3 testimonials on `index.html`, plus another 3 on `services.html`. All are marked `[Testimonial placeholder]`, `[Name, Title]`, `[Company]`. Use real quotes only.
+### Social proof (hidden for now)
+- The client logos + testimonials sections on `index.html` and `services.html` are commented out until you have real ones. To bring them back, search each file for `HIDDEN until real clients are ready`, delete that line and the matching `END HIDDEN -->` line, then swap in your logos and quotes.
 
 ### Inquiry form (Jotform)
 - The form lives in your Jotform account: [edit it here](https://www.jotform.com/build/263021312658046). Change questions, budget tiers, colors and the thank-you message there; the site updates automatically.
