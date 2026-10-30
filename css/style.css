@@ -329,9 +329,11 @@ body.menu-open { overflow: hidden; }
    laid on a cutting table. 4:5 on phones so each one fits on screen. */
 .featured { display: grid; gap: clamp(3rem, 6vw, 6rem) var(--gutter); }
 @media (min-width: 40em) {
-  .featured { grid-template-columns: repeat(3, 1fr); gap: var(--gutter); }
-  .featured .card:nth-child(3n+2) { margin-top: clamp(3rem, 8vw, 8rem); }
-  .featured .card:nth-child(3n+3) { margin-top: clamp(1.5rem, 4vw, 4rem); }
+  .featured { grid-template-columns: repeat(2, 1fr); gap: var(--gutter); }
+  .featured .card:nth-child(even) { margin-top: clamp(3rem, 8vw, 8rem); }
+}
+@media (min-width: 64em) {
+  .featured { grid-template-columns: repeat(4, 1fr); }
 }
 
 /* Logo strip */
