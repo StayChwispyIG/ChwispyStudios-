@@ -1,0 +1,17 @@
+# Netlify config. No build step: the site is plain HTML/CSS/JS.
+[build]
+  publish = "."
+
+# Long cache for media, short cache for pages so edits show up right away.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

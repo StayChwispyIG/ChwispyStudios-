@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+<defs><radialGradient id="g" cx="62%" cy="38%" r="75%"><stop offset="0" stop-color="#2a3442"/><stop offset="1" stop-color="#0c0e11"/></radialGradient></defs>
+<rect width="1920" height="1080" fill="url(#g)"/>
+<g fill="none" stroke="#7e8a97" stroke-opacity=".18"><path d="M634 0V1080M1267 0V1080M0 356H1920M0 713H1920"/></g>
+<text x="960" y="540" fill="#c7d2dc" fill-opacity=".55" font-family="monospace" font-size="40" text-anchor="middle">Replace: reel-poster.jpg (first frame of your reel)</text>
+</svg>

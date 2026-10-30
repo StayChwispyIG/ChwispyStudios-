@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a Call | Chris &quot;Chwispy&quot; [Last Name], Videographer in [CITY]</title>
+  <meta name="description" content="Book a 15-minute call or send a project inquiry. Commercials, brand films, social content and events across Southern California.">
+  <link rel="canonical" href="https://[DOMAIN]/contact.html">
+  <meta name="theme-color" content="#111316">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Chris &quot;Chwispy&quot; [Last Name]">
+  <meta property="og:title" content="Book a Call | Chris &quot;Chwispy&quot; [Last Name], Videographer in [CITY]">
+  <meta property="og:description" content="Book a 15-minute call or send a project inquiry. Commercials, brand films, social content and events across Southern California.">
+  <meta property="og:url" content="https://[DOMAIN]/contact.html">
+  <meta property="og:image" content="https://[DOMAIN]/assets/img/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Martian+Mono:wght@400&family=Schibsted+Grotesk:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ===== HEADER (same on every page; update aria-current per page) ===== -->
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html"><span class="wm-line">Chris <em>&ldquo;Chwispy&rdquo;</em></span> <span class="wm-line">[Last Name]</span></a>
+      <nav aria-label="Main">
+        <ul class="nav-links">
+          <li><a href="work.html">Work</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn-ghost btn-small header-cta" href="contact.html#book"><span class="rec" aria-hidden="true"></span>Book a call</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span></span></button>
+    </div>
+  </header>
+  <div class="menu-overlay" id="menu">
+    <nav aria-label="Mobile">
+      <ul>
+        <li><a href="work.html">Work</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-primary btn-large" href="contact.html#book"><span class="rec" aria-hidden="true"></span>Book a call</a>
+    <p class="mono meta">@staychwispy on Instagram</p>
+  </div>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="wrap">
+        <div class="mono-row"><span class="mono"><span class="rec rec-standalone" aria-hidden="true"></span>Taking projects for [Month] and later</span></div>
+        <h1>Book a call</h1>
+        <p class="lede">Pick a time below, or tell me about the project and I&rsquo;ll reply within one business day.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:clamp(3rem,6vw,5rem)">
+      <div class="wrap contact-grid">
+        <div id="inquire">
+          <h2 style="margin-bottom:2rem">Project inquiry</h2>
+
+          <!-- INQUIRY FORM
+               Netlify: works as-is (data-netlify). Formspree: set action="https://formspree.io/f/YOUR_ID"
+               and remove data-netlify. Budget tiers: replace the [$X–$Y] values. -->
+          <form class="form" id="inquiry" name="inquiry" method="POST" action="/" data-netlify="true" netlify-honeypot="company_website" novalidate>
+            <input type="hidden" name="form-name" value="inquiry">
+            <p class="hp"><label>Leave this empty <input name="company_website" tabindex="-1" autocomplete="off"></label></p>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="f-name">Name</label>
+                <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name">
+                <p class="error" id="e-name" data-error="name" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="f-email">Email</label>
+                <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email">
+                <p class="error" id="e-email" data-error="email" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="f-phone">Phone <span class="optional">(optional)</span></label>
+                <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+              </div>
+              <div class="field">
+                <label for="f-company">Company or brand</label>
+                <input id="f-company" name="company" type="text" autocomplete="organization" required aria-describedby="e-company">
+                <p class="error" id="e-company" data-error="company" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="f-industry">Industry</label>
+              <select id="f-industry" name="industry" required aria-describedby="e-industry">
+                <option value="">Choose one</option>
+                <option>Retail</option>
+                <option>Food &amp; beverage</option>
+                <option>Fitness</option>
+                <option>Automotive</option>
+                <option>Real estate</option>
+                <option>Tech</option>
+                <option>Agency / marketing team</option>
+                <option>Creator / artist / personal brand</option>
+                <option>Events</option>
+                <option>Other</option>
+              </select>
+              <p class="error" id="e-industry" data-error="industry" aria-live="polite"></p>
+            </div>
+
+            <fieldset class="field" aria-describedby="e-type">
+              <legend>Project type</legend>
+              <div class="chips">
+                <label><input type="radio" name="type" value="Commercial" required><span>Commercial</span></label>
+                <label><input type="radio" name="type" value="Brand Film"><span>Brand film</span></label>
+                <label><input type="radio" name="type" value="Social Content"><span>Social content</span></label>
+                <label><input type="radio" name="type" value="Event"><span>Event</span></label>
+                <label><input type="radio" name="type" value="Other"><span>Other</span></label>
+              </div>
+              <p class="error" id="e-type" data-error="type" aria-live="polite"></p>
+            </fieldset>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="f-budget">Budget range</label>
+                <select id="f-budget" name="budget" required aria-describedby="e-budget">
+                  <option value="">Choose a range</option>
+                  <option>[$X–$Y]</option>
+                  <option>[$X–$Y]</option>
+                  <option>[$X–$Y]</option>
+                  <option>[$X]+</option>
+                  <option>Not sure yet</option>
+                </select>
+                <p class="error" id="e-budget" data-error="budget" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="f-timeline">Ideal timeline</label>
+                <select id="f-timeline" name="timeline">
+                  <option value="">Choose one</option>
+                  <option>As soon as possible</option>
+                  <option>Within a month</option>
+                  <option>1–3 months</option>
+                  <option>3+ months</option>
+                  <option>I have a fixed date (add it below)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="f-details">About the project</label>
+              <textarea id="f-details" name="details" required aria-describedby="h-details e-details"></textarea>
+              <p class="mono" id="h-details">What are you making, who is it for, and what should it do for your business?</p>
+              <p class="error" id="e-details" data-error="details" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label for="f-source">How did you find me? <span class="optional">(optional)</span></label>
+              <select id="f-source" name="source">
+                <option value="">Choose one</option>
+                <option>Instagram</option>
+                <option>Google search</option>
+                <option>Referral</option>
+                <option>Saw your work for another brand</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="form-foot">
+              <button class="btn btn-primary btn-large" type="submit"><span class="rec" aria-hidden="true"></span>Send inquiry</button>
+              <p class="form-status" role="alert"></p>
+            </div>
+          </form>
+
+          <!-- SUCCESS STATE: shown after a successful submit -->
+          <div class="success" id="inquiry-success" tabindex="-1" hidden>
+            <p class="mono">Inquiry received</p>
+            <h2>That&rsquo;s a wrap<span data-first-name></span></h2>
+            <p>Thanks for the details. I&rsquo;ll read them and reply within one business day. If it&rsquo;s urgent, book a call on the right and we can talk sooner.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#book"><span class="rec" aria-hidden="true"></span>Book a call</a>
+              <a class="btn btn-ghost" href="work.html">Watch more work</a>
+            </div>
+          </div>
+        </div>
+
+        <aside class="aside" aria-label="Book a call and contact details">
+          <div id="book">
+            <h2 style="margin-bottom:1.25rem">Pick a time</h2>
+            <p style="color:var(--highlight)">A 15-minute call to talk through your goal, timeline and budget.</p>
+            <!-- BOOKING EMBED: put your scheduling link in data-booking-url.
+                 Calendly: https://calendly.com/YOUR_NAME/15min?hide_gdpr_banner=1&background_color=1c2026&text_color=e9edf0&primary_color=9fc4e8
+                 Cal.com:  https://cal.com/YOUR_NAME/15min?embed=true&theme=dark
+                 It loads only when scrolled into view, to keep the page fast. -->
+            <div class="booking" data-booking-url="REPLACE_BOOKING_URL">
+              <div class="booking-placeholder">
+                <p class="mono">Placeholder: Calendly or Cal.com calendar</p>
+                <a class="btn btn-ghost" href="mailto:[EMAIL]?subject=Booking%20a%20call">Email me to book instead</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-direct">
+            <p class="mono">Prefer to reach out directly?</p>
+            <a href="mailto:[EMAIL]">[EMAIL]</a>
+            <a href="https://www.instagram.com/staychwispy/" rel="me noopener" target="_blank">@staychwispy on Instagram</a>
+            <p class="mono">Based in [CITY], shooting across Southern California</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== CLOSING CTA: every page ends with a next step ===== -->
+    <section class="closer" aria-labelledby="closer-title">
+      <div class="wrap" data-reveal>
+        <h2 id="closer-title">Still deciding?</h2>
+        <p>Watch a few more projects first. The calendar will be here when you&rsquo;re ready.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-large" href="work.html">See the work</a>
+          <a class="btn btn-ghost btn-large" href="services.html">Compare packages</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER (same on every page) ===== -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <a class="wordmark" href="index.html"><span class="wm-line">Chris <em>&ldquo;Chwispy&rdquo;</em></span> <span class="wm-line">[Last Name]</span></a>
+        <p class="mono" style="margin-top:.75rem">Videographer and director in [CITY], Southern California</p>
+      </div>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="https://www.instagram.com/staychwispy/" rel="me noopener" target="_blank">Instagram</a></li>
+        </ul>
+      </nav>
+      <p class="mono">&copy; <span data-year>2026</span> Chris [Last Name]</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>
