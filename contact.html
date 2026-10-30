@@ -69,129 +69,19 @@
         <div id="inquire">
           <h2 style="margin-bottom:2rem">Project inquiry</h2>
 
-          <!-- INQUIRY FORM
-               Netlify: works as-is (data-netlify). Formspree: set action="https://formspree.io/f/YOUR_ID"
-               and remove data-netlify. Budget tiers: replace the [$X–$Y] values. -->
-          <form class="form" id="inquiry" name="inquiry" method="POST" action="/" data-netlify="true" netlify-honeypot="company_website" novalidate>
-            <input type="hidden" name="form-name" value="inquiry">
-            <p class="hp"><label>Leave this empty <input name="company_website" tabindex="-1" autocomplete="off"></label></p>
-
-            <div class="form-row">
-              <div class="field">
-                <label for="f-name">Name</label>
-                <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name">
-                <p class="error" id="e-name" data-error="name" aria-live="polite"></p>
-              </div>
-              <div class="field">
-                <label for="f-email">Email</label>
-                <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email">
-                <p class="error" id="e-email" data-error="email" aria-live="polite"></p>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="field">
-                <label for="f-phone">Phone <span class="optional">(optional)</span></label>
-                <input id="f-phone" name="phone" type="tel" autocomplete="tel">
-              </div>
-              <div class="field">
-                <label for="f-company">Company or brand</label>
-                <input id="f-company" name="company" type="text" autocomplete="organization" required aria-describedby="e-company">
-                <p class="error" id="e-company" data-error="company" aria-live="polite"></p>
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="f-industry">Industry</label>
-              <select id="f-industry" name="industry" required aria-describedby="e-industry">
-                <option value="">Choose one</option>
-                <option>Retail</option>
-                <option>Food &amp; beverage</option>
-                <option>Fitness</option>
-                <option>Automotive</option>
-                <option>Real estate</option>
-                <option>Tech</option>
-                <option>Agency / marketing team</option>
-                <option>Creator / artist / personal brand</option>
-                <option>Events</option>
-                <option>Other</option>
-              </select>
-              <p class="error" id="e-industry" data-error="industry" aria-live="polite"></p>
-            </div>
-
-            <fieldset class="field" aria-describedby="e-type">
-              <legend>Project type</legend>
-              <div class="chips">
-                <label><input type="radio" name="type" value="Commercial" required><span>Commercial</span></label>
-                <label><input type="radio" name="type" value="Brand Film"><span>Brand film</span></label>
-                <label><input type="radio" name="type" value="Social Content"><span>Social content</span></label>
-                <label><input type="radio" name="type" value="Event"><span>Event</span></label>
-                <label><input type="radio" name="type" value="Other"><span>Other</span></label>
-              </div>
-              <p class="error" id="e-type" data-error="type" aria-live="polite"></p>
-            </fieldset>
-
-            <div class="form-row">
-              <div class="field">
-                <label for="f-budget">Budget range</label>
-                <select id="f-budget" name="budget" required aria-describedby="e-budget">
-                  <option value="">Choose a range</option>
-                  <option>[$X–$Y]</option>
-                  <option>[$X–$Y]</option>
-                  <option>[$X–$Y]</option>
-                  <option>[$X]+</option>
-                  <option>Not sure yet</option>
-                </select>
-                <p class="error" id="e-budget" data-error="budget" aria-live="polite"></p>
-              </div>
-              <div class="field">
-                <label for="f-timeline">Ideal timeline</label>
-                <select id="f-timeline" name="timeline">
-                  <option value="">Choose one</option>
-                  <option>As soon as possible</option>
-                  <option>Within a month</option>
-                  <option>1–3 months</option>
-                  <option>3+ months</option>
-                  <option>I have a fixed date (add it below)</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="f-details">About the project</label>
-              <textarea id="f-details" name="details" required aria-describedby="h-details e-details"></textarea>
-              <p class="mono" id="h-details">What are you making, who is it for, and what should it do for your business?</p>
-              <p class="error" id="e-details" data-error="details" aria-live="polite"></p>
-            </div>
-
-            <div class="field">
-              <label for="f-source">How did you find me? <span class="optional">(optional)</span></label>
-              <select id="f-source" name="source">
-                <option value="">Choose one</option>
-                <option>Instagram</option>
-                <option>Google search</option>
-                <option>Referral</option>
-                <option>Saw your work for another brand</option>
-                <option>Other</option>
-              </select>
-            </div>
-
-            <div class="form-foot">
-              <button class="btn btn-primary btn-large" type="submit"><span class="rec" aria-hidden="true"></span>Send inquiry</button>
-              <p class="form-status" role="alert"></p>
-            </div>
-          </form>
-
-          <!-- SUCCESS STATE: shown after a successful submit -->
-          <div class="success" id="inquiry-success" tabindex="-1" hidden>
-            <p class="mono">Inquiry received</p>
-            <h2>That&rsquo;s a wrap<span data-first-name></span></h2>
-            <p>Thanks for the details. I&rsquo;ll read them and reply within one business day. If it&rsquo;s urgent, book a call on the right and we can talk sooner.</p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="#book"><span class="rec" aria-hidden="true"></span>Book a call</a>
-              <a class="btn btn-ghost" href="work.html">Watch more work</a>
-            </div>
+          <!-- INQUIRY FORM: hosted on Jotform. Edit questions, styling, the thank-you
+               message and email notifications at https://www.jotform.com/build/263021312658046
+               The embed handler script below auto-sizes the iframe to the form's height
+               (1500px is the fallback if the script can't load). -->
+          <div class="jotform-embed">
+            <iframe id="JotFormIFrame-263021312658046" title="Project inquiry form"
+              src="https://form.jotform.com/263021312658046"
+              allow="geolocation; microphone; camera; fullscreen"
+              scrolling="no" style="width:100%;height:1500px;border:none;"></iframe>
           </div>
+          <script src="https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js"></script>
+          <script>if (window.jotformEmbedHandler) window.jotformEmbedHandler("iframe[id='JotFormIFrame-263021312658046']", "https://form.jotform.com/");</script>
+          <p class="mono" style="margin-top:1rem">Form not loading? Email me at <a href="mailto:[EMAIL]">[EMAIL]</a>.</p>
         </div>
 
         <aside class="aside" aria-label="Book a call and contact details">

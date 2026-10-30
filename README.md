@@ -7,9 +7,9 @@ index.html      Home: showreel hero, statement, featured work, services teaser, 
 work.html       Filterable portfolio grid + video lightbox
 services.html   Packages with "Starting at" pricing, process, testimonials, FAQ
 about.html      Behind the Lens: story, what I bring, process, gear, on-set photo
-contact.html    Inquiry form (with success state) + Calendly/Cal.com embed
+contact.html    Jotform inquiry form embed + Calendly/Cal.com embed
 css/style.css   All styles; colors and fonts live in the :root tokens at the top
-js/main.js      Header, mobile menu, reveals, reel, previews, filters, lightbox, form
+js/main.js      Header, mobile menu, reveals, reel, previews, filters, lightbox, booking embed
 assets/         Images, logos, video, favicon, share image
 tools/og-image.html  Template for regenerating the social share image
 ```
@@ -24,12 +24,11 @@ Search the project for `[` to find every placeholder. Anything in square bracket
 | Placeholder | Where | Notes |
 |---|---|---|
 | `[Last Name]` | Every page (wordmark, titles, footer), `tools/og-image.html` | |
-| `[EMAIL]` | `contact.html`, `js/main.js` (form error message), `index.html` schema | |
+| `[EMAIL]` | `contact.html`, `index.html` schema | |
 | `[CITY]` | Every page (titles, descriptions, footer), `index.html` schema | Your home base, for local SEO |
 | `[DOMAIN]` | Every page `<head>`, `robots.txt`, `sitemap.xml` | e.g. `chwispy.com`, no `https://` |
 | `$[X]` | `services.html` (4 prices), `index.html` services teaser | Starting prices |
 | `[X] hours` / `[X] days` | `services.html` event package | Coverage hours, turnaround |
-| `[$X–$Y]` | `contact.html` budget dropdown | Your budget tiers |
 | `[Month]` | `contact.html` availability line | Or delete the line |
 | FAQ answers + fine print | `services.html` | Marked `[Placeholder]` / `[Edit…]` |
 | Gear list | `about.html` | `[Camera body A]` etc. |
@@ -60,6 +59,11 @@ The placeholders are `.svg` files. When you add a real `.jpg`, update the `src`/
 ### Social proof
 - 6 client logos and 3 testimonials on `index.html`, plus another 3 on `services.html`. All are marked `[Testimonial placeholder]`, `[Name, Title]`, `[Company]`. Use real quotes only.
 
+### Inquiry form (Jotform)
+- The form lives in your Jotform account: [edit it here](https://www.jotform.com/build/263021312658046). Change questions, budget tiers, colors and the thank-you message there; the site updates automatically.
+- In the Jotform builder, go to **Settings → Emails** and make sure the notification goes to your inbox.
+- Budget tiers were set to sample ranges (Under $1,000 up to $10,000+). Adjust them to match your pricing.
+
 ### Booking
 - `contact.html`: set `data-booking-url="REPLACE_BOOKING_URL"` to your Calendly or Cal.com link (dark-theme examples are in the comment above it). It loads only when scrolled into view.
 
@@ -81,16 +85,17 @@ Full-length videos stay on Vimeo or YouTube. Only the reel and short previews ar
 
 ## Deploying
 
-### Netlify (recommended, the form works with no setup)
+The inquiry form is hosted by Jotform, so it works on any host.
+
+### Netlify (recommended)
 1. Push this repo to GitHub (already done).
 2. At [app.netlify.com](https://app.netlify.com), choose **Add new site → Import an existing project**, then pick this repo. Leave the build command empty; the publish directory is `.` (already set in `netlify.toml`).
-3. Deploy. Inquiries show up under **Forms → inquiry**. Under **Forms → Form notifications**, add an email notification to get each inquiry in your inbox.
+3. Deploy.
 4. **Custom domain:** **Domain management → Add a domain**, then either point your registrar's nameservers to Netlify (easiest), or add the `A`/`CNAME` records Netlify shows you. HTTPS is issued automatically.
 
 ### Vercel
 1. At [vercel.com/new](https://vercel.com/new), import the repo. Framework preset: **Other**, no build command.
-2. Vercel has no built-in forms, so use [Formspree](https://formspree.io): create a form, then in `contact.html` change the form's `action="/"` to `action="https://formspree.io/f/YOUR_ID"` and remove `data-netlify="true"`. The success state still works.
-3. **Custom domain:** **Project → Settings → Domains → Add**, then add the DNS records it shows at your registrar.
+2. **Custom domain:** **Project → Settings → Domains → Add**, then add the DNS records it shows at your registrar.
 
 ### After launch
 - Replace every `[DOMAIN]` so canonical URLs, the sitemap and share previews are correct.
@@ -102,5 +107,5 @@ Full-length videos stay on Vimeo or YouTube. Only the reel and short previews ar
 
 - **Colors and fonts:** edit the `:root` tokens at the top of `css/style.css`.
 - **Reduced motion:** when a visitor's device asks for less motion, the reel doesn't autoplay (the poster shows), the grain and blinking REC dots turn off, hover previews are skipped, and fades are near-instant.
-- **Accessibility:** skip link, visible focus rings, keyboard-operable menu, filters, lightbox (Esc closes it and focus returns to the card) and form; inline error messages; a pause button on the hero reel.
+- **Accessibility:** skip link, visible focus rings, keyboard-operable menu, filters and lightbox (Esc closes it and focus returns to the card); a pause button on the hero reel.
 - **Adding a nav link:** the header and footer are repeated in each HTML file. Update all five pages. Keep it to four links plus Book a call.
