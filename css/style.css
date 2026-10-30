@@ -542,7 +542,7 @@ body.menu-open { overflow: hidden; }
 .gear dt { font-family: var(--mono); font-size: var(--fs-label); color: var(--steel); margin-bottom: 0.4rem; }
 .gear dd { margin: 0; color: var(--highlight); }
 @media (min-width: 40em) { .gear { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 64em) { .gear { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 64em) { .gear { grid-template-columns: repeat(4, 1fr); } }
 
 /* 11. CONTACT + FORM ------------------------------------------------------- */
 .contact-grid { display: grid; gap: clamp(3rem, 6vw, 6rem); }
