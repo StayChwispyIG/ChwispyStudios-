@@ -24,7 +24,6 @@ Search the project for `[` to find every placeholder. Anything in square bracket
 | Placeholder | Where | Notes |
 |---|---|---|
 | `[EMAIL]` | `contact.html`, `index.html` schema | |
-| `[CITY]` | Every page (titles, descriptions, footer), `index.html` schema | Your home base, for local SEO |
 | `[DOMAIN]` | Every page `<head>`, `robots.txt`, `sitemap.xml` | e.g. `chwispy.com`, no `https://` |
 | `$[X]` | `services.html` (4 prices), `index.html` services teaser | Starting prices |
 | `[X] hours` / `[X] days` | `services.html` event package | Coverage hours, turnaround |
@@ -106,7 +105,7 @@ The inquiry form is hosted by Jotform, so it works on any host.
 ### After launch
 - Replace every `[DOMAIN]` so canonical URLs, the sitemap and share previews are correct.
 - Submit `https://yourdomain.com/sitemap.xml` in [Google Search Console](https://search.google.com/search-console).
-- Set up a free [Google Business Profile](https://www.google.com/business/) for [CITY]. It's the biggest local SEO lever you have.
+- Set up a free [Google Business Profile](https://www.google.com/business/) with the Inland Empire as your service area. It's the biggest local SEO lever you have.
 - Run Lighthouse in Chrome DevTools on the live site. With compressed media at the sizes above, it should score 90+.
 
 ## How things work
