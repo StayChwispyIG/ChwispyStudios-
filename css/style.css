@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Chris "Chwispy" [Last Name] — Portfolio
+   Chris "Chwispy" — Portfolio
    One stylesheet for every page. Sections are in page order:
    1. Tokens   2. Base   3. Film layers (grain, reveals)   4. Header + menu
    5. Buttons + labels   6. Hero   7. Home sections   8. Work grid + lightbox
@@ -173,9 +173,8 @@ body { animation: cut-in 0.9s var(--ease) both; }
 .menu-toggle[aria-expanded="true"] span { transform: translateY(2.5px) rotate(45deg); }
 .menu-toggle[aria-expanded="true"] span::before { transform: translateY(-5px) rotate(-90deg); }
 
-/* Book a call stays visible at every width; on phones the wordmark stacks to make room. */
+/* Book a call stays visible at every width. */
 .site-header .header-cta { white-space: nowrap; flex: none; }
-.wordmark .wm-line { display: block; }
 @media (max-width: 55.99em) {
   .site-header .wrap { gap: 0.6rem; }
   .wordmark { font-size: 1.2rem; line-height: 0.95; }
@@ -184,7 +183,6 @@ body { animation: cut-in 0.9s var(--ease) both; }
 @media (min-width: 56em) {
   .nav-links { display: flex; }
   .menu-toggle { display: none; }
-  .wordmark .wm-line { display: inline; }
 }
 
 /* Full-screen mobile overlay */

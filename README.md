@@ -1,4 +1,4 @@
-# Chris "Chwispy" [Last Name] portfolio
+# Chris "Chwispy" portfolio
 
 A hand-coded portfolio site: plain HTML, CSS and vanilla JS. No build step, no framework, no page builder. Open any `.html` file in a text editor to change it.
 
@@ -23,7 +23,6 @@ Search the project for `[` to find every placeholder. Anything in square bracket
 ### Text (find and replace across all files)
 | Placeholder | Where | Notes |
 |---|---|---|
-| `[Last Name]` | Every page (wordmark, titles, footer), `tools/og-image.html` | |
 | `[EMAIL]` | `contact.html`, `index.html` schema | |
 | `[CITY]` | Every page (titles, descriptions, footer), `index.html` schema | Your home base, for local SEO |
 | `[DOMAIN]` | Every page `<head>`, `robots.txt`, `sitemap.xml` | e.g. `chwispy.com`, no `https://` |
