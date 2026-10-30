@@ -21,12 +21,11 @@ To preview locally, run `python3 -m http.server` in this folder and open http://
 Visible placeholders left:
 - **Project results:** each real project's `data-breakdown` (on `index.html` and `work.html`) ends with a bracketed note asking for a result, such as views, saves or sales.
 
-Hidden until you're ready (search each file for `HIDDEN` or `DOMAIN`, then delete the comment markers):
+Hidden until you're ready (search each file for `HIDDEN`, then delete the comment markers):
 | What | Where | To bring it back |
 |---|---|---|
 | Client logos + testimonials | `index.html`, `services.html` | Delete the `HIDDEN until real clients are ready` line and its `END HIDDEN -->` line, then add real logos (`assets/logos/`) and quotes |
 | On-set photo | `about.html` | Add `assets/img/chris-on-set.jpg` (1200×1500), delete the `ON-SET PHOTO` line and its `END HIDDEN -->` line, and remove `story--solo` from the div above |
-| Domain (canonical URL, share image) | `<head>` of every page, `robots.txt`, `sitemap.xml` | Swap `[DOMAIN]` for your domain and remove the comment markers around those lines |
 
 Contact: there's no email on the site. "Send me a message" and the inquiry form both go to your Jotform: [edit it here](https://www.jotform.com/build/263021312658046).
 
@@ -59,20 +58,21 @@ Full-length videos stay on Vimeo or YouTube. Only the reel and short previews ar
 
 ## Deploying
 
-The inquiry form is hosted by Jotform, so it works on any host.
+The site is live from GitHub Pages at **https://chwispystudio.com** (domain registered at IONOS).
 
-### Netlify (recommended)
-1. Push this repo to GitHub (already done).
-2. At [app.netlify.com](https://app.netlify.com), choose **Add new site → Import an existing project**, then pick this repo. Leave the build command empty; the publish directory is `.` (already set in `netlify.toml`).
-3. Deploy.
-4. **Custom domain:** **Domain management → Add a domain**, then either point your registrar's nameservers to Netlify (easiest), or add the `A`/`CNAME` records Netlify shows you. HTTPS is issued automatically.
+### GitHub Pages setup (already done once; here for reference)
+1. Repo **Settings → Pages**: Source "Deploy from a branch", branch `claude/chwispy-portfolio-site-ydxsf0`, folder `/ (root)`.
+2. Custom domain: `chwispystudio.com` (also stored in the `CNAME` file).
+3. IONOS DNS (Domains & SSL → chwispystudio.com → DNS): remove the default A/AAAA records for `@`, add A records for `@` pointing to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`, and a CNAME for `www` pointing to `staychwispyig.github.io`. Leave MX (email) records alone.
+4. Once DNS has taken effect, tick **Enforce HTTPS** in Settings → Pages.
 
-### Vercel
-1. At [vercel.com/new](https://vercel.com/new), import the repo. Framework preset: **Other**, no build command.
-2. **Custom domain:** **Project → Settings → Domains → Add**, then add the DNS records it shows at your registrar.
+Every push to the branch goes live within a couple of minutes. GitHub Pages ignores `netlify.toml`; it's only there if you ever move to Netlify.
+
+### Alternative: Netlify
+Import the repo at [app.netlify.com](https://app.netlify.com) with no build command (publish directory `.` is set in `netlify.toml`), then add the domain under **Domain management** and follow the DNS records it shows.
 
 ### After launch
-- Unhide the `DOMAIN` lines in each page's `<head>` and `robots.txt`, swapping `[DOMAIN]` for your domain, so canonical URLs, the sitemap and share previews work.
+- The domain is chwispystudio.com, set in each page's `<head>`, `robots.txt`, `sitemap.xml` and the `CNAME` file (which GitHub Pages uses; keep it in the repo).
 - Submit `https://yourdomain.com/sitemap.xml` in [Google Search Console](https://search.google.com/search-console).
 - Set up a free [Google Business Profile](https://www.google.com/business/) with the Inland Empire as your service area. It's the biggest local SEO lever you have.
 - Run Lighthouse in Chrome DevTools on the live site. With compressed media at the sizes above, it should score 90+.
