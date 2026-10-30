@@ -28,7 +28,6 @@ Search the project for `[` to find every placeholder. Anything in square bracket
 | `[X] hours` / `[X] days` | `services.html` event package | Coverage hours, turnaround |
 | `[Month]` | `contact.html` availability line | Or delete the line |
 | FAQ answers + fine print | `services.html` | Marked `[Placeholder]` / `[Edit…]` |
-| Gear list | `about.html` | `[Camera body A]` etc. |
 | Photo caption | `about.html` | `On set, [location], [year]` |
 
 ### Projects (`work.html` + the featured three on `index.html`)
