@@ -265,25 +265,6 @@
     });
   }
 
-  /* ---- Booking embed: load Calendly/Cal.com only when scrolled near ---- */
-  var booking = document.querySelector("[data-booking-url]");
-  if (booking) {
-    var url = booking.dataset.bookingUrl;
-    if (url && url.indexOf("REPLACE") === -1 && "IntersectionObserver" in window) {
-      var bio = new IntersectionObserver(function (entries) {
-        if (!entries[0].isIntersecting) return;
-        bio.disconnect();
-        booking.innerHTML = "";
-        var frame = document.createElement("iframe");
-        frame.src = url;
-        frame.title = "Book a call with Chris";
-        frame.loading = "lazy";
-        booking.appendChild(frame);
-      }, { rootMargin: "300px" });
-      bio.observe(booking);
-    }
-  }
-
   /* ---- Footer year ----------------------------------------------------- */
   document.querySelectorAll("[data-year]").forEach(function (el) {
     el.textContent = new Date().getFullYear();

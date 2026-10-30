@@ -7,9 +7,9 @@ index.html      Home: showreel hero, statement, featured work, services teaser, 
 work.html       Filterable portfolio grid + video lightbox
 services.html   Packages with "Book a free consultation" pricing, process, testimonials, FAQ
 about.html      Behind the Lens: story, what I bring, process, gear, on-set photo
-contact.html    Jotform inquiry form embed + Calendly/Cal.com embed
+contact.html    Jotform inquiry form embed + "Book a free consultation" link to the same form
 css/style.css   All styles; colors and fonts live in the :root tokens at the top
-js/main.js      Header, mobile menu, reveals, reel, previews, filters, lightbox, booking embed
+js/main.js      Header, mobile menu, reveals, reel, previews, filters, lightbox
 assets/         Images, logos, video, favicon, share image
 tools/og-image.html  Template for regenerating the social share image
 ```
@@ -68,7 +68,7 @@ The placeholders are `.svg` files. When you add a real `.jpg`, update the `src` 
 - Budget tiers were set to sample ranges (Under $1,000 up to $10,000+). Adjust them to match your pricing.
 
 ### Booking
-- `contact.html`: set `data-booking-url="REPLACE_BOOKING_URL"` to your Calendly or Cal.com link (dark-theme examples are in the comment above it). It loads only when scrolled into view.
+- "Book a call" buttons across the site go to the Contact page, where a "Book a free consultation" button opens the Jotform in a new tab. If you later add Calendly or Cal.com, swap that button's link for your scheduling URL.
 
 ## Compressing video
 
