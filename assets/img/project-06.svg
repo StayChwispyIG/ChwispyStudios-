@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
-<defs><radialGradient id="g" cx="62%" cy="38%" r="75%"><stop offset="0" stop-color="#2b3644"/><stop offset="1" stop-color="#0d0f12"/></radialGradient></defs>
-<rect width="1600" height="900" fill="url(#g)"/>
-<g fill="none" stroke="#7e8a97" stroke-opacity=".18"><path d="M528 0V900M1056 0V900M0 297H1600M0 594H1600"/></g>
-<text x="800" y="450" fill="#c7d2dc" fill-opacity=".55" font-family="monospace" font-size="33" text-anchor="middle">Replace: project-06.jpg</text>
-</svg>

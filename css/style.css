@@ -422,7 +422,7 @@ body.menu-open { overflow: hidden; }
 
 .work-grid { display: grid; gap: 3rem var(--gutter); }
 @media (min-width: 40em) { .work-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 72em) { .work-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 64em) { .work-grid { grid-template-columns: repeat(4, 1fr); } }
 .work-grid .card[hidden] { display: none; }
 .work-grid .card { animation: cut-in 0.8s var(--ease) both; }
 .empty-state { color: var(--steel); }
@@ -526,6 +526,7 @@ body.menu-open { overflow: hidden; }
 .story-copy h2 { margin-bottom: 2rem; }
 @media (min-width: 56em) {
   .story { grid-template-columns: 5fr 6fr; align-items: start; }
+  .story.story--solo { grid-template-columns: minmax(0, 48rem); }
   .portrait { position: sticky; top: 6rem; }
 }
 
