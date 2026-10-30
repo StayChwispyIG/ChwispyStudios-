@@ -33,27 +33,33 @@ Search the project for `[` to find every placeholder. Anything in square bracket
 | Gear list | `about.html` | `[Camera body A]` etc. |
 | Photo caption | `about.html` | `On set, [location], [year]` |
 
-### Projects (`work.html` + the 4 featured on `index.html`)
-Each project is one `<article class="card">` block. For each one, set:
+### Projects (`work.html` + the featured three on `index.html`)
+The first three projects are real (vest fitting, boot unboxing, Indian walkaround). Their media is already in place; what's left to confirm on each:
+- `data-client` (currently `[Client name]`), your role (`[confirm your role]`), and the `[Draft]` breakdown: add the goal and a real result.
+- `data-type` if I guessed wrong: the boot unboxing is filed as Commercial, the other two as Social content.
+
+The remaining six cards on `work.html` are placeholders. Each project is one `<article class="card">` block. For each one, set:
 - `data-title`, `data-client`, `data-industry`, `data-role`, `data-duration` (timecode)
-- `data-breakdown`: 2–3 sentences, goal then result. Every one is currently marked `[Draft]`. Replace with real numbers.
-- `data-embed`: the Vimeo player URL (`https://player.vimeo.com/video/123456789`) or YouTube embed URL (`https://www.youtube.com/embed/VIDEO_ID`). Turn on captions in Vimeo/YouTube; the lightbox has a "Show captions" toggle.
+- `data-breakdown`: 2–3 sentences, goal then result
+- `data-embed`: the Vimeo player URL (`https://player.vimeo.com/video/123456789`) or YouTube embed URL (`https://www.youtube.com/embed/VIDEO_ID`). Captions come from Vimeo/YouTube; the lightbox shows a "Show captions" toggle for embeds.
+- `data-video` (optional): a short compressed MP4 that plays in the lightbox until `data-embed` is set. Fine for clips under ~30s; use Vimeo/YouTube for anything longer.
 - `data-preview`: a 3–6 second silent clip for hover/tap previews
+- `data-orientation="vertical"` (plus the `card--vertical` class) for 9:16 work
 - `data-type`: one of `commercial`, `brand-film`, `social`, `events`, `music` (this drives the filter)
 - the visible text inside the card, and the image `alt` text
 
 ### Media files
+Done: the hero reel (`assets/video/reel*.mp4/.webm`, cut from your three clips; phones get the vertical `reel-portrait` version), its posters, and the three real projects' posters (`assets/img/<project>.jpg`), previews (`assets/video/previews/`) and full videos (`assets/video/full/`).
+
+Still to add for the placeholder projects and About page:
 | File | Spec |
 |---|---|
-| `assets/video/reel.webm` + `reel.mp4` | 10–20s silent loop, 1080p, each under ~4 MB (see compression below) |
-| `assets/img/reel-poster.jpg` | First frame of the reel, 1920×1080, under 200 KB |
-| `assets/img/project-01.jpg` … `project-09.jpg` | Stills, 1600×900, under 150 KB each |
-| `assets/video/previews/project-01.mp4` … | 3–6s, 720p, no audio, under 1 MB each |
+| `assets/img/project-02.jpg` … `project-08.jpg` | Stills, 1080×1350 (4:5) or larger, under 150 KB each |
+| `assets/video/previews/project-02.mp4` … | 3–6s, 720p, no audio, under 1 MB each |
 | `assets/img/chris-on-set.jpg` | Candid on-set photo, 1200×1500 (4:5) |
 | `assets/logos/client-1.svg` … `client-6.svg` | Light-colored SVG or transparent PNG. The CSS greys them out. |
-| `assets/img/og-image.jpg` | 1200×630 share image (regenerate with your name from `tools/og-image.html`) |
 
-The placeholders are `.svg` files. When you add a real `.jpg`, update the `src`/`poster` path in the HTML from `.svg` to `.jpg`.
+The placeholders are `.svg` files. When you add a real `.jpg`, update the `src` path in the HTML from `.svg` to `.jpg`.
 
 ### Social proof
 - 6 client logos and 3 testimonials on `index.html`, plus another 3 on `services.html`. All are marked `[Testimonial placeholder]`, `[Name, Title]`, `[Company]`. Use real quotes only.
@@ -71,7 +77,8 @@ The placeholders are `.svg` files. When you add a real `.jpg`, update the `src`/
 Using [ffmpeg](https://ffmpeg.org):
 
 ```bash
-# Hero reel (MP4 + WebM), no audio
+# Hero reel (MP4 + WebM), no audio. For vertical footage, see how reel.mp4 was
+# built in the git history: a blurred backdrop with the 9:16 frame on top.
 ffmpeg -i reel-master.mov -an -vf "scale=1920:-2" -c:v libx264 -crf 26 -preset slow -movflags +faststart assets/video/reel.mp4
 ffmpeg -i reel-master.mov -an -vf "scale=1920:-2" -c:v libvpx-vp9 -crf 36 -b:v 0 assets/video/reel.webm
 # Poster frame

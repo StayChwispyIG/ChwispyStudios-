@@ -75,6 +75,13 @@
     var tc = document.querySelector("[data-reel-timecode]");
     var reelBtn = document.querySelector("[data-reel-toggle]");
 
+    // Phones held upright get the full-frame vertical reel instead of the framed landscape cut.
+    if (window.matchMedia("(orientation: portrait)").matches) {
+      reel.querySelectorAll("source[data-portrait]").forEach(function (s) { s.src = s.dataset.portrait; });
+      if (reel.dataset.portraitPoster) reel.poster = reel.dataset.portraitPoster;
+      reel.load();
+    }
+
     // Reduced motion: never autoplay. The poster frame stays up.
     if (reduceMotion) {
       reel.removeAttribute("autoplay");
@@ -174,8 +181,10 @@
   }
 
   /* ---- Project lightbox -------------------------------------------------
-     Reads data-* attributes from the clicked card. Full videos are embeds
-     (Vimeo or YouTube), never self-hosted. */
+     Reads data-* attributes from the clicked card. Full videos play from the
+     Vimeo/YouTube embed in data-embed; until that's set, data-video (a short
+     compressed MP4) plays instead. data-orientation="vertical" switches the
+     player to 9:16. */
   var box = document.getElementById("lightbox");
   if (box && typeof box.showModal === "function") {
     var player = box.querySelector(".lightbox-player");
@@ -195,6 +204,21 @@
 
     var loadPlayer = function () {
       var src = embedUrl(current.dataset.embed, captions && captions.checked);
+      box.classList.toggle("is-vertical", current.dataset.orientation === "vertical");
+      // Captions come from Vimeo/YouTube, so the toggle only shows for embeds.
+      if (captions) captions.closest("label").style.display = src ? "flex" : "none";
+      if (!src && current.dataset.video) {
+        player.innerHTML = "";
+        var vid = document.createElement("video");
+        vid.src = current.dataset.video;
+        if (current.dataset.poster) vid.poster = current.dataset.poster;
+        vid.controls = true;
+        vid.playsInline = true;
+        vid.autoplay = !reduceMotion;
+        vid.setAttribute("aria-label", current.dataset.title + " (full video)");
+        player.appendChild(vid);
+        return;
+      }
       if (!src) {
         player.innerHTML = '<p class="player-note mono">Placeholder: add this project’s Vimeo or YouTube embed URL to the card’s data-embed attribute.</p>';
         return;

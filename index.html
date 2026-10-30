@@ -21,7 +21,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Martian+Mono:wght@400&family=Schibsted+Grotesk:wght@400;500;600&display=swap">
-  <link rel="preload" as="image" href="assets/img/reel-poster.svg">
+  <link rel="preload" as="image" href="assets/img/reel-poster.jpg" media="(orientation: landscape)">
+  <link rel="preload" as="image" href="assets/img/reel-poster-portrait.jpg" media="(orientation: portrait)">
   <link rel="stylesheet" href="css/style.css">
 
   <!-- Local SEO: tells Google who you are and where you work -->
@@ -75,13 +76,14 @@
 
   <main id="main">
     <!-- ===== HERO: full-bleed showreel =====
-         PLACEHOLDER: export your reel as a 10–20s loop, no audio, ~1080p.
-         assets/video/reel.webm (VP9) + assets/video/reel.mp4 (H.264), each under ~4MB.
-         assets/img/reel-poster.jpg = the first frame. -->
+         Landscape screens: assets/video/reel.webm/.mp4 (vertical reel framed on a blurred backdrop).
+         Phones in portrait: the data-portrait files (full-frame 9:16), swapped in by main.js.
+         Posters: assets/img/reel-poster.jpg and reel-poster-portrait.jpg (first frames). -->
     <section class="hero" aria-label="Showreel">
-      <video autoplay muted loop playsinline preload="metadata" poster="assets/img/reel-poster.svg" aria-hidden="true">
-        <source src="assets/video/reel.webm" type="video/webm">
-        <source src="assets/video/reel.mp4" type="video/mp4">
+      <video autoplay muted loop playsinline preload="metadata" poster="assets/img/reel-poster.jpg" aria-hidden="true"
+        data-portrait-poster="assets/img/reel-poster-portrait.jpg">
+        <source src="assets/video/reel.webm" type="video/webm" data-portrait="assets/video/reel-portrait.webm">
+        <source src="assets/video/reel.mp4" type="video/mp4" data-portrait="assets/video/reel-portrait.mp4">
       </video>
       <div class="letterbox" aria-hidden="true"></div>
 
@@ -115,8 +117,10 @@
 
     <!-- ===== FEATURED WORK (3–6 projects) =====
          Each card opens the lightbox. Copy the <article> block to add more.
-         data-embed: the full video on Vimeo/YouTube (player URL).
-         data-preview: a 3–6s silent MP4 clip for the hover preview. -->
+         data-embed: the full video on Vimeo/YouTube (player URL). Until that's set,
+         the lightbox plays data-video (a compressed MP4 in assets/video/full/).
+         data-preview: a 3–6s silent MP4 clip for the hover preview.
+         data-orientation="vertical" for 9:16 work. -->
     <section class="section section-tight" aria-labelledby="featured-title">
       <div class="wrap">
         <div class="section-head" data-reveal>
@@ -125,86 +129,77 @@
         </div>
 
         <div class="featured">
-          <article class="card" data-reveal data-type="commercial" data-type-label="Commercial"
-            data-title="Built to be heard"
+          <article class="card card--vertical" data-reveal data-type="social" data-type-label="Social content"
+            data-title="Fitted in leather"
             data-client="[Client name]"
-            data-industry="Automotive"
-            data-role="Director, DP, editor, graphics"
-            data-duration="00:00:30:00"
-            data-breakdown="[Draft] Launch spot for a new exhaust system. The goal was to make sound sell on a muted feed, so the cut leans on visual rhythm and on-screen type. The spot became the brand's best-performing paid ad of the quarter. [Swap in your real result.]"
+            data-industry="Motorcycle apparel"
+            data-role="Shot and edited [confirm your role]"
+            data-duration="00:00:10:16"
+            data-breakdown="[Draft] A fitting-day reel for a motorcycle leather brand: two riders sized into vests, straight onto the bike, closing on the label. Cut vertical for Instagram. [Add the goal and the result, e.g. views, saves or sales.]"
+            data-orientation="vertical"
+            data-video="assets/video/full/vest-fitting.mp4"
+            data-poster="assets/img/vest-fitting.jpg"
             data-embed="https://player.vimeo.com/video/REPLACE_VIMEO_ID"
-            data-preview="assets/video/previews/project-01.mp4">
+            data-preview="assets/video/previews/vest-fitting.mp4">
             <button class="card-button" type="button">
               <div class="card-media">
-                <img src="assets/img/project-01.svg" alt="[Alt text: describe the frame, e.g. motorcycle under a streetlight at night]" width="1600" height="900" loading="lazy" decoding="async">
-                <span class="card-tc mono">00:00:30:00</span>
+                <img src="assets/img/vest-fitting.jpg" alt="A rider being fitted for a black leather motorcycle vest" width="720" height="1280" loading="lazy" decoding="async">
+                <span class="card-tc mono">00:00:10:16</span>
+                <span class="card-play mono" aria-hidden="true">Play</span>
               </div>
               <div class="card-body">
-                <div class="mono-row"><span class="mono">Commercial</span><span class="mono">Automotive</span></div>
-                <h3>Built to be heard</h3>
+                <div class="mono-row"><span class="mono">Social content</span><span class="mono">Moto apparel</span></div>
+                <h3>Fitted in leather</h3>
               </div>
             </button>
           </article>
 
-          <article class="card" data-reveal data-type="brand-film" data-type-label="Brand film"
-            data-title="Stay Chwispy, drop one"
-            data-client="Stay Chwispy"
-            data-industry="Apparel / lifestyle"
-            data-role="Founder, director, editor, designer"
-            data-duration="00:01:12:00"
-            data-breakdown="[Draft] The first merch drop for my own lifestyle brand. I built the logo, site and launch film myself, and the film carried the drop on Instagram. [Add your real sell-through or view numbers.]"
+          <article class="card card--vertical" data-reveal data-type="commercial" data-type-label="Commercial"
+            data-title="Boots, unboxed"
+            data-client="[Client name]"
+            data-industry="Footwear / workwear"
+            data-role="Shot and edited [confirm your role]"
+            data-duration="00:00:21:26"
+            data-breakdown="[Draft] A product unboxing that moves from the shop bench to a dark-draped product stage, with quick cuts and light leaks to keep the reveal moving. [Add the goal and the result.]"
+            data-orientation="vertical"
+            data-video="assets/video/full/boot-unboxing.mp4"
+            data-poster="assets/img/boot-unboxing.jpg"
             data-embed="https://player.vimeo.com/video/REPLACE_VIMEO_ID"
-            data-preview="assets/video/previews/project-02.mp4">
+            data-preview="assets/video/previews/boot-unboxing.mp4">
             <button class="card-button" type="button">
               <div class="card-media">
-                <img src="assets/img/project-02.svg" alt="[Alt text: describe the frame]" width="1600" height="900" loading="lazy" decoding="async">
-                <span class="card-tc mono">00:01:12:00</span>
+                <img src="assets/img/boot-unboxing.jpg" alt="Tan leather work boot on a red shoebox against black drapes" width="720" height="1280" loading="lazy" decoding="async">
+                <span class="card-tc mono">00:00:21:26</span>
+                <span class="card-play mono" aria-hidden="true">Play</span>
               </div>
               <div class="card-body">
-                <div class="mono-row"><span class="mono">Brand film</span><span class="mono">Apparel</span></div>
-                <h3>Stay Chwispy, drop one</h3>
+                <div class="mono-row"><span class="mono">Commercial</span><span class="mono">Footwear</span></div>
+                <h3>Boots, unboxed</h3>
               </div>
             </button>
           </article>
 
-          <article class="card" data-reveal data-type="social" data-type-label="Social content"
-            data-title="Morning rush"
+          <article class="card card--vertical" data-reveal data-type="social" data-type-label="Social content"
+            data-title="Golden hour walkaround"
             data-client="[Client name]"
-            data-industry="Food &amp; beverage"
-            data-role="Director, shooter, editor"
-            data-duration="00:00:15:00"
-            data-breakdown="[Draft] A month of vertical content for a local café, batched in one shoot day. The goal was more weekday foot traffic. [Add your real result, e.g. reach, saves, or in-store lift.]"
+            data-industry="Powersports"
+            data-role="Shot and edited [confirm your role]"
+            data-duration="00:00:14:17"
+            data-breakdown="[Draft] A golden-hour walkaround of a red Indian cruiser: full profile, tank badge, then the front end head-on. Built to stop the scroll in the first second. [Add the goal and the result.]"
+            data-orientation="vertical"
+            data-video="assets/video/full/indian-walkaround.mp4"
+            data-poster="assets/img/indian-walkaround.jpg"
             data-embed="https://player.vimeo.com/video/REPLACE_VIMEO_ID"
-            data-preview="assets/video/previews/project-03.mp4">
+            data-preview="assets/video/previews/indian-walkaround.mp4">
             <button class="card-button" type="button">
               <div class="card-media">
-                <img src="assets/img/project-03.svg" alt="[Alt text: describe the frame]" width="1600" height="900" loading="lazy" decoding="async">
-                <span class="card-tc mono">00:00:15:00</span>
+                <img src="assets/img/indian-walkaround.jpg" alt="Red Indian motorcycle parked in profile at golden hour" width="720" height="1280" loading="lazy" decoding="async">
+                <span class="card-tc mono">00:00:14:17</span>
+                <span class="card-play mono" aria-hidden="true">Play</span>
               </div>
               <div class="card-body">
-                <div class="mono-row"><span class="mono">Social content</span><span class="mono">Food &amp; beverage</span></div>
-                <h3>Morning rush</h3>
-              </div>
-            </button>
-          </article>
-
-          <article class="card" data-reveal data-type="events" data-type-label="Events"
-            data-title="Friday ride night"
-            data-client="[Client name]"
-            data-industry="Automotive community"
-            data-role="Director, shooter, editor"
-            data-duration="00:02:04:00"
-            data-breakdown="[Draft] Same-night recap of a 200-bike ride night, posted before the last riders got home. The goal was to sell out the next event. [Add your real result.]"
-            data-embed="https://player.vimeo.com/video/REPLACE_VIMEO_ID"
-            data-preview="assets/video/previews/project-04.mp4">
-            <button class="card-button" type="button">
-              <div class="card-media">
-                <img src="assets/img/project-04.svg" alt="[Alt text: describe the frame]" width="1600" height="900" loading="lazy" decoding="async">
-                <span class="card-tc mono">00:02:04:00</span>
-              </div>
-              <div class="card-body">
-                <div class="mono-row"><span class="mono">Events</span><span class="mono">Automotive</span></div>
-                <h3>Friday ride night</h3>
+                <div class="mono-row"><span class="mono">Social content</span><span class="mono">Powersports</span></div>
+                <h3>Golden hour walkaround</h3>
               </div>
             </button>
           </article>
