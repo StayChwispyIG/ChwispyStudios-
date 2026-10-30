@@ -5,7 +5,7 @@ A hand-coded portfolio site: plain HTML, CSS and vanilla JS. No build step, no f
 ```
 index.html      Home: showreel hero, statement, featured work, services teaser, proof, CTA
 work.html       Filterable portfolio grid + video lightbox
-services.html   Packages with "Starting at" pricing, process, testimonials, FAQ
+services.html   Packages with "Book a free consultation" pricing, process, testimonials, FAQ
 about.html      Behind the Lens: story, what I bring, process, gear, on-set photo
 contact.html    Jotform inquiry form embed + Calendly/Cal.com embed
 css/style.css   All styles; colors and fonts live in the :root tokens at the top
@@ -25,7 +25,6 @@ Search the project for `[` to find every placeholder. Anything in square bracket
 |---|---|---|
 | `[EMAIL]` | `contact.html`, `index.html` schema | |
 | `[DOMAIN]` | Every page `<head>`, `robots.txt`, `sitemap.xml` | e.g. `chwispy.com`, no `https://` |
-| `$[X]` | `services.html` (4 prices), `index.html` services teaser | Starting prices |
 | `[X] hours` / `[X] days` | `services.html` event package | Coverage hours, turnaround |
 | `[Month]` | `contact.html` availability line | Or delete the line |
 | FAQ answers + fine print | `services.html` | Marked `[Placeholder]` / `[Edit…]` |

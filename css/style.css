@@ -481,6 +481,8 @@ body.menu-open { overflow: hidden; }
 .package h2 { font-size: clamp(3rem, 2rem + 4vw, 5.5rem); }
 .price { font-family: var(--display); font-weight: 700; font-size: 2rem; line-height: 1; color: var(--accent); }
 .price small { display: block; font-family: var(--mono); font-weight: 400; font-size: var(--fs-label); color: var(--steel); margin-bottom: 0.4rem; }
+.price a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 0.1rem; transition: color 0.2s; }
+.price a:hover { color: var(--highlight); }
 .includes { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
 .includes li { padding-left: 1.4rem; position: relative; }
 .includes li::before {
