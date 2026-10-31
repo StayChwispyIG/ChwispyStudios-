@@ -5,7 +5,7 @@ A hand-coded portfolio site: plain HTML, CSS and vanilla JS. No build step, no f
 ```
 index.html      Home: showreel hero, statement, featured work, services teaser, proof, CTA
 work.html       Filterable portfolio grid + video lightbox
-services.html   Packages with "Book a free consultation" pricing, process, testimonials, FAQ
+services.html   Price tiers per service, bundles, add-ons, booking terms, process, FAQ
 about.html      Behind the Lens: story, what I bring, process, gear, on-set photo
 contact.html    Jotform inquiry form embed + "Book a free consultation" link to the same form
 css/style.css   All styles; colors and fonts live in the :root tokens at the top
