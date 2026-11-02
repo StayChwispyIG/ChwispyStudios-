@@ -499,6 +499,7 @@ body.menu-open { overflow: hidden; }
   font-family: var(--display); font-weight: 700; font-size: 1.75rem; line-height: 1;
   color: var(--accent); white-space: nowrap; text-align: right; margin: 0;
 }
+.tier-price--text { font-size: 1.125rem; white-space: normal; max-width: 9rem; }
 .tier-note { margin: 0; color: var(--steel); font-size: var(--fs-small); }
 @media (min-width: 56em) {
   .package { grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: start; }
