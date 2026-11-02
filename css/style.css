@@ -505,6 +505,14 @@ body.menu-open { overflow: hidden; }
   .package { grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: start; }
 }
 
+/* Cancellation policy: a readable list, nested tiers indented. */
+.policy .policy-list { max-width: 52rem; }
+.policy-list { gap: 0.9rem; }
+.policy-list strong { font-weight: 600; color: var(--text); }
+.policy-list li { color: var(--highlight); }
+.policy-list .includes { margin-top: 0.75rem; gap: 0.6rem; }
+.fine-print a, .faq a { color: var(--highlight); }
+
 /* Add-ons: a quiet rate card beside the booking terms. */
 .addons-grid { display: grid; gap: clamp(3rem, 6vw, 5rem); }
 .addons-title { font-size: clamp(2.25rem, 1.6rem + 2.5vw, 3.5rem); margin-bottom: 1.5rem; }
