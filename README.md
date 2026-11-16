@@ -30,7 +30,7 @@ Hidden until you're ready (search each file for `HIDDEN`, then delete the commen
 
 Contact: the email address isn't printed on the site. The Start a project flow asks three things (service, goal, name + phone) and opens the visitor's email app with the message filled in, addressed to the inbox in `data-email` on `contact.html`. To add a "Send as a text" button, put your number in `data-sms` (digits with country code). The goal options for each service live at the top of `js/start.js`.
 
-Colors follow the 3-color rule: charcoal black and deep cerulean set the mood, and tally orange is the accent. Keep orange for primary buttons, the REC dot and one touch per hero, so it's always clear where to click.
+Colors come from the wave art (`assets/img/wave.svg`): midnight indigo and dusk set the mood, and orchid pink is the accent. Keep orchid for primary buttons and focus, so it's always clear where to click. Headlines are Cormorant Garamond, everything else is Hanken Grotesk. The wave draws in once on the home page and shows again, cropped, at the top of each page and in the closing section.
 
 ### Adding a project
 Copy one of the `<article class="card card--vertical">` blocks in `work.html` (and in `index.html` to feature it). For each one, set:

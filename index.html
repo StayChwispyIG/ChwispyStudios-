@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Chwispy Studio | Websites, Shopify Stores &amp; Video in the Inland Empire, Southern California</title>
   <meta name="description" content="Websites and Shopify stores for small businesses across Southern California, plus the video, photos and design that fill them. Built by one studio, start to finish.">
-  <meta name="theme-color" content="#111316">
+  <meta name="theme-color" content="#0e0b2b">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Chwispy Studio">
@@ -21,10 +21,9 @@
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Martian+Mono:wght@400&family=Schibsted+Grotesk:wght@400;500;600&display=swap">
-  <link rel="preload" as="image" href="assets/img/reel-poster.jpg" media="(orientation: landscape)">
-  <link rel="preload" as="image" href="assets/img/reel-poster-portrait.jpg" media="(orientation: portrait)">
-  <link rel="stylesheet" href="css/style.css?v=20261116b">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+  <link rel="preload" as="image" href="assets/img/wave.svg">
+  <link rel="stylesheet" href="css/style.css?v=20261116h">
 
   <!-- Local SEO: tells Google who you are and where you work -->
   <script type="application/ld+json">
@@ -43,7 +42,6 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <div class="grain" aria-hidden="true"></div>
 
   <!-- ===== HEADER (same on every page; update aria-current per page) ===== -->
   <header class="site-header">
@@ -57,7 +55,7 @@
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
-      <a class="btn btn-primary btn-small header-cta" href="contact.html#start"><span class="rec" aria-hidden="true"></span>Start a project</a>
+      <a class="btn btn-primary btn-small header-cta" href="contact.html#start">Start a project</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span></span></button>
     </div>
   </header>
@@ -70,57 +68,28 @@
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
-    <a class="btn btn-primary btn-large" href="contact.html#start"><span class="rec" aria-hidden="true"></span>Start a project</a>
+    <a class="btn btn-primary btn-large" href="contact.html#start">Start a project</a>
     <p class="mono meta">@chwispystudio on Instagram</p>
   </div>
 
   <main id="main">
-    <!-- ===== HERO: full-bleed showreel =====
-         Landscape screens: assets/video/reel.webm/.mp4 (vertical reel framed on a blurred backdrop).
-         Phones in portrait: the data-portrait files (full-frame 9:16), swapped in by main.js.
-         Posters: assets/img/reel-poster.jpg and reel-poster-portrait.jpg (first frames). -->
-    <section class="hero" aria-label="Showreel">
-      <video autoplay muted loop playsinline preload="metadata" poster="assets/img/reel-poster.jpg" aria-hidden="true"
-        data-portrait-poster="assets/img/reel-poster-portrait.jpg">
-        <source src="assets/video/reel.webm" type="video/webm" data-portrait="assets/video/reel-portrait.webm">
-        <source src="assets/video/reel.mp4" type="video/mp4" data-portrait="assets/video/reel-portrait.mp4">
-      </video>
-      <div class="letterbox" aria-hidden="true"></div>
-
-      <div class="hero-frame">
-        <div class="hero-top">
-          <p class="mono">Web <span aria-hidden="true">/</span> Shopify <span aria-hidden="true">/</span> Video</p>
-          <div class="hero-top-right">
-            <p class="mono" aria-hidden="true"><span class="rec rec-standalone"></span><span data-reel-timecode>00:00:00:00</span></p>
-            <button class="btn btn-ghost btn-small hero-sound" type="button" data-reel-toggle aria-pressed="true">Pause reel</button>
-          </div>
-        </div>
-        <div class="hero-bottom">
-          <h1>Websites and Shopify stores that <em>sell</em></h1>
-          <p class="hero-kicker">Designed, built and filled with your own video and photos, by one studio.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="contact.html#start"><span class="rec" aria-hidden="true"></span>Start a project</a>
-            <a class="btn btn-ghost" href="#builds">See the builds</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== STATEMENT ===== -->
-    <section class="section">
-      <div class="wrap statement" data-reveal>
-        <h2>Sites and stores, plus the video that fills them. One studio, start to finish.</h2>
-        <div class="body">
-          <p class="lede">I design and build your website or Shopify store, then shoot the video and photos that go on it, so your brand gets one consistent look and one person to call.</p>
-          <p>I run the website, Shopify store and content day to day for an aftermarket performance brand, so I know what a product page has to do, and what a post has to do in the first two seconds.</p>
-          <p class="mono">Based in the Inland Empire, shooting across Southern California and wherever the job is.</p>
+    <!-- ===== HERO =====
+         The wave is assets/img/wave.svg: fine contour lines, drawn in once on load. -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-art" aria-hidden="true"><img src="assets/img/wave.svg" alt="" width="1600" height="1000"></div>
+      <div class="wrap hero-copy">
+        <h1 id="hero-title">Websites and Shopify stores that sell</h1>
+        <p class="hero-kicker">Designed, built and filled with your own video and photos, by one studio in the Inland Empire.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-large" href="contact.html#start">Start a project</a>
+          <a class="btn btn-ghost btn-large" href="#builds">See the builds</a>
         </div>
       </div>
     </section>
 
     <!-- ===== RECENT BUILDS =====
          Screenshots: assets/img/web/ (1280x800 from the live sites). Full case studies on work.html. -->
-    <section class="section section-tight" id="builds" aria-labelledby="builds-title">
+    <section class="section" id="builds" aria-labelledby="builds-title">
       <div class="wrap">
         <div class="section-head" data-reveal>
           <h2 id="builds-title">Recent builds</h2>
@@ -180,6 +149,18 @@
               </div>
             </a>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== STATEMENT ===== -->
+    <section class="section section-tight">
+      <div class="wrap statement" data-reveal>
+        <h2>Sites and stores, plus the video that fills them. One studio, start to finish.</h2>
+        <div class="body">
+          <p class="lede">I design and build your website or Shopify store, then shoot the video and photos that go on it, so your brand gets one consistent look and one person to call.</p>
+          <p>I run the website, Shopify store and content day to day for an aftermarket performance brand, so I know what a product page has to do, and what a post has to do in the first two seconds.</p>
+          <p class="mono">Based in the Inland Empire, shooting across Southern California and wherever the job is.</p>
         </div>
       </div>
     </section>
@@ -383,10 +364,10 @@
     <!-- ===== CLOSING CTA ===== -->
     <section class="closer" aria-labelledby="closer-title">
       <div class="wrap" data-reveal>
-        <h2 id="closer-title">Need a site that <em class="outline">sells?</em></h2>
+        <h2 id="closer-title">Need a site that sells?</h2>
         <p>Tell me what you&rsquo;re launching, a site, a store or a shoot. I&rsquo;ll reply within one business day with ideas and a ballpark.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary btn-large" href="contact.html#start"><span class="rec" aria-hidden="true"></span>Start a project</a>
+          <a class="btn btn-primary btn-large" href="contact.html#start">Start a project</a>
           <a class="btn btn-ghost btn-large" href="work.html">See the work</a>
         </div>
       </div>
@@ -412,7 +393,7 @@
         </dl>
         <label class="mono" style="display:flex;gap:.6rem;align-items:center;cursor:pointer"><input type="checkbox" data-captions> Show captions</label>
         <div class="lightbox-actions">
-          <a class="btn btn-primary" href="contact.html#start" data-close><span class="rec" aria-hidden="true"></span>Start a project</a>
+          <a class="btn btn-primary" href="contact.html#start" data-close>Start a project</a>
           <a class="btn btn-ghost" href="work.html" data-close>More work</a>
         </div>
       </div>
