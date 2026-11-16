@@ -395,6 +395,74 @@ body.menu-open { overflow: hidden; }
   .service-list p { grid-column: auto; }
 }
 
+/* Web builds: case studies shown in a quiet browser frame.
+   Screenshots live in assets/img/web/ (1280x800, taken from the live sites). */
+.browser {
+  border: 1px solid var(--line); border-radius: 0.6rem; overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 30px 80px -40px rgba(11,79,108,.8);
+}
+.browser-bar {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.6rem 0.85rem; border-bottom: 1px solid var(--line);
+}
+.browser-bar i { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--line); flex: none; }
+.browser-bar span {
+  margin-left: 0.6rem; font-family: var(--mono); font-size: var(--fs-label); color: var(--steel);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.browser-shot { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg); }
+.browser-shot img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top;
+  transition: opacity 0.6s var(--ease), transform 1.6s var(--ease);
+}
+.browser-shot img + img { opacity: 0; }
+a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
+.build:hover .browser-shot img + img { opacity: 1; }
+
+/* Por Vida: the redesign isn't public yet, so the frame shows the build log instead of a screenshot. */
+.build-log {
+  position: absolute; inset: 0; display: grid; align-content: center; gap: 0.15rem;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  background:
+    radial-gradient(80% 90% at 100% 100%, rgba(11,79,108,.55), transparent 70%),
+    var(--bg);
+  list-style: none; margin: 0;
+}
+.build-log li {
+  display: flex; justify-content: space-between; gap: 1rem;
+  font-family: var(--mono); font-size: clamp(0.625rem, 0.55rem + 0.35vw, 0.8125rem);
+  color: var(--highlight); padding-block: 0.45rem; border-bottom: 1px solid var(--line);
+}
+.build-log li span:last-child { color: var(--sky); white-space: nowrap; }
+.build-log .log-head { color: var(--steel); border-bottom-color: var(--steel); }
+
+/* Home: three builds side by side. */
+.build-cards { display: grid; gap: clamp(3rem, 6vw, 4rem) var(--gutter); }
+@media (min-width: 56em) { .build-cards { grid-template-columns: repeat(3, 1fr); } }
+.build-card a { display: grid; gap: 1.1rem; text-decoration: none; }
+.build-card h3 { font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem); transition: color 0.3s; }
+.build-card a:hover h3 { color: var(--sky); }
+.build-card p { margin: 0; color: var(--steel); font-size: var(--fs-small); }
+.build-card .card-body { padding-top: 0; }
+
+/* Work page: full case studies, alternating sides on wide screens. */
+.builds { display: grid; gap: clamp(5rem, 10vw, 9rem); }
+.build { display: grid; gap: 2rem; align-items: center; scroll-margin-top: 7rem; }
+.build-copy { display: grid; gap: 1.25rem; align-content: start; }
+.build-copy h3 { font-size: clamp(2.75rem, 2rem + 3vw, 4.5rem); }
+.build-copy .ask { color: var(--highlight); margin: 0; }
+.build-copy .includes { color: var(--text); font-size: var(--fs-small); }
+.build-links { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; align-items: center; }
+.build-status { color: var(--sky); }
+@media (min-width: 56em) {
+  .build { grid-template-columns: 1.3fr 1fr; gap: clamp(3rem, 5vw, 5rem); }
+  .build:nth-child(even) .browser-link { order: 2; }
+}
+.browser-link { display: block; text-decoration: none; }
+
+.hero-kicker { color: var(--highlight); max-width: 40ch; margin: 0; text-shadow: 0 1px 12px rgba(0,0,0,.5); }
+
 /* 8. WORK GRID + CARDS + LIGHTBOX ------------------------------------------ */
 .card { position: relative; }
 .card-button {
