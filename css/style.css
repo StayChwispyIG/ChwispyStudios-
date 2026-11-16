@@ -144,20 +144,25 @@ body { animation: cut-in 0.9s var(--ease) both; }
 }
 .site-header .wrap { display: flex; align-items: center; gap: 1.5rem; }
 
+/* Logo: Viewfinder lockup (assets/logo). Height drives size; width follows the SVG. */
 .wordmark {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 1.375rem;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-  text-decoration: none;
-  line-height: 1;
-  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  flex: none;
   margin-right: auto;
-  transition: font-size 0.4s var(--ease);
+  text-decoration: none;
+  line-height: 0;
 }
-.wordmark em { font-style: normal; color: var(--sky); }
-.is-scrolled .wordmark { font-size: 1.125rem; }
+.wordmark img {
+  display: block;
+  height: 2.75rem;
+  width: auto;
+  max-width: none;
+  transition: height 0.4s var(--ease);
+}
+.is-scrolled .wordmark img { height: 2.25rem; }
+.wordmark-footer { margin-right: 0; }
+.wordmark-footer img { height: 5.5rem; }
 
 .nav-links { display: none; list-style: none; margin: 0; padding: 0; gap: 2rem; }
 .nav-links a {
@@ -185,8 +190,9 @@ body { animation: cut-in 0.9s var(--ease) both; }
 .site-header .header-cta { white-space: nowrap; flex: none; }
 @media (max-width: 55.99em) {
   .site-header .wrap { gap: 0.6rem; }
-  .wordmark { font-size: 1.2rem; line-height: 0.95; }
-  .is-scrolled .wordmark { font-size: 1.05rem; }
+  .wordmark img { height: 2rem; }
+  .is-scrolled .wordmark img { height: 1.75rem; }
+  .wordmark-footer img { height: 4.5rem; }
 }
 @media (min-width: 56em) {
   .nav-links { display: flex; }
