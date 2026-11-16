@@ -8,6 +8,45 @@
   document.documentElement.classList.add("js");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ---- Colour mode: dark (onyx, indigo, mint) or light (cyanotype) ----
+     The head script already set data-theme before paint. These switches flip
+     it, remember the choice, and follow the system setting until the visitor
+     picks one. */
+  var root = document.documentElement;
+  var switches = document.querySelectorAll("[data-theme-toggle]");
+  var favicon = document.querySelector("link[data-favicon]");
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  var applyTheme = function (mode) {
+    root.setAttribute("data-theme", mode);
+    var light = mode === "light";
+    Array.prototype.forEach.call(switches, function (sw) {
+      sw.setAttribute("aria-checked", String(light));
+      sw.title = light ? "Switch to dark mode" : "Switch to light mode";
+    });
+    if (favicon) favicon.href = light ? "assets/icons/favicon-light.svg" : "assets/icons/favicon.svg";
+    if (themeMeta) themeMeta.content = light ? "#eef1f4" : "#0c0c0e";
+    Array.prototype.forEach.call(document.querySelectorAll("img.grade"), function (img) {
+      var src = img.getAttribute("src");
+      img.setAttribute("src", light ? src.replace("/graded/", "/cyan/") : src.replace("/cyan/", "/graded/"));
+    });
+  };
+  var saved = null;
+  try { saved = localStorage.getItem("cs-theme"); } catch (e) {}
+  applyTheme(root.getAttribute("data-theme") === "light" ? "light" : "dark");
+  Array.prototype.forEach.call(switches, function (sw) {
+    sw.addEventListener("click", function () {
+      var next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+      applyTheme(next);
+      saved = next;
+      try { localStorage.setItem("cs-theme", next); } catch (e) {}
+    });
+  });
+  if (window.matchMedia) {
+    var sys = window.matchMedia("(prefers-color-scheme: light)");
+    var onSys = function (e) { if (saved !== "light" && saved !== "dark") applyTheme(e.matches ? "light" : "dark"); };
+    if (sys.addEventListener) sys.addEventListener("change", onSys);
+  }
+
   /* ---- Sticky header that shrinks on scroll ---------------------------- */
   var header = document.querySelector(".site-header");
   if (header) {

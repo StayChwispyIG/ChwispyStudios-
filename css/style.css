@@ -9,28 +9,66 @@
 
 /* 1. TOKENS ---------------------------------------------------------------- */
 :root {
-  color-scheme: dark;
-  /* Palette: black and bone, with one electric lime. Photos are graded to
-     black and white (assets/img/graded/) and come back to colour on hover.
-     Lime marks what you can click (buttons, arrows, focus, the active page),
-     plus one big moment: "Studio" across the bottom of the home hero. */
-  --bg: #000;             /* black, like the matte behind a film frame */
-  --surface: #111113;     /* cards, panels, inputs */
-  --deep: #1d2208;        /* dark olive: pressed states */
-  --sky: #e9e5df;         /* bone: small states (progress, pressed borders) */
-  --steel: #9c9893;       /* ash: quiet text (AA on black and surface) */
-  --highlight: #d3cfc9;   /* soft text */
-  --text: #f6f3ee;        /* bone white */
-  --accent: #d7ff3a;      /* electric lime: CTAs and focus. Use sparingly. */
-  --accent-hover: #e6ff86;
-  --on-accent: #000;      /* text and icons sitting on lime */
-  --error: #ff7a6b;
-  --line: rgba(246, 243, 238, 0.13);
-  --matte: #000;         /* behind video */
-  --paper: #eeede8;       /* the light sections */
-  --ink: #000;            /* text on paper */
-  --ink-soft: #4a4844;    /* quiet text on paper (AA) */
+  /* Two modes, picked with the viewfinder switch in the header (or the menu
+     on phones). The choice is remembered; a first visit follows the visitor's
+     system setting. main.js sets data-theme on <html>.
 
+     Dark: onyx black and electric indigo, with tropical mint as the one
+     accent. Mint marks what you can click; indigo carries the big moments
+     (the Recent builds band, the lead service cards, "Studio").
+
+     Light: cyanotype. Cool print paper and Prussian ink, the photos printed
+     in blue like a sun print, and signal orange as the one accent. */
+  color-scheme: dark;
+  --bg: #0c0c0e;          /* onyx */
+  --surface: #16161b;     /* cards, panels, inputs */
+  --sky: #d9d6ea;         /* small states (progress, pressed borders) */
+  --steel: #9b99aa;       /* quiet text (AA on onyx and surface) */
+  --highlight: #cfcde0;   /* soft text */
+  --text: #f3f2f8;
+  --accent: #3df5b4;      /* tropical mint: fills for CTAs. Use sparingly. */
+  --accent-hover: #7ff9cc;
+  --accent-ink: #3df5b4;  /* mint as a line or glyph on the page */
+  --on-accent: #0c0c0e;
+  --error: #ff7a8a;
+  --line: rgba(243, 242, 248, 0.13);
+  --card-line: rgba(243, 242, 248, 0.6);
+  --matte: #000;          /* behind video */
+  --band: #6f00ff;        /* electric indigo: the bold sections */
+  --on-band: #ffffff;
+  --on-band-soft: #d9d0ff;
+  --band-line: rgba(255, 255, 255, 0.28);
+  --band-accent: #3df5b4;
+  --studio: #9d6bff;      /* indigo, lifted to read on onyx */
+  --grain-blend: screen;
+  --grain-filter: none;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #eef1f4;          /* cool print paper */
+  --surface: #e0e6ec;
+  --sky: #123d8a;
+  --steel: #4c5a70;
+  --highlight: #263650;
+  --text: #0b1d3f;        /* Prussian ink */
+  --accent: #ff5a1f;      /* signal orange */
+  --accent-hover: #ff7a47;
+  --accent-ink: #e0440a;  /* a shade deeper so lines hold up on paper */
+  --on-accent: #0b1d3f;
+  --error: #c42a14;
+  --line: rgba(11, 29, 63, 0.15);
+  --card-line: rgba(11, 29, 63, 0.55);
+  --band: #123d8a;        /* cyanotype blue */
+  --on-band: #eef1f4;
+  --on-band-soft: #b9c7e3;
+  --band-line: rgba(238, 241, 244, 0.3);
+  --band-accent: #ff5a1f;
+  --studio: #123d8a;
+  --grain-blend: multiply;
+  --grain-filter: invert(1);
+}
+
+:root {
   /* Type: Archivo, set wide and heavy in capitals for headlines, the way a
      title card reads on screen. Hanken Grotesk carries the text. */
   --display: "Archivo", "Hanken Grotesk", system-ui, sans-serif;
@@ -91,7 +129,7 @@ h3 {
 }
 
 :focus-visible {
-  outline: 1.5px solid var(--accent);
+  outline: 1.5px solid var(--accent-ink);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -109,7 +147,7 @@ h3 {
 .skip-link:focus { top: 1rem; }
 
 /* Placeholder tag: anything wrapped in .ph is copy/media you need to replace. */
-.ph { outline: 1px dashed rgba(233, 229, 223, 0.4); outline-offset: 2px; }
+.ph { outline: 1px dashed color-mix(in srgb, var(--text) 40%, transparent); outline-offset: 2px; }
 
 /* 3. MOTION ---------------------------------------------------------------
    One moment only: the hero frames cut in on load (section 6).
@@ -119,7 +157,7 @@ h3 {
 /* Film grain: a still texture over the whole page, like a fine print. It never moves. */
 .grain {
   pointer-events: none; position: fixed; inset: 0; z-index: 150;
-  opacity: 0.07; mix-blend-mode: screen;
+  opacity: 0.07; mix-blend-mode: var(--grain-blend); filter: var(--grain-filter);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -140,7 +178,7 @@ h3 {
 }
 .site-header.is-scrolled {
   --header-h: 3.5rem;
-  background: rgba(0, 0, 0, 0.78);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
   backdrop-filter: blur(14px) saturate(1.2);
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
   border-bottom: 1px solid var(--line);
@@ -173,7 +211,7 @@ h3 {
   padding-block: 0.25rem; border-bottom: 1px solid transparent;
   transition: color 0.2s, border-color 0.2s;
 }
-.nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--text); border-color: var(--accent); }
+.nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--text); border-color: var(--accent-ink); }
 
 .menu-toggle {
   display: inline-flex; align-items: center; justify-content: center;
@@ -222,12 +260,58 @@ h3 {
 .menu-overlay .meta { margin-top: 2rem; }
 body.menu-open { overflow: hidden; }
 
+/* Logo: each mode has its own colourway (assets/logo/*-light.svg). */
+.logo-light { display: none !important; }
+:root[data-theme="light"] .logo-dark { display: none !important; }
+:root[data-theme="light"] .logo-light { display: block !important; }
+
+/* Mode switch: the logo in miniature. A viewfinder frame with the logo's dot
+   inside; the dot sits left in dark mode and slides right for light. The
+   corners close in when you point at it, like the buttons. */
+.mode-switch {
+  --bc: var(--text); --bl: 0.42rem; --bw: 1.5px; --gap: 0px;
+  position: relative; flex: none; width: 3.25rem; height: 1.85rem; padding: 0;
+  border: 0; cursor: pointer; color: var(--text);
+  background: linear-gradient(var(--line) 0 0) center / calc(100% - 1.9rem) 1px no-repeat;
+}
+.mode-dot {
+  position: absolute; top: 50%; left: 0.5rem; width: 0.7rem; height: 0.7rem; border-radius: 50%;
+  background: var(--accent-ink); transform: translateY(-50%);
+  transition: left 0.45s var(--ease), background-color 0.3s;
+}
+.mode-switch::after { /* the empty mark at the other end */
+  content: ""; position: absolute; top: 50%; right: 0.5rem; width: 0.7rem; height: 0.7rem;
+  border-radius: 50%; border: 1px solid var(--steel); transform: translateY(-50%);
+  transition: left 0.45s var(--ease), right 0.45s var(--ease);
+}
+.mode-switch[aria-checked="true"] .mode-dot { left: calc(100% - 1.2rem); }
+.mode-switch[aria-checked="true"]::after { right: calc(100% - 1.2rem); }
+.mode-switch:hover::before, .mode-switch:focus-visible::before { inset: 3px; }
+.mode-switch--header { display: none; }
+@media (min-width: 36em) { .mode-switch--header { display: block; } }
+.menu-mode { display: flex; align-items: center; gap: 1rem; margin: 0 0 2rem; color: var(--highlight); font-size: var(--fs-small); }
+.menu-mode .mode-switch { order: -1; }
+@media (min-width: 36em) { .menu-mode { display: none; } }
+
+/* Light mode prints the photos as cyanotypes: blacks turn Prussian blue,
+   whites stay paper. Prints live in assets/img/cyan/. */
+:root[data-theme="light"] .hero-strip { background: var(--band); }
+:root[data-theme="light"] .hero-strip img { mix-blend-mode: screen; filter: contrast(1.1) brightness(0.95); }
+:root[data-theme="light"] .page-hero::before { opacity: 0.95; }
+:root[data-theme="light"] .page-hero--work { --page-img: url("../assets/img/cyan/indian-walkaround.jpg"); }
+:root[data-theme="light"] .page-hero--services { --page-img: url("../assets/img/cyan/boot-unboxing.jpg"); }
+:root[data-theme="light"] .page-hero--about { --page-img: url("../assets/img/cyan/headlight.jpg"); }
+:root[data-theme="light"] .page-hero--contact { --page-img: url("../assets/img/cyan/tank-badge.jpg"); }
+/* The video wall swaps to the cyanotype prints in main.js (assets/img/cyan/). */
+
+
+
 /* 5. BUTTONS + LABELS ------------------------------------------------------
    Viewfinder buttons. Four corner marks, cut from the same brackets as the
    logo, frame every button. Pointing at one pulls the corners in, the way a
    camera locks focus. */
 .btn {
-  --bc: var(--accent);      /* corner colour */
+  --bc: var(--accent-ink);  /* corner colour */
   --bl: 0.7rem;             /* corner arm length */
   --bw: 1.5px;              /* corner stroke */
   --gap: 6px;               /* how far the corners sit outside the button */
@@ -240,7 +324,7 @@ body.menu-open { overflow: hidden; }
   border: 0; border-radius: 0;
   transition: background-color 0.3s var(--ease), color 0.3s;
 }
-.btn::before, .arrow::before {
+.btn::before, .arrow::before, .mode-switch::before {
   content: ""; position: absolute; inset: calc(var(--gap) * -1); pointer-events: none;
   background:
     linear-gradient(var(--bc) 0 0) 0 0 / var(--bl) var(--bw),
@@ -260,22 +344,25 @@ body.menu-open { overflow: hidden; }
 /* The quiet button is the frame alone: no fill, no outline, only the corners,
    like the logo. Pointing at it closes the corners and lights them. */
 .btn-ghost { --bc: var(--text); --gap: 0px; background: transparent; color: var(--text); }
-.btn-ghost:hover::before, .btn-ghost:focus-visible::before { inset: 4px; --bc: var(--accent); }
-.btn-ghost:hover { color: var(--accent); }
+.btn-ghost:hover::before, .btn-ghost:focus-visible::before { inset: 4px; --bc: var(--accent-ink); }
 .btn-small { --bl: 0.55rem; --gap: 4px; min-height: 2.4rem; padding: 0.45rem 1.1rem; font-size: 0.875rem; }
 .btn-large { --bl: 0.85rem; --gap: 7px; min-height: 3.35rem; padding: 0.6rem 1.9rem; font-size: 1rem; }
 
 .section-tight { padding-top: 0; }
 
 /* Arrow marks: a small viewfinder with an arrow inside. The corners close
-   in and the arrow lifts when you point at the link. */
+   in and the arrow lifts when you point at the link. --bc sets both colours. */
 .arrow {
-  --bc: var(--accent); --bl: 0.45rem; --bw: 1.5px; --gap: 0px;
+  --bc: var(--accent-ink); --bl: 0.45rem; --bw: 1.5px; --gap: 0px; --glyph: 0.85rem;
   position: relative; display: inline-block; flex: none; width: 2rem; height: 2rem;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d7ff3a' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E") center / 0.85rem no-repeat;
-  transition: background-position 0.35s var(--ease);
 }
-a:hover .arrow, a:focus-visible .arrow { background-position: calc(50% + 2px) calc(50% - 2px); }
+.arrow::after {
+  content: ""; position: absolute; inset: 0; background: var(--bc);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E") center / var(--glyph) no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E") center / var(--glyph) no-repeat;
+  transition: transform 0.35s var(--ease);
+}
+a:hover .arrow::after, a:focus-visible .arrow::after { transform: translate(2px, -2px); }
 a:hover .arrow::before, a:focus-visible .arrow::before { inset: 4px; }
 
 /* Section numbers: home sections run in order, so they carry one. */
@@ -323,8 +410,8 @@ a:hover .arrow::before, a:focus-visible .arrow::before { inset: 4px; }
 .hero::after { /* fade the frames into black so the type always reads */
   content: ""; position: absolute; z-index: -1; inset: 0;
   background:
-    linear-gradient(to bottom, rgba(0,0,0,.55) 0, rgba(0,0,0,0) 22%),
-    linear-gradient(to top, var(--bg) 22%, rgba(0, 0, 0, 0.75) 48%, rgba(0, 0, 0, 0) 72%);
+    linear-gradient(to bottom, color-mix(in srgb, var(--bg) 55%, transparent) 0, transparent 22%),
+    linear-gradient(to top, var(--bg) 22%, color-mix(in srgb, var(--bg) 75%, transparent) 48%, transparent 72%);
 }
 @media (min-width: 48em) {
   .hero-strip { grid-template-columns: repeat(3, 1fr); gap: 3px; }
@@ -346,7 +433,7 @@ a:hover .arrow::before, a:focus-visible .arrow::before { inset: 4px; }
   padding-block: 0.7rem; text-decoration: none; color: var(--highlight); font-size: var(--fs-small);
 }
 .hero-services a:hover { color: var(--text); }
-.hero-services .arrow { width: 1.6rem; height: 1.6rem; background-size: 0.7rem; --bl: 0.38rem; }
+.hero-services .arrow { width: 1.6rem; height: 1.6rem; --glyph: 0.7rem; --bl: 0.38rem; }
 @media (min-width: 56em) {
   .hero-copy { grid-template-columns: 1fr minmax(16rem, 22rem); align-items: end; gap: var(--gutter); }
 }
@@ -360,7 +447,7 @@ a:hover .arrow::before, a:focus-visible .arrow::before { inset: 4px; }
   color: var(--text);
   display: flex; flex-wrap: wrap; column-gap: 0.22em;
 }
-.hero-mark span + span { color: var(--accent); }
+.hero-mark span + span { color: var(--studio); }
 @media (min-width: 48em) {
   .hero-mark { font-size: 9.2vw; flex-wrap: nowrap; }
 }
@@ -411,7 +498,7 @@ a:hover .arrow::before, a:focus-visible .arrow::before { inset: 4px; }
   font-size: var(--fs-small); font-weight: 500; color: var(--highlight); text-decoration: none;
 }
 .text-link:hover { color: var(--text); }
-p .text-link { display: inline; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 0.25em; text-decoration-thickness: 1.5px; }
+p .text-link { display: inline; text-decoration: underline; text-decoration-color: var(--accent-ink); text-underline-offset: 0.25em; text-decoration-thickness: 1.5px; }
 
 /* Video work: a tight showreel wall. Frames sit graded red until you point
    at one, then the clip plays in full colour. */
@@ -452,18 +539,18 @@ p .text-link { display: inline; text-decoration: underline; text-decoration-colo
   position: relative; height: 100%;
   display: grid; grid-template-rows: auto 1fr auto; gap: 0.75rem;
   padding: clamp(1.25rem, 2.5vw, 1.75rem); min-height: 13rem;
-  border: 1px solid rgba(246, 243, 238, 0.85); border-radius: 4px;
+  border: 1px solid var(--card-line); border-radius: 4px;
   text-decoration: none; transition: background-color 0.3s, color 0.3s;
 }
 .service-cards h3 { padding-right: 3rem; font-size: clamp(1.35rem, 1.2rem + 0.6vw, 1.75rem); }
 .service-cards p { margin: 0; color: var(--steel); font-size: var(--fs-small); max-width: 34ch; }
 .service-cards .price { font-size: var(--fs-small); font-weight: 600; font-variant-numeric: lining-nums tabular-nums; }
 .service-cards .arrow { position: absolute; top: clamp(1rem, 2.2vw, 1.5rem); right: clamp(1rem, 2.2vw, 1.5rem); }
-.service-cards a:hover { background: #fff; color: #000; }
-.service-cards a:hover p { color: #3a3836; }
-.service-cards .lead a { background: var(--text); color: #000; border-color: var(--text); min-height: 17rem; }
-.service-cards .lead p { color: #3a3836; }
-.service-cards .lead .arrow, .service-cards a:hover .arrow, .service-cards a:focus-visible .arrow { --bc: #000; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E"); }
+.service-cards a:hover { background: var(--band); color: var(--on-band); border-color: var(--band); }
+.service-cards a:hover p { color: var(--on-band-soft); }
+.service-cards .lead a { background: var(--band); color: var(--on-band); border-color: var(--band); min-height: 17rem; }
+.service-cards .lead p { color: var(--on-band-soft); }
+.service-cards .lead .arrow, .service-cards a:hover .arrow, .service-cards a:focus-visible .arrow { --bc: var(--band-accent); }
 
 .service-cards .lead h3 { font-size: clamp(1.9rem, 1.4rem + 1.8vw, 3rem); font-weight: 800; font-stretch: 118%; text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.95; }
 @media (max-width: 39.99em) {
@@ -481,13 +568,13 @@ p .text-link { display: inline; text-decoration: underline; text-decoration-colo
 
 /* Recent builds: the light section. Names stack big; pointing at one lifts its
    screenshot over the page. On phones the screenshot sits inline. */
-.builds-red { background: var(--paper); color: var(--ink); padding-block: var(--section); }
-.builds-red .tag { color: var(--ink-soft); }
-.builds-red .text-link { color: var(--ink); }
-.builds-red .arrow { --bc: var(--ink); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E"); }
-.builds-red :focus-visible { outline-color: var(--ink); }
-.build-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(0, 0, 0, 0.18); }
-.build-rows li { border-bottom: 1px solid rgba(0, 0, 0, 0.18); }
+.builds-red { background: var(--band); color: var(--on-band); padding-block: var(--section); }
+.builds-red .tag { color: var(--on-band-soft); }
+.builds-red .text-link { color: var(--on-band); }
+.builds-red .arrow { --bc: var(--band-accent); }
+.builds-red :focus-visible { outline-color: var(--on-band); }
+.build-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--band-line); }
+.build-rows li { border-bottom: 1px solid var(--band-line); }
 .build-row {
   position: relative; display: grid; grid-template-columns: 1fr auto; gap: 0.75rem 1.5rem;
   align-items: center; padding-block: clamp(1.5rem, 3vw, 2.5rem); text-decoration: none;
@@ -497,13 +584,13 @@ p .text-link { display: inline; text-decoration: underline; text-decoration-colo
   text-transform: uppercase; letter-spacing: -0.015em;
   transition: color 0.3s;
 }
-.build-row:hover .build-name, .build-row:focus-visible .build-name { color: var(--ink-soft); }
-.build-about { grid-column: 1 / -1; display: grid; gap: 0.3rem; font-size: var(--fs-small); max-width: 40ch; color: var(--ink-soft); }
-.build-about strong { color: var(--ink); }
+.build-row:hover .build-name, .build-row:focus-visible .build-name { color: var(--on-band-soft); }
+.build-about { grid-column: 1 / -1; display: grid; gap: 0.3rem; font-size: var(--fs-small); max-width: 40ch; color: var(--on-band-soft); }
+.build-about strong { color: var(--on-band); }
 .build-about strong { font-weight: 600; }
 .build-peek {
   grid-column: 1 / -1; display: block; overflow: hidden; border-radius: 4px;
-  aspect-ratio: 16 / 10; background: #000; position: relative;
+  aspect-ratio: 16 / 10; background: var(--surface); color: var(--text); position: relative;
   box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.45);
 }
 .build-peek img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
@@ -529,7 +616,7 @@ p .text-link { display: inline; text-decoration: underline; text-decoration-colo
 .browser {
   border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
   background: var(--surface);
-  box-shadow: 0 40px 90px -50px rgba(215, 255, 58, 0.18);
+  box-shadow: 0 40px 90px -50px color-mix(in srgb, var(--band) 45%, transparent);
 }
 .browser-bar {
   display: flex; align-items: center; gap: 0.4rem;
@@ -610,7 +697,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 .card-button:hover .card-media img, .card-button:focus-visible .card-media img { transform: scale(1.03); }
 .card-tc { /* timecode burned into the corner of the frame */
   position: absolute; z-index: 2; left: 0.75rem; bottom: 0.65rem;
-  color: var(--highlight); text-shadow: 0 1px 4px rgba(0,0,0,.6);
+  color: #f3f2f8; text-shadow: 0 1px 4px rgba(0,0,0,.6);
 }
 .card-play {
   position: absolute; z-index: 2; right: 0.75rem; bottom: 0.6rem;
@@ -664,7 +751,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 .lightbox-meta dd { margin: 0.2rem 0 0; font-size: var(--fs-small); }
 .lightbox-close {
   position: sticky; top: 0; float: right; z-index: 3; margin: 0.75rem;
-  background: rgba(0,0,0,.8); color: var(--text); border: 1px solid var(--line);
+  background: rgba(0,0,0,.8); color: #f3f2f8; border: 1px solid rgba(255,255,255,.2);
   width: 2.75rem; height: 2.75rem; border-radius: 50%; cursor: pointer; font-size: 1.25rem; line-height: 1;
 }
 .lightbox-actions { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; }
@@ -843,7 +930,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 }
 .choice:hover { border-color: var(--steel); }
 .choice:active { transform: scale(0.99); }
-.choice[aria-pressed="true"] { border-color: var(--accent); background: rgba(215, 255, 58, 0.08); }
+.choice[aria-pressed="true"] { border-color: var(--accent-ink); background: color-mix(in srgb, var(--accent) 10%, transparent); }
 .choice-name { font-family: var(--display); font-weight: 700; font-size: 1.3rem; letter-spacing: -0.015em; line-height: 1.1; }
 .choice-sub { color: var(--steel); font-size: var(--fs-small); line-height: 1.35; }
 .choice--goal .choice-name { font-family: var(--body); font-weight: 600; text-transform: none; font-size: 1.0625rem; line-height: 1.3; }
@@ -860,7 +947,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
   font: 400 1.0625rem/1.3 var(--body);
 }
 .field input::placeholder { color: var(--steel); }
-.field input:focus { outline: none; border-color: var(--sky); box-shadow: 0 0 0 3px rgba(233,229,223,.15); }
+.field input:focus { outline: none; border-color: var(--sky); box-shadow: 0 0 0 3px color-mix(in srgb, var(--text) 15%, transparent); }
 .field-error { margin: 0; color: var(--error); font-size: var(--fs-small); }
 .step-next { justify-self: start; }
 .step .btn-primary { justify-self: start; }
@@ -904,7 +991,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
    No autoplay (handled in main.js), no fades on load, no zooms. */
 @media (prefers-reduced-motion: reduce) {
   .hero-strip img { animation: none; }
-  .build-peek, .arrow, .arrow::before, .btn::before, .service-cards a { transition: none; }
+  .build-peek, .arrow::after, .arrow::before, .btn::before, .mode-dot, .mode-switch::after, .mode-switch::before, .service-cards a { transition: none; }
   .work-grid .card, .lightbox[open] { animation-duration: 0.01s; }
   * { scroll-behavior: auto !important; }
   .card-media img { transition: none; }

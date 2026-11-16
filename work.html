@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Work | Chwispy Studio, Websites, Shopify and Video in the Inland Empire</title>
   <meta name="description" content="Website and Shopify builds for Pop Clutch Coffee, NAVI Media and Por Vida Kustoms, plus commercials and social content for brands across Southern California.">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#0c0c0e">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Chwispy Studio">
@@ -16,13 +16,15 @@
   <meta property="og:image" content="https://chwispystudio.com/assets/img/og-image.jpg">
   <meta name="twitter:card" content="summary_large_image">
 
+  <script>/* Pick the colour mode before the page paints: the visitor's saved choice, else their system setting. */
+  (function(){var t;try{t=localStorage.getItem("cs-theme")}catch(e){}if(t!=="light"&&t!=="dark"){t=window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.setAttribute("data-theme",t)})();</script>
   <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
-  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" data-favicon>
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600&family=Mrs+Saint+Delafield&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20261116i">
+  <link rel="stylesheet" href="css/style.css?v=20261116j">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -31,7 +33,7 @@
   <!-- ===== HEADER (same on every page; update aria-current per page) ===== -->
   <header class="site-header">
     <div class="wrap">
-      <a class="wordmark" href="index.html"><img src="assets/logo/chwispy-studio-horizontal.svg" alt="Chwispy Studio" width="543" height="122"></a>
+      <a class="wordmark" href="index.html"><img class="logo-dark" src="assets/logo/chwispy-studio-horizontal.svg" alt="Chwispy Studio" width="543" height="122"><img class="logo-light" src="assets/logo/chwispy-studio-horizontal-light.svg" alt="Chwispy Studio" width="543" height="122"></a>
       <nav aria-label="Main">
         <ul class="nav-links">
           <li><a href="work.html" aria-current="page">Work</a></li>
@@ -40,6 +42,7 @@
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
+      <button class="mode-switch mode-switch--header" type="button" role="switch" aria-checked="false" data-theme-toggle title="Switch to light mode"><span class="visually-hidden">Light mode</span><span class="mode-dot" aria-hidden="true"></span></button>
       <a class="btn btn-primary btn-small header-cta" href="contact.html#start">Start a project</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span></span></button>
     </div>
@@ -54,6 +57,7 @@
       </ul>
     </nav>
     <a class="btn btn-primary btn-large" href="contact.html#start">Start a project</a>
+    <div class="menu-mode"><span aria-hidden="true">Light mode</span><button class="mode-switch" type="button" role="switch" aria-checked="false" data-theme-toggle title="Switch to light mode"><span class="visually-hidden">Light mode</span><span class="mode-dot" aria-hidden="true"></span></button></div>
     <p class="mono meta">@chwispystudio on Instagram</p>
   </div>
 
@@ -332,7 +336,7 @@
   <footer class="site-footer">
     <div class="wrap">
       <div>
-        <a class="wordmark wordmark-footer" href="index.html"><img src="assets/logo/chwispy-studio-stacked.svg" alt="Chwispy Studio" width="656" height="332"></a>
+        <a class="wordmark wordmark-footer" href="index.html"><img class="logo-dark" src="assets/logo/chwispy-studio-stacked.svg" alt="Chwispy Studio" width="656" height="332" loading="lazy"><img class="logo-light" src="assets/logo/chwispy-studio-stacked-light.svg" alt="Chwispy Studio" width="656" height="332" loading="lazy"></a>
         <p class="mono" style="margin-top:.75rem">Websites, Shopify and video in the Inland Empire, Southern California</p>
       </div>
       <nav aria-label="Footer">
