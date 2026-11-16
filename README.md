@@ -30,7 +30,7 @@ Hidden until you're ready (search each file for `HIDDEN`, then delete the commen
 
 Contact: the email address isn't printed on the site. The Start a project flow asks three things (service, goal, name + phone) and opens the visitor's email app with the message filled in, addressed to the inbox in `data-email` on `contact.html`. To add a "Send as a text" button, put your number in `data-sms` (digits with country code). The goal options for each service live at the top of `js/start.js`.
 
-Colors come from the wave art (`assets/img/wave.svg`): midnight indigo and dusk set the mood, and orchid pink is the accent. Keep orchid for primary buttons and focus, so it's always clear where to click. Everything is set in Hanken Grotesk: light and tightly spaced for headlines, regular for text. The wave draws in once on the home page and shows again, cropped, at the top of each page and in the closing section.
+Colors follow Stay Chwispy: black, bone white and red, with the wave art (`assets/img/wave.svg`) burning red out of the black. Keep red for primary buttons and focus, so it's always clear where to click. Type is Hanken Grotesk: light and tightly spaced for headlines, regular for text. The Chwispy signature (Mrs Saint Delafield) appears twice: home hero and the About story. A still film grain sits over every page. The wave draws in once on the home page and shows again, cropped, at the top of each page and in the closing section.
 
 ### Adding a project
 Copy one of the `<article class="card card--vertical">` blocks in `work.html` (and in `index.html` to feature it). For each one, set:

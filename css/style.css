@@ -10,21 +10,20 @@
 /* 1. TOKENS ---------------------------------------------------------------- */
 :root {
   color-scheme: dark;
-  /* Palette, taken from the wave art (assets/img/wave.svg).
-     Base: midnight indigo with a dusk surface. Text: moon white and haze.
-     Accent: orchid, the pink end of the wave. Orchid is for click targets only
-     (primary buttons, focus). Periwinkle is the cool end of the wave, for small states. */
-  --bg: #0e0b2b;          /* midnight */
-  --surface: #17133f;     /* dusk: cards, panels, inputs */
-  --deep: #2b2373;        /* deep violet: active states */
-  --sky: #9aa6ff;         /* periwinkle: small states, AA on midnight */
-  --steel: #a39fc9;       /* haze: quiet text (AA on midnight and dusk) */
-  --highlight: #d2cfe8;   /* soft text */
-  --text: #f1effa;        /* moon */
-  --accent: #ff5fb4;      /* orchid: CTAs and focus. Use sparingly. */
-  --accent-hover: #ff82c6;
-  --line: rgba(210, 207, 232, 0.14);
-  --matte: #07051a;       /* behind video */
+  /* Palette: black, bone white and red, from Stay Chwispy, with the wave art
+     (assets/img/wave.svg) burning red out of the black.
+     Red is for click targets only (primary buttons, focus, the active nav line). */
+  --bg: #000;             /* black, like the matte behind a film frame */
+  --surface: #111113;     /* cards, panels, inputs */
+  --deep: #3a0a12;        /* wine: pressed states */
+  --sky: #e9e5df;         /* bone: small states (progress, pressed borders) */
+  --steel: #9c9893;       /* ash: quiet text (AA on black and surface) */
+  --highlight: #d3cfc9;   /* soft text */
+  --text: #f6f3ee;        /* bone white */
+  --accent: #e3102f;      /* red: CTAs and focus. Use sparingly. */
+  --accent-hover: #ff2b48;
+  --line: rgba(246, 243, 238, 0.13);
+  --matte: #000;         /* behind video */
 
   /* Type: one grotesk family. Headlines run light and tightly spaced,
      thin strokes like the hairlines in the wave; text runs at regular weight. */
@@ -99,12 +98,27 @@ h3 { font-size: var(--fs-h3); line-height: 1.12; font-weight: 400; letter-spacin
 .skip-link:focus { top: 1rem; }
 
 /* Placeholder tag: anything wrapped in .ph is copy/media you need to replace. */
-.ph { outline: 1px dashed rgba(154, 166, 255, 0.4); outline-offset: 2px; }
+.ph { outline: 1px dashed rgba(233, 229, 223, 0.4); outline-offset: 2px; }
 
 /* 3. MOTION ---------------------------------------------------------------
    One moment only: the hero wave draws in on load (section 6).
    Everything else is still, apart from responses to hover and taps. */
 @keyframes cut-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Film grain: a still texture over the whole page, like a fine print. It never moves. */
+.grain {
+  pointer-events: none; position: fixed; inset: 0; z-index: 150;
+  opacity: 0.07; mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Signature: Chwispy's own hand, used twice (home hero and the About story). */
+.signature {
+  font-family: "Mrs Saint Delafield", cursive; font-weight: 400;
+  font-size: clamp(3.25rem, 2.4rem + 3vw, 5.5rem); line-height: 1;
+  letter-spacing: 0; color: var(--text); margin: 0; max-width: none;
+  transform: rotate(-7deg); transform-origin: left center;
+}
 
 /* 4. HEADER + MENU --------------------------------------------------------- */
 .site-header {
@@ -115,7 +129,7 @@ h3 { font-size: var(--fs-h3); line-height: 1.12; font-weight: 400; letter-spacin
 }
 .site-header.is-scrolled {
   --header-h: 3.5rem;
-  background: rgba(14, 11, 43, 0.82);
+  background: rgba(0, 0, 0, 0.78);
   backdrop-filter: blur(14px) saturate(1.2);
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
   border-bottom: 1px solid var(--line);
@@ -208,9 +222,9 @@ body.menu-open { overflow: hidden; }
   border: 1px solid transparent;
   transition: background-color 0.25s, color 0.25s, border-color 0.25s;
 }
-.btn-primary { background: var(--accent); color: var(--bg); }
+.btn-primary { background: var(--accent); color: #fff; }
 .btn-primary:hover { background: var(--accent-hover); }
-.btn-ghost { border-color: rgba(241, 239, 250, 0.32); color: var(--text); background: transparent; }
+.btn-ghost { border-color: rgba(246, 243, 238, 0.32); color: var(--text); background: transparent; }
 .btn-ghost:hover { border-color: var(--text); }
 .btn-small { --pad-y: 0.6rem; padding-inline: 1rem; }
 .btn-large { --pad-y: 1.1rem; padding-inline: 1.9rem; font-size: 1rem; }
@@ -251,13 +265,13 @@ body.menu-open { overflow: hidden; }
 }
 .hero::after { /* veil so the type always reads */
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(to top, var(--bg) 8%, rgba(14, 11, 43, 0.82) 34%, rgba(14, 11, 43, 0) 66%);
+  background: linear-gradient(to top, var(--bg) 8%, rgba(0, 0, 0, 0.8) 34%, rgba(0, 0, 0, 0) 66%);
 }
 @media (min-width: 56em) {
   .hero::after {
     background:
-      linear-gradient(to top, var(--bg) 0%, rgba(14, 11, 43, 0) 30%),
-      linear-gradient(100deg, rgba(14, 11, 43, 0.88) 16%, rgba(14, 11, 43, 0) 52%);
+      linear-gradient(to top, var(--bg) 0%, rgba(0, 0, 0, 0) 30%),
+      linear-gradient(100deg, rgba(0, 0, 0, 0.9) 16%, rgba(0, 0, 0, 0) 52%);
   }
 }
 .hero-copy { display: grid; gap: 1.6rem; justify-items: start; }
@@ -273,6 +287,14 @@ body.menu-open { overflow: hidden; }
 }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
 .hero-copy .hero-actions { margin-top: 0.6rem; }
+.hero .signature { justify-self: end; margin-top: 1rem; opacity: 0.92; }
+@media (min-width: 56em) {
+  .hero .signature {
+    position: absolute; right: var(--gutter); bottom: clamp(3rem, 2rem + 5vw, 7rem);
+    margin: 0; font-size: clamp(4.5rem, 3rem + 3vw, 7rem);
+  }
+}
+.story-copy .signature { margin-top: 1.5rem; color: var(--accent); }
 
 /* Page heroes (inner pages): the edge of the same wave, cropped high on the right. */
 .page-hero {
@@ -310,7 +332,7 @@ body.menu-open { overflow: hidden; }
 .section-head h2 { max-width: 14ch; }
 .text-link {
   font-size: var(--fs-small); color: var(--highlight); text-decoration: none;
-  border-bottom: 1px solid rgba(210, 207, 232, 0.4); padding-bottom: 0.2rem;
+  border-bottom: 1px solid rgba(246, 243, 238, 0.4); padding-bottom: 0.2rem;
 }
 .text-link:hover { color: var(--text); border-color: var(--text); }
 
@@ -371,7 +393,7 @@ body.menu-open { overflow: hidden; }
 .browser {
   border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
   background: var(--surface);
-  box-shadow: 0 40px 90px -50px rgba(120, 80, 255, 0.55);
+  box-shadow: 0 40px 90px -50px rgba(227, 16, 47, 0.45);
 }
 .browser-bar {
   display: flex; align-items: center; gap: 0.4rem;
@@ -489,7 +511,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
   margin: auto; padding: 0; border: 0; background: var(--bg); color: var(--text);
   overflow-y: auto;
 }
-.lightbox::backdrop { background: rgba(7, 5, 26, 0.94); }
+.lightbox::backdrop { background: rgba(0, 0, 0, 0.94); }
 .lightbox[open] { animation: cut-in 0.6s var(--ease) both; }
 .lightbox-player { position: relative; aspect-ratio: 16 / 9; background: var(--matte); }
 .lightbox-player iframe, .lightbox-player video {
@@ -506,7 +528,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 .lightbox-meta dd { margin: 0.2rem 0 0; font-size: var(--fs-small); }
 .lightbox-close {
   position: sticky; top: 0; float: right; z-index: 3; margin: 0.75rem;
-  background: rgba(14,11,43,.8); color: var(--text); border: 1px solid var(--line);
+  background: rgba(0,0,0,.8); color: var(--text); border: 1px solid var(--line);
   width: 2.75rem; height: 2.75rem; border-radius: 50%; cursor: pointer; font-size: 1.25rem; line-height: 1;
 }
 .lightbox-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
@@ -586,7 +608,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 /* Process: a real sequence, so it gets numbers. */
 .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 2.5rem; counter-reset: step; }
 .steps li { counter-increment: step; display: grid; gap: 0.6rem; border-top: 1px solid var(--line); padding-top: 1.25rem; }
-.steps li::before { content: "Step " counter(step); font-size: var(--fs-label); color: var(--sky); }
+.steps li::before { content: "Step " counter(step); font-size: var(--fs-label); color: var(--steel); }
 .steps h3 { font-size: clamp(1.6rem, 1.35rem + 1vw, 2.1rem); }
 .steps p { color: var(--highlight); margin: 0; }
 @media (min-width: 56em) { .steps { grid-template-columns: repeat(5, 1fr); gap: var(--gutter); } }
@@ -684,7 +706,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 }
 .choice:hover { border-color: var(--steel); }
 .choice:active { transform: scale(0.99); }
-.choice[aria-pressed="true"] { border-color: var(--sky); background: rgba(91, 74, 255, 0.18); }
+.choice[aria-pressed="true"] { border-color: var(--accent); background: rgba(227, 16, 47, 0.1); }
 .choice-name { font-family: var(--display); font-weight: 400; font-size: 1.4rem; letter-spacing: -0.02em; line-height: 1.1; }
 .choice-sub { color: var(--steel); font-size: var(--fs-small); line-height: 1.35; }
 .choice--goal .choice-name { font-family: var(--body); font-weight: 600; text-transform: none; font-size: 1.0625rem; line-height: 1.3; }
@@ -701,7 +723,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
   font: 400 1.0625rem/1.3 var(--body);
 }
 .field input::placeholder { color: var(--steel); }
-.field input:focus { outline: none; border-color: var(--sky); box-shadow: 0 0 0 3px rgba(154,166,255,.2); }
+.field input:focus { outline: none; border-color: var(--sky); box-shadow: 0 0 0 3px rgba(233,229,223,.15); }
 .field-error { margin: 0; color: var(--accent-hover); font-size: var(--fs-small); }
 .step-next { justify-self: start; }
 .step .btn-primary { justify-self: start; }
