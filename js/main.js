@@ -33,12 +33,30 @@
   var saved = null;
   try { saved = localStorage.getItem("cs-theme"); } catch (e) {}
   applyTheme(root.getAttribute("data-theme") === "light" ? "light" : "dark");
+  /* Flipping the mode opens the new look as a circle from the switch you
+     pressed, where the browser supports view transitions. The photos get a
+     short moment to load so they arrive with the colours. */
+  var waitForPhotos = function () {
+    var imgs = Array.prototype.slice.call(document.querySelectorAll("img.grade"));
+    var loads = imgs.map(function (img) { return img.decode ? img.decode().catch(function () {}) : null; });
+    return Promise.race([Promise.all(loads), new Promise(function (r) { setTimeout(r, 450); })]);
+  };
   Array.prototype.forEach.call(switches, function (sw) {
     sw.addEventListener("click", function () {
       var next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
-      applyTheme(next);
       saved = next;
       try { localStorage.setItem("cs-theme", next); } catch (e) {}
+      if (reduceMotion || !document.startViewTransition) { applyTheme(next); return; }
+      var r = sw.getBoundingClientRect();
+      var x = r.left + r.width / 2, y = r.top + r.height / 2;
+      var radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      var vt = document.startViewTransition(function () { applyTheme(next); return waitForPhotos(); });
+      vt.ready.then(function () {
+        root.animate(
+          { clipPath: ["circle(0px at " + x + "px " + y + "px)", "circle(" + radius + "px at " + x + "px " + y + "px)"] },
+          { duration: 700, easing: "cubic-bezier(.7,0,.2,1)", pseudoElement: "::view-transition-new(root)" }
+        );
+      }).catch(function () {});
     });
   });
   if (window.matchMedia) {

@@ -296,8 +296,6 @@ body.menu-open { overflow: hidden; }
 
 /* Light mode prints the photos as cyanotypes: blacks turn Prussian blue,
    whites stay paper. Prints live in assets/img/cyan/. */
-:root[data-theme="light"] .hero-strip { background: var(--band); }
-:root[data-theme="light"] .hero-strip img { mix-blend-mode: screen; filter: contrast(1.1) brightness(0.95); }
 :root[data-theme="light"] .page-hero::before { opacity: 0.95; }
 :root[data-theme="light"] .page-hero--work { --page-img: url("../assets/img/cyan/indian-walkaround.jpg"); }
 :root[data-theme="light"] .page-hero--services { --page-img: url("../assets/img/cyan/boot-unboxing.jpg"); }
@@ -386,47 +384,97 @@ a:hover .arrow::before, a:focus-visible .arrow::before { inset: 4px; }
 
 .lede { font-size: clamp(1.2rem, 1rem + 0.8vw, 1.5rem); line-height: 1.45; color: var(--highlight); max-width: 34ch; }
 
+/* The mode flip: the new look opens as a circle (main.js), with no crossfade. */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
 /* 6. HERO (home) -----------------------------------------------------------
-   Three graded frames side by side, the copy over their dark lower edge,
-   and the studio name set huge across the bottom. */
+   An uneven grid of tiles, like a contact sheet laid out on a table:
+   the headline takes the wide tile, one tall still, one short still, the
+   mode switch as its own colour block, the latest build and the services.
+   The studio name runs huge underneath. */
 .hero {
-  position: relative; isolation: isolate; overflow: hidden;
-  display: grid; grid-template-columns: minmax(0, 1fr); align-content: end;
-  min-height: 100svh;
-  padding: calc(var(--header-h) + 1rem) 0 0;
+  position: relative; isolation: isolate;
+  padding: calc(var(--header-h) + clamp(1rem, 2vw, 2rem)) 0 0;
   background: var(--bg);
 }
-.hero-strip {
-  position: absolute; z-index: -2; inset: 0 0 auto 0; height: 82%;
-  display: grid; grid-template-columns: 1fr;
+.hero-grid {
+  --tile-gap: 6px;
+  display: grid; gap: var(--tile-gap);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    "copy  copy"
+    "tall  short"
+    "tall  mode"
+    "build build"
+    "svc   svc";
+  grid-template-rows: auto minmax(11rem, 1fr) auto auto auto;
 }
-.hero-strip img {
-  width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%;
-  animation: cut-in 1.4s var(--ease) both;
+.tile { margin: 0; min-width: 0; }
+.tile-copy { grid-area: copy; display: grid; gap: 1.4rem; justify-items: start; align-content: end; padding: 1.5rem 0 2.5rem; }
+.tile-still--tall { grid-area: tall; }
+.tile-still--short { grid-area: short; }
+.tile-mode { grid-area: mode; }
+.tile-build { grid-area: build; }
+.tile-services { grid-area: svc; }
+
+.tile-still { position: relative; overflow: hidden; background: var(--surface); min-height: 11rem; }
+.tile-still img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  filter: contrast(1.05); animation: cut-in 1.4s var(--ease) both;
 }
-.hero-strip img + img { display: none; }
-.hero-strip img { filter: contrast(1.05); }
-.hero-strip img:nth-child(2) { animation-delay: 0.25s; object-position: 50% 62%; }
-.hero-strip img:nth-child(3) { animation-delay: 0.5s; object-position: 50% 52%; }
-.hero::after { /* fade the frames into black so the type always reads */
-  content: ""; position: absolute; z-index: -1; inset: 0;
-  background:
-    linear-gradient(to bottom, color-mix(in srgb, var(--bg) 55%, transparent) 0, transparent 22%),
-    linear-gradient(to top, var(--bg) 22%, color-mix(in srgb, var(--bg) 75%, transparent) 48%, transparent 72%);
+.tile-still--tall img { object-position: 50% 58%; }
+.tile-still--short img { object-position: 50% 55%; animation-delay: 0.25s; }
+
+/* The mode switch, given a tile of its own: indigo in dark mode, Prussian
+   blue in light. One tap flips every colour, photo and logo on the site. */
+.tile-mode {
+  background: var(--band); color: var(--on-band);
+  display: flex; flex-direction: column; justify-content: space-between; gap: 1.25rem;
+  padding: clamp(1.1rem, 2vw, 1.75rem);
 }
-@media (min-width: 48em) {
-  .hero-strip { grid-template-columns: repeat(3, 1fr); gap: 3px; }
-  .hero-strip img + img { display: block; }
+.tile-mode-label {
+  margin: 0; font-family: var(--display); font-weight: 700; font-stretch: 112%;
+  font-size: clamp(1.15rem, 0.9rem + 1vw, 1.6rem); line-height: 1.05; letter-spacing: -0.01em; text-wrap: balance;
 }
-.hero-copy { display: grid; gap: 2.5rem; padding-top: 38svh; }
-.hero-intro { display: grid; gap: 1.4rem; justify-items: start; }
+.tile-mode-note { text-wrap: pretty; margin: 0; color: var(--on-band-soft); font-size: var(--fs-small); line-height: 1.45; max-width: 22ch; }
+.when-light { display: none; }
+:root[data-theme="light"] .when-light { display: inline; }
+:root[data-theme="light"] .when-dark { display: none; }
+.mode-switch--feature {
+  --bc: var(--on-band); --bl: 0.7rem; --bw: 2px;
+  width: 6.25rem; height: 3.25rem; margin: 6px; /* room for the corner marks */
+  background: linear-gradient(var(--band-line) 0 0) center / calc(100% - 3.4rem) 1px no-repeat;
+}
+.mode-switch--feature .mode-dot { left: 0.85rem; width: 1.2rem; height: 1.2rem; background: var(--band-accent); }
+.mode-switch--feature::after { right: 0.85rem; width: 1.2rem; height: 1.2rem; border-color: var(--on-band-soft); }
+.mode-switch--feature[aria-checked="true"] .mode-dot { left: calc(100% - 2.05rem); }
+.mode-switch--feature[aria-checked="true"]::after { right: calc(100% - 2.05rem); }
+.mode-switch--feature:hover::before, .mode-switch--feature:focus-visible::before { inset: 5px; }
+
+/* Latest build: a screenshot with its caption underneath. */
+.tile-build {
+  display: flex; flex-direction: column; overflow: hidden; text-decoration: none;
+  background: var(--surface); color: var(--text);
+}
+.tile-build img { flex: 1; width: 100%; min-height: 10rem; object-fit: cover; object-position: top; transition: transform 0.6s var(--ease); }
+.tile-build:hover img { transform: scale(1.03); }
+.tile-build-caption {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  padding: 0.75rem 1rem; font-size: var(--fs-small); color: var(--highlight); position: relative; background: var(--surface);
+}
+.tile-build:hover .tile-build-caption { color: var(--text); }
+.tile-build .arrow { width: 1.6rem; height: 1.6rem; --glyph: 0.7rem; --bl: 0.38rem; }
+
+.hero-grid .tile-services { align-self: end; padding-top: 1rem; border-top: 0; }
+.hero-grid .tile-services li:first-child { border-top: 1px solid var(--line); }
+
 .hero h1 { font-size: var(--fs-h1); max-width: 15ch; }
 .hero-kicker {
   color: var(--highlight); max-width: 38ch; margin: 0;
   font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
 }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 2rem 2.5rem; align-items: center; }
-.hero-intro .hero-actions { margin-top: 0.4rem; }
+.tile-copy .hero-actions { margin-top: 0.4rem; }
 .hero-services { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
 .hero-services li { border-bottom: 1px solid var(--line); }
 .hero-services a {
@@ -435,8 +483,20 @@ a:hover .arrow::before, a:focus-visible .arrow::before { inset: 4px; }
 }
 .hero-services a:hover { color: var(--text); }
 .hero-services .arrow { width: 1.6rem; height: 1.6rem; --glyph: 0.7rem; --bl: 0.38rem; }
+
 @media (min-width: 56em) {
-  .hero-copy { grid-template-columns: 1fr minmax(16rem, 22rem); align-items: end; gap: var(--gutter); }
+  .hero-grid {
+    --tile-gap: 8px;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-areas:
+      "copy  copy  copy  copy  copy  copy  copy  tall tall tall short short"
+      "copy  copy  copy  copy  copy  copy  copy  tall tall tall mode  mode"
+      "build build build build svc   svc   svc   tall tall tall mode  mode";
+    grid-template-rows: minmax(12rem, 1fr) auto minmax(12rem, auto);
+    min-height: calc(92svh - var(--header-h));
+  }
+  .tile-copy { padding: 1rem clamp(1.5rem, 3vw, 3rem) 2rem 0; }
+  .hero-grid .tile-services { padding: 0 clamp(1.25rem, 2vw, 2rem) 0 clamp(1rem, 1.5vw, 1.5rem); }
 }
 
 /* The studio name, edge to edge. Decorative: the logo already names the page. */
@@ -991,7 +1051,8 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 /* 13. REDUCED MOTION -------------------------------------------------------
    No autoplay (handled in main.js), no fades on load, no zooms. */
 @media (prefers-reduced-motion: reduce) {
-  .hero-strip img { animation: none; }
+  .tile-still img { animation: none; }
+  .tile-build img { transition: none; }
   .build-peek, .arrow::after, .arrow::before, .btn::before, .mode-dot, .mode-switch::after, .mode-switch::before, .service-cards a { transition: none; }
   .work-grid .card, .lightbox[open] { animation-duration: 0.01s; }
   * { scroll-behavior: auto !important; }

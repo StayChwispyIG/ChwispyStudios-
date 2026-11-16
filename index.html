@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600&family=Mrs+Saint+Delafield&display=swap">
   <link rel="preload" as="image" href="assets/img/graded/dean-speed-pegs.jpg">
-  <link rel="stylesheet" href="css/style.css?v=20261116k">
+  <link rel="stylesheet" href="css/style.css?v=20261116l">
 
   <!-- Local SEO: tells Google who you are and where you work -->
   <script type="application/ld+json">
@@ -79,16 +79,12 @@
 
   <main id="main">
     <!-- ===== HERO =====
-         Frames: stills from the reels, graded black and white (assets/img/graded/).
-         Phones show the first frame only. -->
+         An uneven grid of tiles: the headline, two reel stills (graded in dark
+         mode, cyanotype prints in light), the mode switch as a feature, a recent
+         build and the services list. Stills: assets/img/graded/ and cyan/. -->
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-strip" aria-hidden="true">
-        <img src="assets/img/graded/dean-speed-pegs.jpg" alt="" width="720" height="1280">
-        <img src="assets/img/graded/indian-walkaround.jpg" alt="" width="720" height="1280">
-        <img src="assets/img/graded/boot-unboxing.jpg" alt="" width="720" height="1280">
-      </div>
-      <div class="wrap hero-copy">
-        <div class="hero-intro">
+      <div class="wrap hero-grid">
+        <div class="tile tile-copy">
           <h1 id="hero-title">Websites and Shopify stores that sell</h1>
           <p class="hero-kicker">Designed, built and filled with your own video and photos, by one studio in the Inland Empire.</p>
           <div class="hero-actions">
@@ -96,7 +92,22 @@
             <a class="btn btn-ghost btn-large" href="#builds">See the builds</a>
           </div>
         </div>
-        <ul class="hero-services" aria-label="What I make">
+        <figure class="tile tile-still tile-still--tall">
+          <img class="grade" src="assets/img/graded/indian-walkaround.jpg" alt="Indian motorcycle in a parking lot, a still from a walkaround reel" width="720" height="1280">
+        </figure>
+        <figure class="tile tile-still tile-still--short">
+          <img class="grade" src="assets/img/graded/dean-speed-pegs.jpg" alt="Close-up of machined footpegs, a still from a product reel" width="720" height="1280">
+        </figure>
+        <div class="tile tile-mode">
+          <p class="tile-mode-label" aria-hidden="true">See the site in <span class="when-dark">dark</span><span class="when-light">light</span></p>
+          <button class="mode-switch mode-switch--feature" type="button" role="switch" aria-checked="false" aria-describedby="hero-mode-next" data-theme-toggle title="Switch to light mode"><span class="visually-hidden">Light mode</span><span class="mode-dot" aria-hidden="true"></span></button>
+          <p class="tile-mode-note" id="hero-mode-next">Flip it for <span class="when-dark">light</span><span class="when-light">dark</span>. Photos, colors and logo all change.</p>
+        </div>
+        <a class="tile tile-build" href="#builds">
+          <img src="assets/img/web/pop-clutch-home.jpg" alt="Pop Clutch Coffee site: yellow hero with the cart&rsquo;s name and Redlands location" width="1280" height="800" decoding="async">
+          <span class="tile-build-caption">Latest build <span class="arrow" aria-hidden="true"></span></span>
+        </a>
+        <ul class="tile tile-services hero-services" aria-label="What I make">
           <li><a href="services.html#websites">Websites <span class="arrow" aria-hidden="true"></span></a></li>
           <li><a href="services.html#websites">Shopify stores <span class="arrow" aria-hidden="true"></span></a></li>
           <li><a href="services.html#social">Video and photo <span class="arrow" aria-hidden="true"></span></a></li>
