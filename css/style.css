@@ -10,21 +10,26 @@
 /* 1. TOKENS ---------------------------------------------------------------- */
 :root {
   color-scheme: dark;
-  /* Palette: black, bone white and red, from Stay Chwispy. Photos are graded
-     black-to-red (assets/img/graded/). Red fills one full section on the home
-     page; everywhere else it marks things you can click. */
+  /* Palette: black and bone, with one electric lime. Photos are graded to
+     black and white (assets/img/graded/) and come back to colour on hover.
+     Lime marks what you can click (buttons, arrows, focus, the active page),
+     plus one big moment: "Studio" across the bottom of the home hero. */
   --bg: #000;             /* black, like the matte behind a film frame */
   --surface: #111113;     /* cards, panels, inputs */
-  --deep: #3a0a12;        /* wine: pressed states */
+  --deep: #1d2208;        /* dark olive: pressed states */
   --sky: #e9e5df;         /* bone: small states (progress, pressed borders) */
   --steel: #9c9893;       /* ash: quiet text (AA on black and surface) */
   --highlight: #d3cfc9;   /* soft text */
   --text: #f6f3ee;        /* bone white */
-  --accent: #e3102f;      /* red: CTAs and focus. Use sparingly. */
-  --accent-hover: #ff2b48;
+  --accent: #d7ff3a;      /* electric lime: CTAs and focus. Use sparingly. */
+  --accent-hover: #e6ff86;
+  --on-accent: #000;      /* text and icons sitting on lime */
+  --error: #ff7a6b;
   --line: rgba(246, 243, 238, 0.13);
   --matte: #000;         /* behind video */
-  --red: #e3102f;         /* the red section on home */
+  --paper: #eeede8;       /* the light sections */
+  --ink: #000;            /* text on paper */
+  --ink-soft: #4a4844;    /* quiet text on paper (AA) */
 
   /* Type: Archivo, set wide and heavy in capitals for headlines, the way a
      title card reads on screen. Hanken Grotesk carries the text. */
@@ -99,7 +104,7 @@ h3 {
 }
 .skip-link {
   position: absolute; left: 1rem; top: -4rem; z-index: 200;
-  background: var(--accent); color: var(--bg); padding: 0.75rem 1rem; font-weight: 600;
+  background: var(--accent); color: var(--on-accent); padding: 0.75rem 1rem; font-weight: 600;
 }
 .skip-link:focus { top: 1rem; }
 
@@ -219,29 +224,43 @@ body.menu-open { overflow: hidden; }
 
 /* 5. BUTTONS + LABELS ------------------------------------------------------ */
 .btn {
-  --pad-y: 0.85rem;
-  display: inline-flex; align-items: center; gap: 0.65rem;
-  padding: var(--pad-y) 1.5rem;
-  font: 500 var(--fs-small)/1 var(--body);
-  letter-spacing: 0.01em;
+  --pad-y: 0.4rem;
+  --dot: 2rem;
+  display: inline-flex; align-items: center; gap: 0.85rem;
+  min-height: 2.8rem;
+  padding: var(--pad-y) var(--pad-y) var(--pad-y) 1.3rem;
+  font: 500 0.9375rem/1 var(--body);
+  letter-spacing: 0.005em;
   text-decoration: none; cursor: pointer;
   border-radius: 999px;
   border: 1px solid transparent;
-  transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+  transition: background-color 0.3s var(--ease), color 0.3s, border-color 0.3s;
 }
-.btn-primary { background: var(--accent); color: #fff; }
+/* Buttons that go somewhere carry a small round arrow at the right end. */
+a.btn::after, button.btn[type="submit"]::after, .step-next::after {
+  content: ""; flex: none; width: var(--dot); height: var(--dot); border-radius: 50%;
+  background: var(--on-accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d7ff3a' stroke-width='2.2' stroke-linecap='square'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E") center / 0.8rem no-repeat;
+  transition: transform 0.4s var(--ease);
+}
+.btn:not(a):not([type="submit"]):not(.step-next) { padding-right: 1.3rem; }
+.btn:hover::after, .btn:focus-visible::after { transform: rotate(45deg); }
+.btn-primary { background: var(--accent); color: var(--on-accent); }
 .btn-primary:hover { background: var(--accent-hover); }
-.btn-ghost { border-color: rgba(246, 243, 238, 0.32); color: var(--text); background: transparent; }
+.btn-ghost { border-color: rgba(246, 243, 238, 0.28); color: var(--text); background: transparent; }
 .btn-ghost:hover { border-color: var(--text); }
-.btn-small { --pad-y: 0.6rem; padding-inline: 1rem; }
-.btn-large { --pad-y: 1.1rem; padding-inline: 1.9rem; font-size: 1rem; }
+.btn-ghost::after {
+  background-color: var(--text) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='square'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E") !important;
+}
+.btn-small { --pad-y: 0.3rem; --dot: 1.6rem; min-height: 2.3rem; padding-left: 1rem; font-size: 0.875rem; gap: 0.6rem; }
+.btn-large { --pad-y: 0.45rem; --dot: 2.35rem; min-height: 3.25rem; padding-left: 1.5rem; font-size: 1rem; }
 
 .section-tight { padding-top: 0; }
 
-/* Round red arrow: marks a link that takes you somewhere. Turns on hover. */
+/* Round lime arrow: marks a link that takes you somewhere. Turns on hover. */
 .arrow {
-  display: inline-block; flex: none; width: 2.25rem; height: 2.25rem; border-radius: 50%;
-  background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E") center / 1rem no-repeat;
+  display: inline-block; flex: none; width: 2rem; height: 2rem; border-radius: 50%;
+  background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='square'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E") center / 0.9rem no-repeat;
   transition: transform 0.35s var(--ease), background-color 0.25s;
 }
 a:hover .arrow, a:focus-visible .arrow { transform: rotate(45deg); background-color: var(--accent-hover); }
@@ -285,6 +304,7 @@ a:hover .arrow, a:focus-visible .arrow { transform: rotate(45deg); background-co
   animation: cut-in 1.4s var(--ease) both;
 }
 .hero-strip img + img { display: none; }
+.hero-strip img { filter: contrast(1.05); }
 .hero-strip img:nth-child(2) { animation-delay: 0.25s; object-position: 50% 62%; }
 .hero-strip img:nth-child(3) { animation-delay: 0.5s; object-position: 50% 52%; }
 .hero::after { /* fade the frames into black so the type always reads */
@@ -331,7 +351,7 @@ a:hover .arrow, a:focus-visible .arrow { transform: rotate(45deg); background-co
 @media (min-width: 48em) {
   .hero-mark { font-size: 9.2vw; flex-wrap: nowrap; }
 }
-.story-copy .signature { margin-top: 1.5rem; color: var(--accent); }
+.story-copy .signature { margin-top: 1.5rem; color: var(--text); }
 
 /* Page heroes (inner pages): one graded frame on the right, fading into the black. */
 .page-hero {
@@ -444,16 +464,16 @@ p .text-link { display: inline; text-decoration: underline; text-decoration-colo
   .service-cards .wide .arrow { top: 50%; margin-top: -1.125rem; }
 }
 
-/* Recent builds: the one full-bleed red section. Names stack big; pointing at
-   one lifts its screenshot over the red. On phones the screenshot sits inline. */
-.builds-red { background: var(--red); color: #fff; padding-block: var(--section); }
-.builds-red .tag { color: rgba(255, 255, 255, 0.85); }
-.builds-red .text-link { color: #fff; }
-.builds-red .arrow { background-color: #000; }
-.builds-red a:hover .arrow, .builds-red a:focus-visible .arrow { background-color: #000; }
-.builds-red :focus-visible { outline-color: #fff; }
-.build-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(255, 255, 255, 0.5); }
-.build-rows li { border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
+/* Recent builds: the light section. Names stack big; pointing at one lifts its
+   screenshot over the page. On phones the screenshot sits inline. */
+.builds-red { background: var(--paper); color: var(--ink); padding-block: var(--section); }
+.builds-red .tag { color: var(--ink-soft); }
+.builds-red .text-link { color: var(--ink); }
+.builds-red .arrow { background-color: var(--ink); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d7ff3a' stroke-width='2.2' stroke-linecap='square'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E"); }
+.builds-red a:hover .arrow, .builds-red a:focus-visible .arrow { background-color: var(--ink); }
+.builds-red :focus-visible { outline-color: var(--ink); }
+.build-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(0, 0, 0, 0.18); }
+.build-rows li { border-bottom: 1px solid rgba(0, 0, 0, 0.18); }
 .build-row {
   position: relative; display: grid; grid-template-columns: 1fr auto; gap: 0.75rem 1.5rem;
   align-items: center; padding-block: clamp(1.5rem, 3vw, 2.5rem); text-decoration: none;
@@ -463,13 +483,14 @@ p .text-link { display: inline; text-decoration: underline; text-decoration-colo
   text-transform: uppercase; letter-spacing: -0.015em;
   transition: color 0.3s;
 }
-.build-row:hover .build-name, .build-row:focus-visible .build-name { color: #000; }
-.build-about { grid-column: 1 / -1; display: grid; gap: 0.3rem; font-size: var(--fs-small); max-width: 40ch; }
+.build-row:hover .build-name, .build-row:focus-visible .build-name { color: var(--ink-soft); }
+.build-about { grid-column: 1 / -1; display: grid; gap: 0.3rem; font-size: var(--fs-small); max-width: 40ch; color: var(--ink-soft); }
+.build-about strong { color: var(--ink); }
 .build-about strong { font-weight: 600; }
 .build-peek {
   grid-column: 1 / -1; display: block; overflow: hidden; border-radius: 4px;
   aspect-ratio: 16 / 10; background: #000; position: relative;
-  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.45);
 }
 .build-peek img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .build-row > .arrow { grid-column: 2; grid-row: 1; }
@@ -494,7 +515,7 @@ p .text-link { display: inline; text-decoration: underline; text-decoration-colo
 .browser {
   border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
   background: var(--surface);
-  box-shadow: 0 40px 90px -50px rgba(227, 16, 47, 0.45);
+  box-shadow: 0 40px 90px -50px rgba(215, 255, 58, 0.18);
 }
 .browser-bar {
   display: flex; align-items: center; gap: 0.4rem;
@@ -591,13 +612,13 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 }
 .filters::-webkit-scrollbar { display: none; }
 .filter {
-  flex: none; padding: 0.6rem 1.1rem; border-radius: 3px;
+  flex: none; padding: 0.6rem 1.1rem; border-radius: 999px;
   background: transparent; border: 1px solid var(--line); color: var(--highlight);
   font: 500 var(--fs-small)/1 var(--body); cursor: pointer;
   transition: background-color 0.25s, color 0.25s, border-color 0.25s;
 }
 .filter:hover { border-color: var(--steel); }
-.filter[aria-pressed="true"] { background: var(--deep); color: var(--text); border-color: var(--sky); }
+.filter[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 
 .work-grid { display: grid; gap: 3rem var(--gutter); }
 @media (min-width: 40em) { .work-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -808,7 +829,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 }
 .choice:hover { border-color: var(--steel); }
 .choice:active { transform: scale(0.99); }
-.choice[aria-pressed="true"] { border-color: var(--accent); background: rgba(227, 16, 47, 0.1); }
+.choice[aria-pressed="true"] { border-color: var(--accent); background: rgba(215, 255, 58, 0.08); }
 .choice-name { font-family: var(--display); font-weight: 700; font-size: 1.3rem; letter-spacing: -0.015em; line-height: 1.1; }
 .choice-sub { color: var(--steel); font-size: var(--fs-small); line-height: 1.35; }
 .choice--goal .choice-name { font-family: var(--body); font-weight: 600; text-transform: none; font-size: 1.0625rem; line-height: 1.3; }
@@ -826,7 +847,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 }
 .field input::placeholder { color: var(--steel); }
 .field input:focus { outline: none; border-color: var(--sky); box-shadow: 0 0 0 3px rgba(233,229,223,.15); }
-.field-error { margin: 0; color: var(--accent-hover); font-size: var(--fs-small); }
+.field-error { margin: 0; color: var(--error); font-size: var(--fs-small); }
 .step-next { justify-self: start; }
 .step .btn-primary { justify-self: start; }
 
