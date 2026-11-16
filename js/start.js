@@ -38,6 +38,7 @@
   var err = root.querySelector("[data-error]");
   var answers = { service: "", goal: "" };
   var step = 1;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function show(n, focus) {
     step = n;
@@ -47,8 +48,14 @@
     root.classList.toggle("is-done", n === 4);
     back.hidden = n === 1;
     if (focus !== false) {
+      // Bring the top of the panel back into view (clear of the sticky header),
+      // then move focus to the new question without a second jump.
+      var top = root.getBoundingClientRect().top;
+      if (top < 0 || top > window.innerHeight * 0.4) {
+        root.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
+      }
       var h = root.querySelector('[data-step="' + n + '"] h2');
-      if (h) h.focus({ preventScroll: false });
+      if (h) h.focus({ preventScroll: true });
     }
   }
 

@@ -622,10 +622,17 @@ body.menu-open { overflow: hidden; }
 .starter-bar span { display: block; height: 100%; width: 33%; background: var(--sky); transition: width 0.5s var(--ease); }
 
 .starter-form { margin: 0; }
-.step { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 1.5rem; }
-.step legend { padding: 0; margin-bottom: 1.5rem; float: left; width: 100%; }
-.step legend + * { clear: both; }
-.step h2 { font-size: clamp(2.25rem, 1.5rem + 3vw, 3.75rem); max-width: 16ch; text-wrap: balance; }
+.step { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 1.25rem; }
+/* display:grid would otherwise override the hidden attribute and stack every step. */
+.step[hidden] { display: none; }
+/* Float takes the legend out of the fieldset border slot so it sits in the grid like
+   any other row; the grid gap then spaces it, with nothing extra below. */
+.step legend { padding: 0; margin: 0 0 0.25rem; float: left; width: 100%; }
+.step h2 {
+  font-size: clamp(2.25rem, 1.5rem + 3vw, 3.75rem); max-width: 16ch; text-wrap: balance;
+  scroll-margin-top: calc(var(--header-h) + 2rem);
+}
+.starter { scroll-margin-top: calc(var(--header-h) + 1rem); }
 .step h2:focus { outline: none; }
 
 .choices { display: grid; gap: 0.75rem; }
