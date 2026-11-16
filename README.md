@@ -7,7 +7,8 @@ index.html      Home: showreel hero, statement, featured work, services teaser, 
 work.html       Filterable portfolio grid + video lightbox
 services.html   Price tiers per service, bundles, add-ons, booking terms, process, FAQ
 about.html      Behind the Lens: story, what I bring, process, gear, on-set photo
-contact.html    Jotform inquiry form embed + "Book a free consultation" link to the same form
+contact.html    "Start a project": one question at a time, then opens an email to you
+js/start.js     The Start a project flow (questions, goals, where the message goes)
 css/style.css   All styles; colors and fonts live in the :root tokens at the top
 js/main.js      Header, mobile menu, reveals, reel, previews, filters, lightbox
 assets/         Images, logos, video, favicon, share image
@@ -27,7 +28,9 @@ Hidden until you're ready (search each file for `HIDDEN`, then delete the commen
 | Client logos + testimonials | `index.html`, `services.html` | Delete the `HIDDEN until real clients are ready` line and its `END HIDDEN -->` line, then add real logos (`assets/logos/`) and quotes |
 | On-set photo | `about.html` | Add `assets/img/chris-on-set.jpg` (1200×1500), delete the `ON-SET PHOTO` line and its `END HIDDEN -->` line, and remove `story--solo` from the div above |
 
-Contact: there's no email on the site. "Send me a message" and the inquiry form both go to your Jotform: [edit it here](https://www.jotform.com/build/263021312658046).
+Contact: the email address isn't printed on the site. The Start a project flow asks three things (service, goal, name + phone) and opens the visitor's email app with the message filled in, addressed to the inbox in `data-email` on `contact.html`. To add a "Send as a text" button, put your number in `data-sms` (digits with country code). The goal options for each service live at the top of `js/start.js`.
+
+Colors follow the 3-color rule: charcoal black and deep cerulean set the mood, and tally orange is the accent. Keep orange for primary buttons, the REC dot and one touch per hero, so it's always clear where to click.
 
 ### Adding a project
 Copy one of the `<article class="card card--vertical">` blocks in `work.html` (and in `index.html` to feature it). For each one, set:

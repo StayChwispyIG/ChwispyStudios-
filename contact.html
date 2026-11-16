@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Book a Call | Chris &quot;Chwispy&quot;, Videographer in the Inland Empire</title>
-  <meta name="description" content="Book a 15-minute call or send a project inquiry. Commercials, brand films, social content and events across Southern California.">
+  <title>Start a Project | Chwispy Studio, Inland Empire</title>
+  <meta name="description" content="Three quick taps to start a project. Commercials, brand films, social content and events across Southern California.">
   <meta name="theme-color" content="#111316">
 
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Chris &quot;Chwispy&quot;">
-  <meta property="og:title" content="Book a Call | Chris &quot;Chwispy&quot;, Videographer in the Inland Empire">
-  <meta property="og:description" content="Book a 15-minute call or send a project inquiry. Commercials, brand films, social content and events across Southern California.">
+  <meta property="og:site_name" content="Chwispy Studio">
+  <meta property="og:title" content="Start a Project | Chwispy Studio, Inland Empire">
+  <meta property="og:description" content="Three quick taps to start a project. Commercials, brand films, social content and events across Southern California.">
   <link rel="canonical" href="https://chwispystudio.com/contact.html">
   <meta property="og:url" content="https://chwispystudio.com/contact.html">
   <meta property="og:image" content="https://chwispystudio.com/assets/img/og-image.jpg">
@@ -29,7 +29,7 @@
   <!-- ===== HEADER (same on every page; update aria-current per page) ===== -->
   <header class="site-header">
     <div class="wrap">
-      <a class="wordmark" href="index.html">Chris <em>&ldquo;Chwispy&rdquo;</em></a>
+      <a class="wordmark" href="index.html">Chwispy <em>Studio</em></a>
       <nav aria-label="Main">
         <ul class="nav-links">
           <li><a href="work.html">Work</a></li>
@@ -38,7 +38,7 @@
           <li><a href="contact.html" aria-current="page">Contact</a></li>
         </ul>
       </nav>
-      <a class="btn btn-ghost btn-small header-cta" href="contact.html#book"><span class="rec" aria-hidden="true"></span>Book a call</a>
+      <a class="btn btn-primary btn-small header-cta" href="contact.html#start"><span class="rec" aria-hidden="true"></span>Start a project</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span></span></button>
     </div>
   </header>
@@ -51,54 +51,93 @@
         <li><a href="contact.html" aria-current="page">Contact</a></li>
       </ul>
     </nav>
-    <a class="btn btn-primary btn-large" href="contact.html#book"><span class="rec" aria-hidden="true"></span>Book a call</a>
+    <a class="btn btn-primary btn-large" href="contact.html#start"><span class="rec" aria-hidden="true"></span>Start a project</a>
     <p class="mono meta">@chwispystudio on Instagram</p>
   </div>
 
   <main id="main">
-    <section class="page-hero">
+    <section class="page-hero page-hero--short">
       <div class="wrap">
-        <h1>Book a call</h1>
-        <p class="lede">Tell me about the project and I&rsquo;ll reply within one business day to set up a free consultation.</p>
+        <div class="mono-row"><span class="mono">Three quick questions</span><span class="mono">Reply within one business day</span></div>
+        <h1>Start a <em class="outline">project</em></h1>
+        <p class="lede">Tap your answers, add your name and number, and it comes straight to me. No long form.</p>
       </div>
     </section>
 
-    <section class="section" style="padding-top:clamp(3rem,6vw,5rem)">
-      <div class="wrap contact-grid">
-        <div id="inquire">
-          <h2 style="margin-bottom:2rem">Project inquiry</h2>
-
-          <!-- INQUIRY FORM: hosted on Jotform. Edit questions, styling, the thank-you
-               message and email notifications at https://www.jotform.com/build/263021312658046
-               The embed handler script below auto-sizes the iframe to the form's height
-               (1500px is the fallback if the script can't load). -->
-          <div class="jotform-embed">
-            <iframe id="JotFormIFrame-263021312658046" title="Project inquiry form"
-              src="https://form.jotform.com/263021312658046"
-              allow="geolocation; microphone; camera; fullscreen"
-              scrolling="no" style="width:100%;height:1500px;border:none;"></iframe>
+    <!-- ===== START A PROJECT: one question at a time =====
+         Step 1 picks the service, step 2 the goal, step 3 asks for name + phone.
+         The finished message goes to the inbox in data-email (it is never printed
+         on the page). To add a "Send as a text" button, put your number in data-sms,
+         digits only with country code, e.g. data-sms="19095551234".
+         Services links arrive as contact.html?type=Commercial#start and skip step 1. -->
+    <section class="section start-section" id="start" aria-labelledby="start-title">
+      <span id="book" aria-hidden="true"></span><span id="inquire" aria-hidden="true"></span>
+      <div class="wrap">
+        <div class="starter" data-starter data-email="chwispystudio@gmail.com" data-sms="">
+          <div class="starter-top">
+            <p class="mono" data-step-count aria-live="polite">Question 1 of 3</p>
+            <button class="starter-back" type="button" data-back hidden>&larr; Back</button>
           </div>
-          <script src="https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js"></script>
-          <script>if (window.jotformEmbedHandler) window.jotformEmbedHandler("iframe[id='JotFormIFrame-263021312658046']", "https://form.jotform.com/");</script>
-          <p class="mono" style="margin-top:1rem">Form not loading? <a href="https://form.jotform.com/263021312658046" target="_blank" rel="noopener">Open it in a new tab</a>.</p>
+          <div class="starter-bar" aria-hidden="true"><span data-bar></span></div>
+
+          <form class="starter-form" novalidate>
+            <!-- STEP 1 -->
+            <fieldset class="step" data-step="1">
+              <legend><h2 id="start-title" tabindex="-1">What do you need help with?</h2></legend>
+              <div class="choices">
+                <button class="choice" type="button" data-pick="service" data-value="Video"><span class="choice-name">Video</span><span class="choice-sub">Social, commercials, brand films, events</span></button>
+                <button class="choice" type="button" data-pick="service" data-value="Website"><span class="choice-name">Website</span><span class="choice-sub">A new site or a redo, from $750</span></button>
+                <button class="choice" type="button" data-pick="service" data-value="Shopify store"><span class="choice-name">Shopify store</span><span class="choice-sub">Setup, product pages, your theme</span></button>
+                <button class="choice" type="button" data-pick="service" data-value="Logo or flyer"><span class="choice-name">Logo or flyer</span><span class="choice-sub">Design that matches your content</span></button>
+              </div>
+            </fieldset>
+
+            <!-- STEP 2: the goal options change with the service picked -->
+            <fieldset class="step" data-step="2" hidden>
+              <legend><h2 tabindex="-1">What&rsquo;s the goal?</h2></legend>
+              <div class="choices choices--goals" data-goals></div>
+              <label class="field field--note" for="start-note">
+                <span class="mono">Anything else? Optional</span>
+                <input id="start-note" name="note" type="text" maxlength="200" autocomplete="off" placeholder="Dates, links, budget, anything that helps">
+              </label>
+              <button class="btn btn-ghost step-next" type="button" data-next hidden>Next</button>
+            </fieldset>
+
+            <!-- STEP 3 -->
+            <fieldset class="step" data-step="3" hidden>
+              <legend><h2 tabindex="-1">Where can I reach you?</h2></legend>
+              <div class="fields">
+                <label class="field" for="start-name">
+                  <span class="mono">Your name</span>
+                  <input id="start-name" name="name" type="text" autocomplete="name" required>
+                </label>
+                <label class="field" for="start-phone">
+                  <span class="mono">Phone number</span>
+                  <input id="start-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+                </label>
+              </div>
+              <p class="field-error" data-error role="alert" hidden>Add your name and a phone number so I can get back to you.</p>
+              <button class="btn btn-primary btn-large" type="submit"><span class="rec" aria-hidden="true"></span>Send it to Chwispy</button>
+            </fieldset>
+          </form>
+
+          <!-- DONE: the summary, and how it gets sent -->
+          <div class="step step--done" data-step="4" hidden>
+            <h2 tabindex="-1">Ready to send</h2>
+            <p class="done-copy">Last step: tap <strong>Open it in email</strong> and hit send. I&rsquo;ll reply within one business day.</p>
+            <pre class="done-message" data-message></pre>
+            <div class="hero-actions">
+              <a class="btn btn-primary" data-send-email href="#"><span class="rec" aria-hidden="true"></span>Open it in email</a>
+              <a class="btn btn-ghost" data-send-sms href="#" hidden>Send as a text</a>
+              <button class="btn btn-ghost" type="button" data-copy>Copy message</button>
+            </div>
+            <p class="mono done-alt">No email app? Copy the message and DM it to <a href="https://www.instagram.com/chwispystudio/" rel="me noopener" target="_blank">@chwispystudio</a>.</p>
+          </div>
         </div>
 
-        <aside class="aside" aria-label="Book a call and contact details">
-          <div id="book">
-            <!-- BOOK A CALL: links to the Jotform inquiry form (same form as on the left). -->
-            <div class="book-card">
-              <h2>Book a free consultation</h2>
-              <p>Fill out a quick form and I&rsquo;ll reach out within one business day to set up a 15-minute call about your goal, timeline and budget.</p>
-              <a class="btn btn-primary btn-large" href="https://form.jotform.com/263021312658046" target="_blank" rel="noopener"><span class="rec" aria-hidden="true"></span>Book a free consultation<span class="visually-hidden"> (opens in a new tab)</span></a>
-            </div>
-          </div>
-
-          <div class="contact-direct">
-            <p class="mono">Prefer to reach out directly?</p>
-            <a href="https://form.jotform.com/263021312658046" target="_blank" rel="noopener">Send me a message</a>
-            <a href="https://www.instagram.com/chwispystudio/" rel="me noopener" target="_blank">@chwispystudio on Instagram</a>
-            <p class="mono">Based in the Inland Empire, shooting across Southern California</p>
-          </div>
+        <aside class="start-aside mono" aria-label="Other ways to reach me">
+          <p>Based in the Inland Empire. Video shoots across Southern California; websites and Shopify for anywhere.</p>
+          <p><a href="https://www.instagram.com/chwispystudio/" rel="me noopener" target="_blank">@chwispystudio on Instagram</a></p>
         </aside>
       </div>
     </section>
@@ -106,8 +145,8 @@
     <!-- ===== CLOSING CTA: every page ends with a next step ===== -->
     <section class="closer" aria-labelledby="closer-title">
       <div class="wrap" data-reveal>
-        <h2 id="closer-title">Still deciding?</h2>
-        <p>Watch a few more projects first. The form will be here when you&rsquo;re ready.</p>
+        <h2 id="closer-title">Still <em class="outline">deciding?</em></h2>
+        <p>Watch a few more projects first. This will be here when you&rsquo;re ready.</p>
         <div class="hero-actions">
           <a class="btn btn-primary btn-large" href="work.html">See the work</a>
           <a class="btn btn-ghost btn-large" href="services.html">Compare packages</a>
@@ -120,7 +159,7 @@
   <footer class="site-footer">
     <div class="wrap">
       <div>
-        <a class="wordmark" href="index.html">Chris <em>&ldquo;Chwispy&rdquo;</em></a>
+        <a class="wordmark" href="index.html">Chwispy <em>Studio</em></a>
         <p class="mono" style="margin-top:.75rem">Videographer and director in the Inland Empire, Southern California</p>
       </div>
       <nav aria-label="Footer">
@@ -132,10 +171,11 @@
           <li><a href="https://www.instagram.com/chwispystudio/" rel="me noopener" target="_blank">Instagram</a></li>
         </ul>
       </nav>
-      <p class="mono">&copy; <span data-year>2026</span> Chris &ldquo;Chwispy&rdquo;</p>
+      <p class="mono">&copy; <span data-year>2026</span> Chwispy Studio</p>
     </div>
   </footer>
 
   <script src="js/main.js" defer></script>
+  <script src="js/start.js" defer></script>
 </body>
 </html>
