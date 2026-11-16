@@ -30,7 +30,7 @@ Hidden until you're ready (search each file for `HIDDEN`, then delete the commen
 
 Contact: the email address isn't printed on the site. The Start a project flow asks three things (service, goal, name + phone) and opens the visitor's email app with the message filled in, addressed to the inbox in `data-email` on `contact.html`. To add a "Send as a text" button, put your number in `data-sms` (digits with country code). The goal options for each service live at the top of `js/start.js`.
 
-Colors follow Stay Chwispy: black, bone white and red, with the wave art (`assets/img/wave.svg`) burning red out of the black. Keep red for primary buttons and focus, so it's always clear where to click. Type is Hanken Grotesk: light and tightly spaced for headlines, regular for text. The Chwispy signature (Mrs Saint Delafield) appears twice: home hero and the About story. A still film grain sits over every page. The wave draws in once on the home page and shows again, cropped, at the top of each page and in the closing section.
+Colors follow Stay Chwispy: black, bone white and red. Photos on the hero and page tops are stills from the reels, graded black-to-red (`assets/img/graded/`, regenerate from the originals if a reel changes). The home page has one full red section (Recent builds); everywhere else red marks what you can click, including the round arrow buttons. Headlines are Archivo, wide and heavy in capitals; text is Hanken Grotesk. The studio name runs huge across the bottom of the home hero. The Chwispy signature (Mrs Saint Delafield) signs the About story. A still film grain sits over every page. Home sections carry numbers (01) to (03) because they read in order.
 
 ### Adding a project
 Copy one of the `<article class="card card--vertical">` blocks in `work.html` (and in `index.html` to feature it). For each one, set:
@@ -83,6 +83,6 @@ Import the repo at [app.netlify.com](https://app.netlify.com) with no build comm
 ## How things work
 
 - **Colors and fonts:** edit the `:root` tokens at the top of `css/style.css`.
-- **Reduced motion:** when a visitor's device asks for less motion, the reel doesn't autoplay (the poster shows), the grain and blinking REC dots turn off, hover previews are skipped, and fades are near-instant.
+- **Reduced motion:** when a visitor's device asks for less motion, the reel doesn't autoplay (the poster shows), the hero frames don't fade in, hover previews are skipped, and fades are near-instant.
 - **Accessibility:** skip link, visible focus rings, keyboard-operable menu, filters and lightbox (Esc closes it and focus returns to the card); a pause button on the hero reel.
 - **Adding a nav link:** the header and footer are repeated in each HTML file. Update all five pages. Keep it to four links plus Book a call.
