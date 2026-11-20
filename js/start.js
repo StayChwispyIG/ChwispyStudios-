@@ -136,6 +136,10 @@
       smsLink.href = "sms:+" + sms + "?&body=" + encodeURIComponent(text);
       smsLink.hidden = false;
     }
+    // Tell PostHog a quote was started: only the service and goal picked, never the name, phone or note.
+    if (window.posthog && typeof window.posthog.capture === "function") {
+      window.posthog.capture("quote_form_submitted", { service: answers.service, goal: answers.goal });
+    }
     show(4);
   });
 

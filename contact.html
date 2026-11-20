@@ -25,6 +25,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600&family=Mrs+Saint+Delafield&display=swap">
   <link rel="stylesheet" href="css/style.css?v=20261116m">
+  <script src="js/posthog.js?v=20261120a"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -104,7 +105,7 @@
               <div class="choices choices--goals" data-goals></div>
               <label class="field field--note" for="start-note">
                 <span class="mono">Anything else? Optional</span>
-                <input id="start-note" name="note" type="text" maxlength="200" autocomplete="off" placeholder="Dates, links, budget, anything that helps">
+                <input class="ph-no-capture" id="start-note" name="note" type="text" maxlength="200" autocomplete="off" placeholder="Dates, links, budget, anything that helps">
               </label>
               <button class="btn btn-ghost step-next" type="button" data-next hidden>Next</button>
             </fieldset>
@@ -115,11 +116,11 @@
               <div class="fields">
                 <label class="field" for="start-name">
                   <span class="mono">Your name</span>
-                  <input id="start-name" name="name" type="text" autocomplete="name" required>
+                  <input class="ph-no-capture" id="start-name" name="name" type="text" autocomplete="name" required>
                 </label>
                 <label class="field" for="start-phone">
                   <span class="mono">Phone number</span>
-                  <input id="start-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+                  <input class="ph-no-capture" id="start-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
                 </label>
               </div>
               <p class="field-error" data-error role="alert" hidden>Add your name and a phone number so I can get back to you.</p>
@@ -128,7 +129,7 @@
           </form>
 
           <!-- DONE: the summary, and how it gets sent -->
-          <div class="step step--done" data-step="4" hidden>
+          <div class="step step--done ph-no-capture" data-step="4" hidden>
             <h2 tabindex="-1">Ready to send</h2>
             <p class="done-copy">Last step: tap <strong>Open it in email</strong> and hit send. I&rsquo;ll reply within one business day.</p>
             <pre class="done-message" data-message></pre>
@@ -182,6 +183,6 @@
   </footer>
 
   <script src="js/main.js" defer></script>
-  <script src="js/start.js" defer></script>
+  <script src="js/start.js?v=20261120a" defer></script>
 </body>
 </html>
