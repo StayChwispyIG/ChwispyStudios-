@@ -1048,6 +1048,64 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 @media (min-width: 56em) {
   .site-footer .wrap { grid-template-columns: 1fr auto auto; align-items: end; gap: 3rem; }
 }
+.footer-legal { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1.25rem; margin: 0; }
+.footer-legal a, .footer-legal button { color: var(--steel); }
+.footer-legal a:hover, .footer-legal button:hover { color: var(--text); }
+.footer-legal button {
+  font: inherit; letter-spacing: inherit; background: none; border: 0; padding: 0; cursor: pointer;
+}
+
+/* Policy pages (privacy.html, terms.html): a quiet index on the left, the text on the right. */
+.page-hero--legal h1 { max-width: none; }
+.legal-section { padding-block: clamp(3.5rem, 2rem + 5vw, 7rem) var(--section); }
+.legal { display: grid; gap: 2.5rem; }
+.legal-index { display: grid; gap: 1.25rem; align-content: start; }
+.legal-index ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+.legal-index a { color: var(--highlight); text-decoration: none; }
+.legal-index a:hover { color: var(--text); }
+.legal-body { max-width: 44rem; }
+.legal-body section + section { margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--line); }
+.legal-body h2 {
+  font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.75rem); line-height: 1.15;
+  margin-bottom: 1.1rem; scroll-margin-top: calc(var(--header-h) + 1.5rem);
+}
+.legal-body p, .legal-body li { color: var(--highlight); }
+.legal-body p + p, .legal-body p + ul, .legal-body ul + p { margin-top: 1rem; }
+.legal-body ul { margin: 0; padding-left: 1.15rem; display: grid; gap: 0.6rem; }
+.legal-body strong { color: var(--text); font-weight: 600; }
+.legal-body a, .link-button { color: var(--text); }
+.link-button {
+  font: inherit; background: none; border: 0; padding: 0; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 0.18em;
+}
+.legal-body .fine-print { margin-top: 3rem; }
+@media (min-width: 56em) {
+  .legal { grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr); gap: clamp(3rem, 7vw, 7rem); }
+  .legal-index { position: sticky; top: calc(var(--header-h) + 2rem); }
+}
+
+/* Cookie banner (js/consent.js): small, bottom corner, never blocks the page. */
+.consent {
+  position: fixed; z-index: 80; left: var(--gutter); right: var(--gutter); bottom: 1rem;
+  max-width: 25rem; padding: 1.25rem 1.35rem 1.35rem;
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 50px -20px rgba(0, 0, 0, 0.55);
+  opacity: 0; transform: translateY(0.75rem);
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+}
+.consent.is-open { opacity: 1; transform: none; }
+.consent[hidden] { display: none; }
+.consent-title {
+  margin: 0 0 0.5rem; font: 600 var(--fs-label)/1.4 var(--body);
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--steel);
+}
+.consent-copy { margin: 0; font-size: var(--fs-small); line-height: 1.55; color: var(--highlight); }
+.consent-copy a { color: var(--text); }
+.consent-actions { display: flex; flex-wrap: wrap; gap: 0.9rem 1.1rem; margin-top: 1.15rem; padding-left: 4px; }
+@media (min-width: 48em) {
+  .consent { right: auto; bottom: 1.5rem; }
+}
 
 /* 13. REDUCED MOTION -------------------------------------------------------
    No autoplay (handled in main.js), no fades on load, no zooms. */
@@ -1059,4 +1117,5 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
   * { scroll-behavior: auto !important; }
   .card-media img { transition: none; }
   .starter-bar span, .choice { transition: none; }
+  .consent { transition: none; }
 }

@@ -8,11 +8,15 @@ work.html       Filterable portfolio grid + video lightbox
 services.html   Price tiers per service, bundles, add-ons, booking terms, process, FAQ
 about.html      Behind the Lens: story, what I bring, process, gear, on-set photo
 contact.html    "Start a project": one question at a time, then opens an email to you
+privacy.html    Privacy policy (quote form, PostHog analytics, cookies)
+terms.html      Terms and conditions (quotes, payments, refunds link, work shown)
+js/consent.js   Cookie banner: Accept / Decline, reopened by "Cookie settings" in the footer
+js/posthog.js   PostHog analytics, only starts after the visitor accepts cookies
 js/start.js     The Start a project flow (questions, goals, where the message goes)
 css/style.css   All styles; colors and fonts live in the :root tokens at the top
 js/main.js      Header, mobile menu, reveals, reel, previews, filters, lightbox
 assets/         Images, logos, video, favicon, share image
-tools/og-image.html  Template for regenerating the social share image
+tools/og-image.html  Template for the social share image (assets/img/og-share.jpg)
 ```
 
 To preview locally, run `python3 -m http.server` in this folder and open http://localhost:8000.
@@ -28,7 +32,7 @@ Hidden until you're ready (search each file for `HIDDEN`, then delete the commen
 | Client logos + testimonials | `index.html`, `services.html` | Delete the `HIDDEN until real clients are ready` line and its `END HIDDEN -->` line, then add real logos (`assets/logos/`) and quotes |
 | On-set photo | `about.html` | Add `assets/img/chris-on-set.jpg` (1200×1500), delete the `ON-SET PHOTO` line and its `END HIDDEN -->` line, and remove `story--solo` from the div above |
 
-Contact: the email address isn't printed on the site. The Start a project flow asks three things (service, goal, name + phone) and opens the visitor's email app with the message filled in, addressed to the inbox in `data-email` on `contact.html`. To add a "Send as a text" button, put your number in `data-sms` (digits with country code). The goal options for each service live at the top of `js/start.js`.
+Contact: the email address isn't printed on the site. The Start a project flow asks three things (service, goal, name + phone) and opens the visitor's email app with the message filled in, addressed to the inbox in `data-mail` + `data-host` on `contact.html` (split in two so scrapers can't harvest the address). To add a "Send as a text" button, put your number in `data-sms` (digits with country code). The goal options for each service live at the top of `js/start.js`.
 
 Colors: two modes, switched with the viewfinder switch in the header (in the menu on phones). The choice is remembered, and a first visit follows the visitor's system setting. Dark is onyx black and electric indigo with tropical mint as the one accent; light is cyanotype, cool print paper and Prussian ink with signal orange. Both palettes live as tokens at the top of `css/style.css`. Photos are stills from the reels: black and white in dark mode (`assets/img/graded/`), printed blue like a sun print in light mode (`assets/img/cyan/`); regenerate both if a reel changes. The logo and favicon each have a light version (`*-light.svg`). The accent marks what you can click: viewfinder buttons (four corner marks cut from the logo brackets that close in when you point at them; the quiet button is the corners alone) and small viewfinder arrow marks on links. Indigo (blue in light mode) carries the Recent builds band, the lead service cards and "Studio" in the huge name across the bottom of the home hero. Headlines are Archivo, wide and heavy in capitals; text is Hanken Grotesk. The Chwispy signature (Mrs Saint Delafield) signs the About story. A still film grain sits over every page. Home sections carry numbers (01) to (03) because they read in order.
 
@@ -86,3 +90,9 @@ Import the repo at [app.netlify.com](https://app.netlify.com) with no build comm
 - **Reduced motion:** when a visitor's device asks for less motion, the reel doesn't autoplay (the poster shows), the hero frames don't fade in, hover previews are skipped, and fades are near-instant.
 - **Accessibility:** skip link, visible focus rings, keyboard-operable menu, filters and lightbox (Esc closes it and focus returns to the card); a pause button on the hero reel.
 - **Adding a nav link:** the header and footer are repeated in each HTML file. Update all five pages. Keep it to four links plus Book a call.
+
+## Launch checklist notes
+
+- **Cookies:** PostHog only loads after Accept. The choice is saved on the visitor's device as `cs-consent`. If you add any other tracking (Google Ads, Meta pixel), start it from the same `cs:consent` event in `js/posthog.js` and add it to `privacy.html`.
+- **Policies:** if what the site collects changes, update `privacy.html` and its "Last updated" date. Have a lawyer look the policies over.
+- **New pages:** add them to `sitemap.xml`, and give them a title, description, canonical and og tags like the others.

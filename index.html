@@ -13,7 +13,10 @@
   <meta property="og:description" content="Websites and Shopify stores built to sell, with the video and design to fill them.">
   <link rel="canonical" href="https://chwispystudio.com/">
   <meta property="og:url" content="https://chwispystudio.com/">
-  <meta property="og:image" content="https://chwispystudio.com/assets/img/og-image.jpg">
+  <meta property="og:image" content="https://chwispystudio.com/assets/img/og-share.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Chwispy Studio: websites, Shopify stores and video in the Inland Empire, Southern California">
   <meta name="twitter:card" content="summary_large_image">
 
   <script>/* Pick the colour mode before the page paints: the visitor's saved choice, else their system setting. */
@@ -25,21 +28,49 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600&family=Mrs+Saint+Delafield&display=swap">
   <link rel="preload" as="image" href="assets/img/graded/dean-speed-pegs.jpg">
-  <link rel="stylesheet" href="css/style.css?v=20261116m">
-  <script src="js/posthog.js?v=20261120a"></script>
+  <link rel="stylesheet" href="css/style.css?v=20261120b">
+  <script src="js/posthog.js?v=20261120b"></script>
+  <script src="js/consent.js?v=20261120b" defer></script>
 
-  <!-- Local SEO: tells Google who you are and where you work -->
+  <!-- Local SEO: tells Google who you are, where you work and what you offer -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Chwispy Studio",
-    "description": "Web design studio building websites and Shopify stores, plus commercials, social content, event coverage and design.",
-    "url": "https://chwispystudio.com/",
-    "image": "https://chwispystudio.com/assets/img/og-image.jpg",
-    "address": { "@type": "PostalAddress", "addressRegion": "CA", "addressCountry": "US" },
-    "areaServed": ["Inland Empire", "Riverside County", "San Bernardino County", "Southern California", "Los Angeles County", "Orange County", "San Diego County"],
-    "sameAs": ["https://www.instagram.com/chwispystudio/"]
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://chwispystudio.com/#studio",
+        "name": "Chwispy Studio",
+        "description": "Web design studio building websites and Shopify stores, plus commercials, social content, event coverage and design.",
+        "url": "https://chwispystudio.com/",
+        "logo": "https://chwispystudio.com/assets/icons/favicon-512.png",
+        "image": "https://chwispystudio.com/assets/img/og-share.jpg",
+        "address": { "@type": "PostalAddress", "addressLocality": "San Bernardino", "addressRegion": "CA", "addressCountry": "US" },
+        "areaServed": ["Inland Empire", "Riverside County", "San Bernardino County", "Southern California", "Los Angeles County", "Orange County", "San Diego County"],
+        "founder": { "@type": "Person", "name": "Chris", "alternateName": "Chwispy" },
+        "knowsAbout": ["Web design", "Shopify", "Videography", "Logo design", "Flyer design"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Services",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website design and build" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Shopify store setup" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Social video content" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Commercials and brand films" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Event coverage" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Logo and flyer design" } }
+          ]
+        },
+        "sameAs": ["https://www.instagram.com/chwispystudio/"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://chwispystudio.com/#website",
+        "name": "Chwispy Studio",
+        "url": "https://chwispystudio.com/",
+        "publisher": { "@id": "https://chwispystudio.com/#studio" }
+      }
+    ]
   }
   </script>
 </head>
@@ -432,7 +463,7 @@
           <li><a href="https://www.instagram.com/chwispystudio/" rel="me noopener" target="_blank">Instagram</a></li>
         </ul>
       </nav>
-      <p class="mono">&copy; <span data-year>2026</span> Chwispy Studio</p>
+      <p class="mono footer-legal"><span>&copy; <span data-year>2026</span> Chwispy Studio</span><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><button type="button" data-cookie-settings>Cookie settings</button></p>
     </div>
   </footer>
 

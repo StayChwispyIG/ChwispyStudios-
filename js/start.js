@@ -2,7 +2,7 @@
    start.js: the "Start a project" flow on contact.html.
    One question per screen: service, then goal, then name + phone.
    The finished message opens in the visitor's email app, addressed to the
-   inbox in data-email. If data-sms has a number, a "Send as a text" button
+   inbox in data-mail + data-host. If data-sms has a number, a "Send as a text" button
    shows too. Nothing is sent anywhere until the visitor hits send themselves.
    ========================================================================== */
 (function () {
@@ -116,6 +116,8 @@
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+    // Enter pressed in the optional note (question 2) moves on instead of sending.
+    if (step !== 3) { if (step === 2 && answers.goal) show(3); return; }
     var name = form.elements.name.value.trim();
     var phone = form.elements.phone.value.trim();
     var ok = name && phone.replace(/\D/g, "").length >= 7;
@@ -126,7 +128,9 @@
     var subject = "New project: " + answers.service + " (" + name + ")";
     root.querySelector("[data-message]").textContent = text;
 
-    var email = root.dataset.email;
+    // The address is stored in two halves (data-mail + data-host) so scrapers
+    // reading the page code can't harvest it.
+    var email = root.dataset.mail + "@" + root.dataset.host;
     var mail = root.querySelector("[data-send-email]");
     mail.href = "mailto:" + email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(text);
 
