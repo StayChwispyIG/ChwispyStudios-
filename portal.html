@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Client Portal | Chwispy Studio</title>
+  <meta name="description" content="Sign in to see your project, invoices and contracts with Chwispy Studio.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0c0c0e">
+  <script>/* Pick the colour mode before the page paints: the visitor's saved choice, else their system setting. */
+  (function(){var t;try{t=localStorage.getItem("cs-theme")}catch(e){}if(t!=="light"&&t!=="dark"){t=window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.setAttribute("data-theme",t)})();</script>
+  <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" data-favicon>
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/style.css?v=20261122p">
+  <link rel="stylesheet" href="css/portal.css?v=20261122p">
+  <!-- No analytics on the portal: invoices and contracts never go to PostHog. -->
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header portal-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html"><img class="logo-dark" src="assets/logo/chwispy-studio-horizontal.svg" alt="Chwispy Studio" width="543" height="122"><img class="logo-light" src="assets/logo/chwispy-studio-horizontal-light.svg" alt="Chwispy Studio" width="543" height="122"></a>
+      <a class="back-link" href="index.html" data-back-site>Back to site</a>
+      <button class="mode-switch mode-switch--header" type="button" role="switch" aria-checked="false" data-theme-toggle title="Switch to light mode"><span class="visually-hidden">Light mode</span><span class="mode-dot" aria-hidden="true"></span></button>
+      <button class="btn btn-ghost btn-small portal-out" type="button" data-sign-out hidden>Sign out</button>
+    </div>
+  </header>
+
+  <main id="main" class="portal-main">
+    <p class="preview-note" data-preview-note hidden><strong>Preview with sample data.</strong> Sign in with any email, then the code 123456. <a href="portal-admin.html">Open the studio desk</a></p>
+
+    <!-- ===== SIGN IN: email, then the 6-digit code that arrives by email ===== -->
+    <section class="signin" data-signin aria-labelledby="signin-title">
+      <div class="wrap">
+        <div class="signin-copy">
+          <p class="mono">Chwispy Studio clients</p>
+          <h1 id="signin-title">Client portal</h1>
+          <p class="lede">Your project, invoices and contracts in one place. No password to remember.</p>
+        </div>
+
+        <div class="panel">
+          <div class="signin-card" data-card="email">
+            <h2 tabindex="-1">Sign in</h2>
+            <p>Use the email on your project. I&rsquo;ll send you a 6-digit code.</p>
+            <form data-email-form novalidate>
+              <label class="field" for="portal-email">
+                <span class="mono">Email</span>
+                <input id="portal-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+              </label>
+              <p class="field-error form-status" data-email-status role="alert"></p>
+              <button class="btn btn-primary btn-large" type="submit">Email me a code</button>
+            </form>
+            <p class="signin-fine mono">Not a client yet? <a href="contact.html#start">Start a project</a>.</p>
+          </div>
+
+          <div class="signin-card" data-card="code" hidden>
+            <h2 tabindex="-1">Check your email</h2>
+            <p>I sent a code to <strong data-sent-to></strong>. It works once.</p>
+            <form data-code-form novalidate>
+              <label class="field" for="portal-code">
+                <span class="mono">6-digit code</span>
+                <input class="code-input" id="portal-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required>
+              </label>
+              <p class="field-error form-status" data-code-status role="alert"></p>
+              <button class="btn btn-primary btn-large" type="submit">Sign in</button>
+            </form>
+            <div class="signin-links">
+              <button class="text-button" type="button" data-resend>Send a new code</button>
+              <button class="text-button" type="button" data-change-email>Use a different email</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SIGNED IN: one project, three tabs ===== -->
+    <section class="app" data-app hidden aria-labelledby="hello">
+      <div class="wrap">
+        <div class="app-top">
+          <p class="mono" data-client-company></p>
+          <h1 id="hello" tabindex="-1" data-hello>Hi</h1>
+          <p class="project-name" data-project-name></p>
+          <div class="tabs" role="tablist" aria-label="Your project">
+            <button class="tab" type="button" role="tab" id="tab-overview" aria-controls="view-overview" aria-selected="true" data-tab="overview">Overview</button>
+            <button class="tab" type="button" role="tab" id="tab-invoices" aria-controls="view-invoices" aria-selected="false" tabindex="-1" data-tab="invoices">Invoices <span class="tab-count" data-count="invoices" hidden></span></button>
+            <button class="tab" type="button" role="tab" id="tab-contracts" aria-controls="view-contracts" aria-selected="false" tabindex="-1" data-tab="contracts">Contracts <span class="tab-count" data-count="contracts" hidden></span></button>
+          </div>
+        </div>
+
+        <div class="app-body">
+          <!-- Overview -->
+          <div class="view" id="view-overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="-1">
+            <div class="overview-grid">
+              <article class="panel stage-card" aria-labelledby="stage-title">
+                <p class="panel-label">Where things stand</p>
+                <div class="stage-now">
+                  <h2 id="stage-title" data-stage-name></h2>
+                  <p class="mono" data-stage-count></p>
+                </div>
+                <div class="stage-bar" data-stage-bar aria-hidden="true"></div>
+                <ol class="timeline" data-timeline></ol>
+              </article>
+
+              <article class="panel" aria-labelledby="todo-title">
+                <p class="panel-label" id="todo-title">Waiting on you</p>
+                <ul class="todo-list" data-todo></ul>
+                <p class="all-clear" data-all-clear hidden>Nothing needs you right now. I&rsquo;ll let you know when it does.</p>
+              </article>
+
+              <article class="panel" aria-labelledby="note-title">
+                <p class="panel-label" id="note-title">Latest from Chwispy</p>
+                <p class="note-body" data-note></p>
+                <p class="note-sign" data-note-date></p>
+              </article>
+            </div>
+          </div>
+
+          <!-- Invoices -->
+          <div class="view" id="view-invoices" role="tabpanel" aria-labelledby="tab-invoices" tabindex="-1" hidden>
+            <div class="totals">
+              <div class="total"><p class="mono">Paid so far</p><p class="total-value" data-total-paid></p></div>
+              <div class="total"><p class="mono">Balance due</p><p class="total-value" data-total-due></p></div>
+            </div>
+            <ul class="doc-list" data-invoices></ul>
+          </div>
+
+          <!-- Contracts -->
+          <div class="view" id="view-contracts" role="tabpanel" aria-labelledby="tab-contracts" tabindex="-1" hidden>
+            <ul class="doc-list" data-contracts></ul>
+          </div>
+
+          <div class="panel help" style="margin-top: clamp(1.25rem, 1rem + 1vw, 2rem)">
+            <p>Questions about anything here? Reply to any email from me, or DM <a href="https://www.instagram.com/chwispystudio/" rel="noopener" target="_blank">@chwispystudio</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer site-footer--portal">
+      <div class="wrap">
+        <p class="mono footer-legal"><span>&copy; <span data-year>2026</span> Chwispy Studio</span><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/portal-config.js?v=20261122p"></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/portal-data.js?v=20261122p" defer></script>
+  <script src="js/portal-signin.js?v=20261122p" defer></script>
+  <script src="js/portal.js?v=20261122p" defer></script>
+</body>
+</html>

@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /tools/
+Disallow: /portal.html
+Disallow: /portal-admin.html
+Disallow: /assets/portal-sample/
 
 Sitemap: https://chwispystudio.com/sitemap.xml

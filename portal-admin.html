@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Studio Desk | Chwispy Studio</title>
+  <meta name="description" content="Chwispy Studio's desk for updating client projects.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0c0c0e">
+  <script>/* Pick the colour mode before the page paints: the visitor's saved choice, else their system setting. */
+  (function(){var t;try{t=localStorage.getItem("cs-theme")}catch(e){}if(t!=="light"&&t!=="dark"){t=window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.setAttribute("data-theme",t)})();</script>
+  <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" data-favicon>
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/style.css?v=20261122p">
+  <link rel="stylesheet" href="css/portal.css?v=20261122p">
+  <!-- No analytics on the portal: invoices and contracts never go to PostHog. -->
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header portal-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html"><img class="logo-dark" src="assets/logo/chwispy-studio-horizontal.svg" alt="Chwispy Studio" width="543" height="122"><img class="logo-light" src="assets/logo/chwispy-studio-horizontal-light.svg" alt="Chwispy Studio" width="543" height="122"></a>
+      <a class="back-link" href="index.html" data-back-site>Back to site</a>
+      <button class="mode-switch mode-switch--header" type="button" role="switch" aria-checked="false" data-theme-toggle title="Switch to light mode"><span class="visually-hidden">Light mode</span><span class="mode-dot" aria-hidden="true"></span></button>
+      <button class="btn btn-ghost btn-small portal-out" type="button" data-sign-out hidden>Sign out</button>
+    </div>
+  </header>
+
+  <main id="main" class="portal-main">
+    <p class="preview-note" data-preview-note hidden><strong>Preview with sample data.</strong> Sign in with any email, then the code 123456. Changes stay in this browser. <a href="portal.html">Open the client view</a></p>
+
+    <!-- ===== SIGN IN: email, then the 6-digit code that arrives by email ===== -->
+    <section class="signin" data-signin aria-labelledby="signin-title">
+      <div class="wrap">
+        <div class="signin-copy">
+          <p class="mono">For Chwispy only</p>
+          <h1 id="signin-title">Studio desk</h1>
+          <p class="lede">Update a client’s step, add invoices and contracts. They see it the moment you save.</p>
+        </div>
+
+        <div class="panel">
+          <div class="signin-card" data-card="email">
+            <h2 tabindex="-1">Sign in</h2>
+            <p>Use your studio email. A 6-digit code comes to that inbox.</p>
+            <form data-email-form novalidate>
+              <label class="field" for="portal-email">
+                <span class="mono">Email</span>
+                <input id="portal-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+              </label>
+              <p class="field-error form-status" data-email-status role="alert"></p>
+              <button class="btn btn-primary btn-large" type="submit">Email me a code</button>
+            </form>
+            <p class="signin-fine mono">Clients sign in at <a href="portal.html">the client portal</a>.</p>
+          </div>
+
+          <div class="signin-card" data-card="code" hidden>
+            <h2 tabindex="-1">Check your email</h2>
+            <p>I sent a code to <strong data-sent-to></strong>. It works once.</p>
+            <form data-code-form novalidate>
+              <label class="field" for="portal-code">
+                <span class="mono">6-digit code</span>
+                <input class="code-input" id="portal-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required>
+              </label>
+              <p class="field-error form-status" data-code-status role="alert"></p>
+              <button class="btn btn-primary btn-large" type="submit">Sign in</button>
+            </form>
+            <div class="signin-links">
+              <button class="text-button" type="button" data-resend>Send a new code</button>
+              <button class="text-button" type="button" data-change-email>Use a different email</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== THE DESK: pick a client on the left, update them on the right ===== -->
+    <section class="app" data-app hidden aria-labelledby="desk-title">
+      <div class="wrap">
+        <div class="app-top">
+          <p class="mono">Studio desk</p>
+          <h1 id="desk-title" tabindex="-1">Clients</h1>
+        </div>
+        <div class="app-body">
+          <div class="desk">
+            <aside class="desk-clients" aria-label="Clients">
+              <ul class="client-list" data-client-list></ul>
+              <label class="field desk-select" for="desk-pick">
+                <span class="mono">Client</span>
+                <select id="desk-pick" data-client-select></select>
+              </label>
+              <button class="btn btn-ghost btn-small" type="button" data-new-client style="justify-self:start; margin:4px">Add a client</button>
+            </aside>
+
+            <div class="desk-main" data-desk-main>
+              <div class="desk-head">
+                <div>
+                  <h2 data-desk-name></h2>
+                  <p class="mono" data-desk-sub></p>
+                </div>
+                <a class="text-button" href="portal.html" data-view-as hidden>See it as the client</a>
+              </div>
+
+              <!-- Project + step -->
+              <article class="panel">
+                <p class="panel-label">Project and step</p>
+                <form class="desk-form" data-project-form>
+                  <div class="desk-row">
+                    <label class="field" for="d-name"><span class="mono">Client name</span><input id="d-name" name="name" type="text" required></label>
+                    <label class="field" for="d-company"><span class="mono">Business</span><input id="d-company" name="company" type="text"></label>
+                  </div>
+                  <div class="desk-row">
+                    <label class="field" for="d-email"><span class="mono">Sign-in email (only this address can see the project)</span><input id="d-email" name="email" type="email" required></label>
+                    <label class="field" for="d-project"><span class="mono">Project</span><input id="d-project" name="project" type="text" placeholder="Website build"></label>
+                  </div>
+                  <label class="field" for="d-kind"><span class="mono">Kind of project</span><select id="d-kind" name="kind" data-kind></select></label>
+                  <fieldset class="step">
+                    <legend class="mono" style="float:none; margin-bottom:0.25rem; color:var(--highlight)">Where it stands now</legend>
+                    <div class="stage-picks" data-stage-picks></div>
+                  </fieldset>
+                  <label class="field" for="d-note"><span class="mono">Note to the client (shows on their Overview)</span><textarea id="d-note" name="note" maxlength="600"></textarea></label>
+                  <button class="btn btn-primary" type="submit">Save update</button>
+                  <p class="desk-saved" data-saved="project" aria-live="polite"></p>
+                </form>
+              </article>
+
+              <!-- Invoices -->
+              <article class="panel">
+                <p class="panel-label">Invoices</p>
+                <ul class="doc-list doc-list--desk" data-desk-invoices></ul>
+                <details class="add-doc">
+                  <summary>Add an invoice</summary>
+                  <form class="desk-form" data-invoice-form>
+                    <div class="desk-row">
+                      <label class="field" for="i-number"><span class="mono">Invoice number</span><input id="i-number" name="number" type="text" required placeholder="CS-1053"></label>
+                      <label class="field" for="i-title"><span class="mono">What it&rsquo;s for</span><input id="i-title" name="title" type="text" required placeholder="Deposit, 50%"></label>
+                    </div>
+                    <div class="desk-row">
+                      <label class="field" for="i-amount"><span class="mono">Amount (USD)</span><input id="i-amount" name="amount" type="text" inputmode="decimal" required placeholder="900"></label>
+                      <label class="field" for="i-due"><span class="mono">Due date</span><input id="i-due" name="due_on" type="date" required></label>
+                    </div>
+                    <div class="desk-row">
+                      <label class="field" for="i-file"><span class="mono">Invoice PDF</span><input id="i-file" name="file" type="file" accept="application/pdf"></label>
+                      <label class="field" for="i-pay"><span class="mono">Payment link (optional)</span><input id="i-pay" name="pay_url" type="url" placeholder="https://"></label>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Add invoice</button>
+                    <p class="desk-saved" data-saved="invoice" aria-live="polite"></p>
+                  </form>
+                </details>
+              </article>
+
+              <!-- Contracts -->
+              <article class="panel">
+                <p class="panel-label">Contracts</p>
+                <ul class="doc-list doc-list--desk" data-desk-contracts></ul>
+                <details class="add-doc">
+                  <summary>Add a contract</summary>
+                  <form class="desk-form" data-contract-form>
+                    <label class="field" for="k-title"><span class="mono">Title</span><input id="k-title" name="title" type="text" required placeholder="Website agreement"></label>
+                    <div class="desk-row">
+                      <label class="field" for="k-file"><span class="mono">Contract PDF</span><input id="k-file" name="file" type="file" accept="application/pdf"></label>
+                      <label class="field" for="k-sign"><span class="mono">Signing link (optional)</span><input id="k-sign" name="sign_url" type="url" placeholder="https://"></label>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Add contract</button>
+                    <p class="desk-saved" data-saved="contract" aria-live="polite"></p>
+                  </form>
+                </details>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer site-footer--portal">
+      <div class="wrap">
+        <p class="mono footer-legal"><span>&copy; <span data-year>2026</span> Chwispy Studio</span><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/portal-config.js?v=20261122p"></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/portal-data.js?v=20261122p" defer></script>
+  <script src="js/portal-signin.js?v=20261122p" defer></script>
+  <script src="js/portal-admin.js?v=20261122p" defer></script>
+</body>
+</html>
