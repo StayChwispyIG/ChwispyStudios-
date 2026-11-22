@@ -10,9 +10,9 @@
    key here or anywhere in this repo.
    ========================================================================== */
 window.PORTAL_CONFIG = {
-  mode: "sample",
-  supabaseUrl: "",      // e.g. "https://abcd1234.supabase.co"
-  supabaseAnonKey: "",  // the "anon public" key
+  mode: "live",
+  supabaseUrl: "https://ynmgaxfgydcxvhmqbaon.supabase.co",
+  supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlubWdheGZneWRjeHZobXFiYW9uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUzNjc0MTMsImV4cCI6MjExMDk0MzQxM30.Zo_Ge93iEJM0UXwfI6szCD8wUpRwk-qulBovYQkuX08", // public "anon" key, safe in the page
   bucket: "client-files",
 
   /* The steps each kind of project moves through. The studio desk picks
