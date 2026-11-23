@@ -1122,3 +1122,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 
 /* Quote form: the Send button while the inquiry is on its way. */
 .step .btn[aria-busy="true"] { opacity: 0.7; cursor: progress; }
+/* .btn sets display, which would otherwise show buttons marked hidden (e.g. "Send as a text" with no number). */
+.btn[hidden] { display: none; }
+/* Room for the viewfinder corners so they don't crowd the field or message box above. */
+.step .btn-primary[type="submit"], .step--done .hero-actions { margin-top: 0.5rem; }
