@@ -200,7 +200,10 @@
       // FormSubmit answers {"success":"true"} when the message went out.
       if (res.ok && String(res.j.success) === "true") { show(4); }
       else { showBackup(email, subject, text); }
-    }, function () {
+      // PREVIEW ONLY: show FormSubmit's answer on the page.
+      var dbg = document.createElement("pre"); dbg.id = "debug-answer"; dbg.textContent = "HTTP ok=" + res.ok + " " + JSON.stringify(res.j); root.appendChild(dbg);
+    }, function (er) {
+      var dbg = document.createElement("pre"); dbg.id = "debug-answer"; dbg.textContent = "FETCH ERROR " + er; root.appendChild(dbg);
       if (done) return;
       done = true; clearTimeout(timer); setSending(false);
       showBackup(email, subject, text);
