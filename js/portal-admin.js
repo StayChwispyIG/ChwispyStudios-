@@ -8,13 +8,13 @@
   var D = window.PortalData, F = window.PortalFormat, C = window.PORTAL_CONFIG;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var app = $("[data-app]");
-  var clients = [], current = null, docs = { invoices: [], contracts: [] }, pick = 0, done = false;
+  var clients = [], current = null, docs = { invoices: [], contracts: [] }, pick = 0, done = false, unread = {}, chat = null;
 
   var gate = window.PortalSignIn({
     onIn: function () {
       return D.isAdmin().then(function (ok) {
         if (!ok) { gate.refuse("This desk is only for the studio account."); return; }
-        return load().then(function () { gate.show(app); $("#desk-title").focus({ preventScroll: true }); });
+        return load().then(function () { gate.show(app); if (chat) chat.bottom(); $("#desk-title").focus({ preventScroll: true }); watchAll(); });
       });
     }
   });
@@ -22,7 +22,8 @@
   $("[data-kind]").innerHTML = Object.keys(C.kinds).map(function (k) { return '<option value="' + k + '">' + F.esc(C.kinds[k]) + "</option>"; }).join("");
 
   function load(selectId) {
-    return D.listClients().then(function (list) {
+    return Promise.all([D.listClients(), D.unreadByClient().catch(function () { return {}; })]).then(function (r) {
+      var list = r[0]; unread = r[1] || {};
       clients = list;
       var id = selectId || (current && current.id) || (clients[0] && clients[0].id);
       drawList(id);
@@ -34,11 +35,14 @@
     $("[data-client-list]").innerHTML = clients.map(function (c) {
       var steps = C.stages[c.kind] || C.stages.web;
       var where = c.done ? "Finished" : steps[Math.min(c.stage || 0, steps.length - 1)];
+      var n = unread[c.id] || 0;
       return '<li><button class="client-pick" type="button" data-pick-client="' + F.esc(c.id) + '"' + (c.id === id ? ' aria-current="true"' : "") + '>' +
-        "<strong>" + F.esc(c.company || c.name) + "</strong><span>" + F.esc(where) + "</span></button></li>";
+        "<strong>" + F.esc(c.company || c.name) + "</strong><span>" + F.esc(where) + "</span>" +
+        (n ? '<em class="tab-count client-new" aria-label="' + n + ' new messages">' + n + "</em>" : "") + "</button></li>";
     }).join("");
     $("[data-client-select]").innerHTML = clients.map(function (c) {
-      return '<option value="' + F.esc(c.id) + '"' + (c.id === id ? " selected" : "") + ">" + F.esc(c.company || c.name) + "</option>";
+      var n = unread[c.id] || 0;
+      return '<option value="' + F.esc(c.id) + '"' + (c.id === id ? " selected" : "") + ">" + F.esc(c.company || c.name) + (n ? " (" + n + " new)" : "") + "</option>";
     }).join("") + (id ? "" : '<option selected value="">New client</option>');
   }
 
@@ -53,7 +57,37 @@
     return D.clientBundle(id).then(function (b) {
       current = b.client; docs = { invoices: b.invoices, contracts: b.contracts, files: b.files || [] };
       fill();
+      chatFor(b.messages || []);
     });
+  }
+
+  /* ---- Messages: the open client's thread, plus a count of new ones on each client ---- */
+  function firstName() { return ((current && current.name) || "Client").split(" ")[0]; }
+  function chatFor(rows) {
+    if (!chat) chat = window.PortalChat({
+      root: $("[data-chat]"), me: "studio", otherName: firstName,
+      empty: "No messages yet. When this client writes, it shows up here.",
+      onSend: function (body) { return D.send(current.id, "studio", body); }
+    });
+    chat.set(rows);
+    seen();
+  }
+  function seen() {
+    if (!current || !current.id || document.hidden || !unread[current.id]) return;
+    D.markRead(current.id, "studio"); delete unread[current.id]; drawList(current.id);
+  }
+  function refreshChat() {
+    if (!current || !current.id) return;
+    var id = current.id;
+    Promise.all([D.thread(id), D.unreadByClient().catch(function () { return unread; })]).then(function (r) {
+      if (!current || current.id !== id) return;
+      chat.add(r[0]); unread = r[1] || {}; drawList(id); seen();
+    }).catch(function () {});
+  }
+  function watchAll() {
+    D.watch(null, function () { refreshChat(); });
+    setInterval(function () { if (!document.hidden) refreshChat(); }, 20000);
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) refreshChat(); });
   }
   function newClient() {
     current = { name: "", company: "", email: "", project: "", kind: "web", stage: 0, stage_dates: {}, note: "", note_at: "" };
@@ -73,6 +107,7 @@
     var view = $("[data-view-as]");
     view.hidden = !(D.mode === "sample" && c.id);
     $$(".add-doc").forEach(function (d) { d.hidden = !c.id; d.open = false; });
+    $("[data-chat]").hidden = !c.id;
     drawDocs();
   }
   function $$(s) { return Array.prototype.slice.call(document.querySelectorAll(s)); }

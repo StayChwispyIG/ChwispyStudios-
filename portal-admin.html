@@ -16,8 +16,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20261123f">
-  <link rel="stylesheet" href="css/portal.css?v=20261123f">
+  <link rel="stylesheet" href="css/style.css?v=20261123g">
+  <link rel="stylesheet" href="css/portal.css?v=20261123g">
   <!-- No analytics on the portal: invoices and contracts never go to PostHog. -->
 </head>
 <body>
@@ -41,7 +41,7 @@
         <div class="signin-copy">
           <p class="mono">For Chwispy only</p>
           <h1 id="signin-title">Studio desk</h1>
-          <p class="lede">Update a client’s step, add invoices and contracts. They see it the moment you save.</p>
+          <p class="lede">Reply to clients, update their step, add invoices, contracts and files. They see it the moment you save.</p>
         </div>
 
         <div class="panel">
@@ -105,6 +105,22 @@
                 </div>
                 <a class="text-button" href="portal.html" data-view-as hidden>See it as the client</a>
               </div>
+
+              <!-- Messages with this client -->
+              <article class="panel chat chat--desk" data-chat aria-label="Messages with this client">
+                <p class="panel-label">Messages</p>
+                <ol class="chat-log" data-chat-log aria-live="polite"></ol>
+                <form class="chat-compose" data-chat-form novalidate>
+                  <label class="visually-hidden" for="chat-body">Reply to the client</label>
+                  <textarea id="chat-body" name="body" rows="1" placeholder="Write a reply…" autocomplete="off"></textarea>
+                  <button class="btn btn-primary" type="submit">Send</button>
+                </form>
+                <div class="chat-foot">
+                  <p class="chat-hint" data-chat-hint hidden>Enter sends. Shift+Enter starts a new line.</p>
+                  <p class="chat-count" data-chat-count aria-live="polite"></p>
+                  <p class="chat-status form-status" data-chat-status role="alert"></p>
+                </div>
+              </article>
 
               <!-- Project + step -->
               <article class="panel">
@@ -206,10 +222,11 @@
     </footer>
   </main>
 
-  <script src="js/portal-config.js?v=20261123f"></script>
+  <script src="js/portal-config.js?v=20261123g"></script>
   <script src="js/main.js" defer></script>
-  <script src="js/portal-data.js?v=20261123f" defer></script>
-  <script src="js/portal-signin.js?v=20261123f" defer></script>
-  <script src="js/portal-admin.js?v=20261123f" defer></script>
+  <script src="js/portal-data.js?v=20261123g" defer></script>
+  <script src="js/portal-signin.js?v=20261123g" defer></script>
+  <script src="js/portal-chat.js?v=20261123g" defer></script>
+  <script src="js/portal-admin.js?v=20261123g" defer></script>
 </body>
 </html>

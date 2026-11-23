@@ -1,6 +1,7 @@
 /* ==========================================================================
    portal.js: the client side of the portal (portal.html).
-   Sign in with email + 6-digit code, then Overview, Invoices, Contracts.
+   Sign in with email + 6-digit code, then Overview, Messages, Invoices,
+   Contracts and Files.
    All data comes from window.PortalData (portal-data.js). Anything a client
    typed or the studio wrote is escaped before it reaches the page.
    ========================================================================== */
@@ -23,9 +24,10 @@
     });
   }
 
-  var current = {};
+  var current = {}, chat = null, stopWatch = null, poll = null;
   function render(b) {
     current = b;
+    startChat(b);
     var c = b.client, steps = (C.stages[c.kind] || C.stages.web), fin = !!c.done;
     var now = fin ? steps.length : Math.min(c.stage || 0, steps.length - 1);
     var first = (c.name || "").split(" ")[0];
@@ -81,12 +83,51 @@
     }).concat(toSign.map(function (k) {
       return todo("Sign the " + k.title.replace(/^./, function (m) { return m.toLowerCase(); }), "Sent " + F.date(k.sent_on), "contracts", "Review it");
     }));
+    todoBase = todos;
+    drawTodos();
+  }
+
+  /* ---- Messages ---- */
+  var todoBase = [];
+  function unread() { return (chat ? chat.items() : []).filter(function (m) { return m.sender === "studio" && !m.read_at; }); }
+  function drawTodos() {
+    var u = unread(), last = u[u.length - 1];
+    var todos = (u.length ? [todo(u.length > 1 ? "Read " + u.length + " new messages from Chwispy" : "Read a new message from Chwispy",
+      F.day(last.created_at) + ", " + F.time(last.created_at), "messages", "Open chat")] : []).concat(todoBase);
+    count("messages", u.length);
     $("[data-todo]").innerHTML = todos.join("");
     $("[data-todo]").hidden = !todos.length;
     $("[data-all-clear]").hidden = !!todos.length;
   }
+  function startChat(b) {
+    if (!chat) chat = window.PortalChat({
+      root: $("[data-chat]"), me: "client", otherName: function () { return "Chwispy"; },
+      empty: "No messages yet. Ask a question or send a note, and I’ll reply here.",
+      onSend: function (body) { return D.send(current.client.id, "client", body); }
+    });
+    chat.set(b.messages || []);
+    if (stopWatch) stopWatch();
+    stopWatch = D.watch(b.client.id, function () { refreshThread(); });
+    clearInterval(poll);
+    /* A backstop for live updates: look again every 20 seconds while the page is open. */
+    poll = setInterval(function () { if (!document.hidden) refreshThread(); }, 20000);
+  }
+  function refreshThread() {
+    if (!current.client) return;
+    D.thread(current.client.id).then(function (rows) { chat.add(rows); seenIfOpen(); drawTodos(); }).catch(function () {});
+  }
+  function onMessages() { return !$("#view-messages").hidden && !document.hidden; }
+  /* Opening the Messages tab marks Chwispy's messages as read. */
+  function seenIfOpen() {
+    if (!onMessages() || !unread().length) return;
+    var now = new Date().toISOString();
+    unread().forEach(function (m) { m.read_at = now; });
+    D.markRead(current.client.id, "client");
+    drawTodos();
+  }
+  document.addEventListener("visibilitychange", function () { if (!document.hidden && current.client) refreshThread(); });
 
-  function count(name, n) { var el = $('[data-count="' + name + '"]'); el.textContent = n; el.hidden = !n; el.setAttribute("aria-label", n + " need you"); }
+  function count(name, n) { var el = $('[data-count="' + name + '"]'); el.textContent = n; el.hidden = !n; el.setAttribute("aria-label", n + (name === "messages" ? " new" : " need you")); }
   function todo(title, sub, tab, label) {
     return '<li class="todo"><div><p class="todo-title">' + F.esc(title) + '</p><p class="todo-sub">' + F.esc(sub) + '</p></div>' +
       '<button class="btn btn-ghost btn-small" type="button" data-go="' + tab + '">' + label + '</button></li>';
@@ -139,6 +180,7 @@
       if (on && focus) t.focus();
     });
     try { history.replaceState(null, "", "#" + name); } catch (e) {}
+    if (name === "messages" && chat) { chat.bottom(); seenIfOpen(); }
   }
   tabs.forEach(function (t, i) {
     t.addEventListener("click", function () { select(t.dataset.tab); });
@@ -171,5 +213,5 @@
 
   /* ---- Already signed in? Go straight to the project. ---- */
   var startTab = (location.hash || "").slice(1);
-  gate.resume().then(function (ok) { if (ok && ["invoices", "contracts", "files"].indexOf(startTab) > -1) select(startTab); });
+  gate.resume().then(function (ok) { if (ok && ["messages", "invoices", "contracts", "files"].indexOf(startTab) > -1) select(startTab); });
 })();

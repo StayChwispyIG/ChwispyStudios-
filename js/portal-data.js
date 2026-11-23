@@ -60,6 +60,13 @@
         { id: "f2", client_id: "c1", title: "Homepage hero photo", kind: "image", file_path: "sample/hero.jpg", file_name: "ridgeline-hero.jpg", size_bytes: 2411724, mime_type: "image/jpeg", created_at: "2026-11-18T18:00:00Z" },
         { id: "f3", client_id: "c1", title: "Menu launch reel", kind: "video", file_path: "sample/reel.mp4", file_name: "ridgeline-menu-reel.mp4", size_bytes: 38273024, mime_type: "video/mp4", created_at: "2026-11-21T18:00:00Z" },
         { id: "f4", client_id: "c3", title: "Commercial, first cut", kind: "video", file_path: "sample/reel.mp4", file_name: "carter-first-cut.mp4", size_bytes: 41943040, mime_type: "video/mp4", created_at: "2026-11-20T18:00:00Z" }
+      ],
+      messages: [
+        { id: "m1", client_id: "c1", sender: "client", body: "Quick one: can the catering menu page have its own order button, or does it share the main one?", created_at: "2026-11-20T18:12:00Z", read_at: "2026-11-20T18:40:00Z" },
+        { id: "m2", client_id: "c1", sender: "studio", body: "It can have its own. I’ll point it at your catering form so those orders don’t mix with daily pickup.", created_at: "2026-11-20T19:03:00Z", read_at: "2026-11-20T19:30:00Z" },
+        { id: "m3", client_id: "c1", sender: "client", body: "Perfect. I’ll send the catering photos tonight.", created_at: "2026-11-20T19:31:00Z", read_at: "2026-11-21T16:00:00Z" },
+        { id: "m4", client_id: "c1", sender: "studio", body: "Got the photos, thanks. The edited hero shot is in your Files tab.\nPreview link for the whole site comes Wednesday.", created_at: "2026-11-22T00:22:00Z", read_at: null },
+        { id: "m5", client_id: "c3", sender: "client", body: "Watched the first cut. Love it! Can the logo hold a second longer at the end?", created_at: "2026-11-21T22:05:00Z", read_at: null }
       ]
     };
   }
@@ -68,6 +75,7 @@
     try { d = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
     if (!d || !d.clients) { d = seed(); store(d); }
     if (!d.deliverables) { d.deliverables = seed().deliverables; store(d); }
+    if (!d.messages) { d.messages = seed().messages; store(d); }
     return d;
   }
   function store(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} }
@@ -130,18 +138,44 @@
     },
     removeFile: function (row) { var d = db(); d.deliverables = d.deliverables.filter(function (x) { return x.id !== row.id; }); store(d); return later(true); },
     downloadUrl: function (row) { return Promise.resolve("assets/portal-sample/" + row.file_path.split("/").pop()); },
+
+    /* Messages. The preview keeps them in this browser; a change made on
+       the desk shows up in an open client tab (and back) within a moment. */
+    thread: function (clientId) { return later(threadOf(db(), clientId)); },
+    send: function (clientId, sender, body) {
+      var d = db(), row = { id: uid("m"), client_id: clientId, sender: sender, body: String(body).trim().slice(0, 2000), created_at: new Date().toISOString(), read_at: null };
+      d.messages.push(row); store(d); return later(row);
+    },
+    markRead: function (clientId, reader) {
+      var d = db(), other = reader === "studio" ? "client" : "studio", now = new Date().toISOString(), n = 0;
+      d.messages.forEach(function (m) { if (m.client_id === clientId && m.sender === other && !m.read_at) { m.read_at = now; n++; } });
+      if (n) store(d); return Promise.resolve();
+    },
+    unreadByClient: function () {
+      var out = {}; db().messages.forEach(function (m) { if (m.sender === "client" && !m.read_at) out[m.client_id] = (out[m.client_id] || 0) + 1; });
+      return Promise.resolve(out);
+    },
+    watch: function (clientId, onChange) {
+      function fn(e) { if (e.key === KEY) onChange(); }
+      window.addEventListener("storage", fn);
+      return function () { window.removeEventListener("storage", fn); };
+    },
     resetSample: function () { store(seed()); }
   };
   function newest(a, z) { return a.created_at < z.created_at ? 1 : -1; }
   function extOf(name) { var m = /\.([a-z0-9]+)$/i.exec(name || ""); return m ? m[1].toLowerCase() : ""; }
   function typeOf(name) { return (C.fileTypes || {})[extOf(name)] || ""; }
+  function threadOf(d, id) {
+    return d.messages.filter(function (m) { return m.client_id === id; }).sort(function (a, z) { return a.created_at < z.created_at ? -1 : 1; });
+  }
   function bundle(d, c) {
     if (!c) return null;
     return {
       client: c,
       invoices: d.invoices.filter(function (x) { return x.client_id === c.id; }),
       contracts: d.contracts.filter(function (x) { return x.client_id === c.id; }),
-      files: d.deliverables.filter(function (x) { return x.client_id === c.id; }).sort(newest)
+      files: d.deliverables.filter(function (x) { return x.client_id === c.id; }).sort(newest),
+      messages: threadOf(d, c.id)
     };
   }
 
@@ -186,9 +220,10 @@
           rows(s.from("clients").select("*").limit(1)),
           rows(s.from("invoices").select("*").order("due_on", { ascending: true })),
           rows(s.from("contracts").select("*").order("sent_on", { ascending: false })),
-          rows(s.from("deliverables").select("*").order("created_at", { ascending: false }))
+          rows(s.from("deliverables").select("*").order("created_at", { ascending: false })),
+          rows(s.from("messages").select("*").order("created_at", { ascending: true }).limit(500))
         ]);
-      }).then(function (r) { return r[0][0] ? { client: r[0][0], invoices: r[1], contracts: r[2], files: r[3] } : null; });
+      }).then(function (r) { return r[0][0] ? { client: r[0][0], invoices: r[1], contracts: r[2], files: r[3], messages: r[4] } : null; });
     },
     /* Files sit in a private bucket. Each open makes a link that dies in 60 seconds. */
     fileUrl: function (path) {
@@ -205,9 +240,10 @@
           rows(s.from("clients").select("*").eq("id", id).limit(1)),
           rows(s.from("invoices").select("*").eq("client_id", id).order("due_on", { ascending: true })),
           rows(s.from("contracts").select("*").eq("client_id", id).order("sent_on", { ascending: false })),
-          rows(s.from("deliverables").select("*").eq("client_id", id).order("created_at", { ascending: false }))
+          rows(s.from("deliverables").select("*").eq("client_id", id).order("created_at", { ascending: false })),
+          rows(s.from("messages").select("*").eq("client_id", id).order("created_at", { ascending: true }).limit(500))
         ]);
-      }).then(function (r) { return { client: r[0][0], invoices: r[1], contracts: r[2], files: r[3] }; });
+      }).then(function (r) { return { client: r[0][0], invoices: r[1], contracts: r[2], files: r[3], messages: r[4] }; });
     },
     saveClient: function (c) {
       return sb().then(function (s) {
@@ -271,6 +307,34 @@
     downloadUrl: function (row) {
       return sb().then(function (s) { return s.storage.from(C.filesBucket).createSignedUrl(row.file_path, 120, { download: row.file_name || true }); })
         .then(function (r) { if (r.error) throw r.error; return r.data.signedUrl; });
+    },
+
+    /* Messages. The database decides whose thread you get and which side
+       you may post as (supabase/messages.sql); it also sets the time. */
+    thread: function (clientId) {
+      return sb().then(function (s) { return rows(s.from("messages").select("*").eq("client_id", clientId).order("created_at", { ascending: true }).limit(500)); });
+    },
+    send: function (clientId, sender, body) {
+      return sb().then(function (s) { return rows(s.from("messages").insert({ client_id: clientId, sender: sender, body: String(body).trim().slice(0, 2000) }).select()); })
+        .then(function (r) { return r[0]; });
+    },
+    markRead: function (clientId) {
+      return sb().then(function (s) { return s.rpc("mark_thread_read", { p_client: clientId }); }).then(function () {}, function () {});
+    },
+    unreadByClient: function () {
+      return sb().then(function (s) { return rows(s.from("messages").select("client_id").eq("sender", "client").is("read_at", null).limit(1000)); })
+        .then(function (list) { var out = {}; list.forEach(function (m) { out[m.client_id] = (out[m.client_id] || 0) + 1; }); return out; });
+    },
+    /* New messages arrive live. Realtime still only sends rows this person may read. */
+    watch: function (clientId, onChange) {
+      var ch = null, stopped = false;
+      sb().then(function (s) {
+        if (stopped) return;
+        var f = { event: "INSERT", schema: "public", table: "messages" };
+        if (clientId) f.filter = "client_id=eq." + clientId;
+        ch = s.channel("messages-" + (clientId || "all")).on("postgres_changes", f, function (p) { onChange(p.new); }).subscribe();
+      }).catch(function () {});
+      return function () { stopped = true; if (ch && client) client.removeChannel(ch); };
     }
   };
 
@@ -318,6 +382,16 @@
         file: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>'
       };
       return '<svg class="file-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + (paths[kind] || paths.file) + "</svg>";
+    },
+    /* Chat times: 2:14 PM, and a day label for the line between days. */
+    time: function (iso) { return iso ? new Date(iso).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }) : ""; },
+    day: function (iso) {
+      if (!iso) return "";
+      var d = new Date(iso), now = new Date(), y = new Date(now); y.setDate(now.getDate() - 1);
+      var same = function (a, b) { return a.toDateString() === b.toDateString(); };
+      if (same(d, now)) return "Today";
+      if (same(d, y)) return "Yesterday";
+      return d.toLocaleDateString("en-US", d.getFullYear() === now.getFullYear() ? { weekday: "short", month: "short", day: "numeric" } : { month: "short", day: "numeric", year: "numeric" });
     },
     safeUrl: function (u) { return /^(https:\/\/|#)/.test(u || "") ? u : ""; }
   };

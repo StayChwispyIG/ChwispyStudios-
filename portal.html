@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Client Portal | Chwispy Studio</title>
-  <meta name="description" content="Sign in to see your project, invoices, contracts and files with Chwispy Studio.">
+  <meta name="description" content="Sign in to see your project, messages, invoices, contracts and files with Chwispy Studio.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#0c0c0e">
@@ -16,8 +16,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20261123f">
-  <link rel="stylesheet" href="css/portal.css?v=20261123f">
+  <link rel="stylesheet" href="css/style.css?v=20261123g">
+  <link rel="stylesheet" href="css/portal.css?v=20261123g">
   <!-- No analytics on the portal: invoices and contracts never go to PostHog. -->
 </head>
 <body>
@@ -41,7 +41,7 @@
         <div class="signin-copy">
           <p class="mono">Chwispy Studio clients</p>
           <h1 id="signin-title">Client portal</h1>
-          <p class="lede">Your project, invoices, contracts and files in one place. No password to remember.</p>
+          <p class="lede">Your project, messages, invoices, contracts and files in one place. No password to remember.</p>
         </div>
 
         <div class="panel">
@@ -88,6 +88,7 @@
           <p class="project-name" data-project-name></p>
           <div class="tabs" role="tablist" aria-label="Your project">
             <button class="tab" type="button" role="tab" id="tab-overview" aria-controls="view-overview" aria-selected="true" data-tab="overview">Overview</button>
+            <button class="tab" type="button" role="tab" id="tab-messages" aria-controls="view-messages" aria-selected="false" tabindex="-1" data-tab="messages">Chat <span class="tab-count" data-count="messages" hidden></span></button>
             <button class="tab" type="button" role="tab" id="tab-invoices" aria-controls="view-invoices" aria-selected="false" tabindex="-1" data-tab="invoices">Invoices <span class="tab-count" data-count="invoices" hidden></span></button>
             <button class="tab" type="button" role="tab" id="tab-contracts" aria-controls="view-contracts" aria-selected="false" tabindex="-1" data-tab="contracts">Contracts <span class="tab-count" data-count="contracts" hidden></span></button>
             <button class="tab" type="button" role="tab" id="tab-files" aria-controls="view-files" aria-selected="false" tabindex="-1" data-tab="files">Files</button>
@@ -122,6 +123,23 @@
             </div>
           </div>
 
+          <!-- Messages: a chat with the studio, newest at the bottom -->
+          <div class="view" id="view-messages" role="tabpanel" aria-labelledby="tab-messages" tabindex="-1" hidden>
+            <article class="panel chat" data-chat aria-label="Messages with Chwispy">
+              <ol class="chat-log" data-chat-log aria-live="polite"></ol>
+              <form class="chat-compose" data-chat-form novalidate>
+                <label class="visually-hidden" for="chat-body">Message to Chwispy</label>
+                <textarea id="chat-body" name="body" rows="1" placeholder="Write a message…" autocomplete="off"></textarea>
+                <button class="btn btn-primary" type="submit">Send</button>
+              </form>
+              <div class="chat-foot">
+                <p class="chat-hint" data-chat-hint hidden>Enter sends. Shift+Enter starts a new line.</p>
+                <p class="chat-count" data-chat-count aria-live="polite"></p>
+                <p class="chat-status form-status" data-chat-status role="alert"></p>
+              </div>
+            </article>
+          </div>
+
           <!-- Invoices -->
           <div class="view" id="view-invoices" role="tabpanel" aria-labelledby="tab-invoices" tabindex="-1" hidden>
             <div class="totals">
@@ -142,7 +160,7 @@
           </div>
 
           <div class="panel help" style="margin-top: clamp(1.25rem, 1rem + 1vw, 2rem)">
-            <p>Questions about anything here? Reply to any email from me, or DM <a href="https://www.instagram.com/chwispystudio/" rel="noopener" target="_blank">@chwispystudio</a>.</p>
+            <p>Questions about anything here? Send me a message in the Chat tab, or DM <a href="https://www.instagram.com/chwispystudio/" rel="noopener" target="_blank">@chwispystudio</a>.</p>
           </div>
         </div>
       </div>
@@ -155,10 +173,11 @@
     </footer>
   </main>
 
-  <script src="js/portal-config.js?v=20261123f"></script>
+  <script src="js/portal-config.js?v=20261123g"></script>
   <script src="js/main.js" defer></script>
-  <script src="js/portal-data.js?v=20261123f" defer></script>
-  <script src="js/portal-signin.js?v=20261123f" defer></script>
-  <script src="js/portal.js?v=20261123f" defer></script>
+  <script src="js/portal-data.js?v=20261123g" defer></script>
+  <script src="js/portal-signin.js?v=20261123g" defer></script>
+  <script src="js/portal-chat.js?v=20261123g" defer></script>
+  <script src="js/portal.js?v=20261123g" defer></script>
 </body>
 </html>
