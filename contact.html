@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600&family=Mrs+Saint+Delafield&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20261120b">
+  <link rel="stylesheet" href="css/style.css?v=20261123a">
   <script src="js/posthog.js?v=20261120b"></script>
   <script src="js/consent.js?v=20261120b" defer></script>
 </head>
@@ -77,14 +77,17 @@
 
     <!-- ===== START A PROJECT: one question at a time =====
          Step 1 picks the service, step 2 the goal, step 3 asks for name + phone.
-         The finished message goes to the inbox in data-mail + data-host (it is never
-         printed on the page, and is split so scrapers can't harvest it). To add a "Send as a text" button, put your number in data-sms,
+         When the visitor taps Send, the answers go through FormSubmit (formsubmit.co, free)
+         straight to the inbox in data-mail + data-host (never printed on the page, and split
+         so scrapers can't harvest it). Once FormSubmit's confirm email is clicked, put the
+         random string it sends into data-form and the address leaves the page code entirely.
+         If sending fails, the visitor gets the old "Open it in email" step as a backup. To add a "Send as a text" button, put your number in data-sms,
          digits only with country code, e.g. data-sms="19095551234".
          Services links arrive as contact.html?type=Commercial#start and skip step 1. -->
     <section class="section start-section" id="start" aria-labelledby="start-title">
       <span id="book" aria-hidden="true"></span><span id="inquire" aria-hidden="true"></span>
       <div class="wrap">
-        <div class="starter" data-starter data-mail="chwispystudio" data-host="gmail.com" data-sms="">
+        <div class="starter" data-starter data-mail="chwispystudio" data-host="gmail.com" data-form="" data-sms="">
           <div class="starter-top">
             <p class="mono" data-step-count aria-live="polite">Question 1 of 3</p>
             <button class="starter-back" type="button" data-back hidden>&larr; Back</button>
@@ -127,15 +130,28 @@
                   <input class="ph-no-capture" id="start-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
                 </label>
               </div>
+              <!-- Spam trap: hidden from people and screen readers. Bots that fill it are quietly dropped. -->
+              <div class="visually-hidden" aria-hidden="true">
+                <label for="start-company">Company website</label>
+                <input id="start-company" name="_honey" type="text" tabindex="-1" autocomplete="off">
+              </div>
               <p class="field-error" data-error role="alert" hidden>Add your name and a phone number so I can get back to you.</p>
-              <button class="btn btn-primary btn-large" type="submit">Send it to Chwispy</button>
+              <button class="btn btn-primary btn-large" type="submit" data-submit>Send it to Chwispy</button>
             </fieldset>
           </form>
 
-          <!-- DONE: the summary, and how it gets sent -->
+          <!-- SENT: the inquiry reached the inbox -->
           <div class="step step--done ph-no-capture" data-step="4" hidden>
-            <h2 tabindex="-1">Ready to send</h2>
-            <p class="done-copy">Last step: tap <strong>Open it in email</strong> and hit send. I&rsquo;ll reply within one business day.</p>
+            <h2 tabindex="-1" data-sent-title>Got it, thanks</h2>
+            <p class="done-copy">Your request is in my inbox. I&rsquo;ll call or text you within one business day.</p>
+            <pre class="done-message" data-message></pre>
+            <p class="mono done-alt">Want to send photos or links? DM them to <a href="https://www.instagram.com/chwispystudio/" rel="me noopener" target="_blank">@chwispystudio</a>.</p>
+          </div>
+
+          <!-- BACKUP: only if sending didn't go through, the old email-app route -->
+          <div class="step step--done ph-no-capture" data-step="5" hidden>
+            <h2 tabindex="-1">Almost there</h2>
+            <p class="done-copy">It didn&rsquo;t send on my end. Tap <strong>Open it in email</strong> and hit send, and I&rsquo;ll reply within one business day.</p>
             <pre class="done-message" data-message></pre>
             <div class="hero-actions">
               <a class="btn btn-primary" data-send-email href="#">Open it in email</a>
@@ -187,6 +203,6 @@
   </footer>
 
   <script src="js/main.js" defer></script>
-  <script src="js/start.js?v=20261120b" defer></script>
+  <script src="js/start.js?v=20261123a" defer></script>
 </body>
 </html>

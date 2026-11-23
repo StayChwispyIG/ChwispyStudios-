@@ -1,9 +1,11 @@
 /* ==========================================================================
    start.js: the "Start a project" flow on contact.html.
    One question per screen: service, then goal, then name + phone.
-   The finished message opens in the visitor's email app, addressed to the
-   inbox in data-mail + data-host. If data-sms has a number, a "Send as a text" button
-   shows too. Nothing is sent anywhere until the visitor hits send themselves.
+   Tapping "Send it to Chwispy" sends the answers through FormSubmit (formsubmit.co)
+   to the inbox in data-mail + data-host, or to the FormSubmit alias in data-form once
+   it's set. A hidden _honey field catches bots: if it's filled, nothing is sent.
+   If the send fails, step 5 offers the old route: the message opens in the visitor's
+   email app (plus "Send as a text" when data-sms has a number).
    ========================================================================== */
 (function () {
   "use strict";
@@ -36,17 +38,20 @@
   var nextBtn = root.querySelector("[data-next]");
   var note = root.querySelector("#start-note");
   var err = root.querySelector("[data-error]");
+  var submitBtn = root.querySelector("[data-submit]");
+  var honey = root.querySelector('[name="_honey"]');
   var answers = { service: "", goal: "" };
+  var sending = false;
   var step = 1;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function show(n, focus) {
     step = n;
     steps.forEach(function (el) { el.hidden = Number(el.dataset.step) !== n; });
-    count.textContent = n <= 3 ? "Question " + n + " of 3" : "All set";
+    count.textContent = n <= 3 ? "Question " + n + " of 3" : (n === 4 ? "Sent" : "One more tap");
     bar.style.width = (Math.min(n, 3) / 3 * 100) + "%";
-    root.classList.toggle("is-done", n === 4);
-    back.hidden = n === 1;
+    root.classList.toggle("is-done", n >= 4);
+    back.hidden = n === 1 || n === 4;
     if (focus !== false) {
       // Bring the top of the panel back into view (clear of the sticky header),
       // then move focus to the new question without a second jump.
@@ -100,7 +105,7 @@
     }
   });
   nextBtn.addEventListener("click", function () { show(3); });
-  back.addEventListener("click", function () { show(step === 4 ? 3 : step - 1); });
+  back.addEventListener("click", function () { show(step >= 4 ? 3 : step - 1); });
 
   function message(name, phone) {
     var lines = [
@@ -114,10 +119,35 @@
     return lines.join("\n");
   }
 
+  function fillMessage(text) {
+    root.querySelectorAll("[data-message]").forEach(function (pre) { pre.textContent = text; });
+  }
+
+  // Backup route (step 5): the message opens in the visitor's own email app.
+  function showBackup(email, subject, text) {
+    var mail = root.querySelector("[data-send-email]");
+    mail.href = "mailto:" + email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(text);
+    var sms = (root.dataset.sms || "").replace(/\D/g, "");
+    var smsLink = root.querySelector("[data-send-sms]");
+    if (sms) {
+      smsLink.href = "sms:+" + sms + "?&body=" + encodeURIComponent(text);
+      smsLink.hidden = false;
+    }
+    show(5);
+  }
+
+  function setSending(on) {
+    sending = on;
+    submitBtn.disabled = on;
+    submitBtn.setAttribute("aria-busy", String(on));
+    submitBtn.textContent = on ? "Sending\u2026" : "Send it to Chwispy";
+  }
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     // Enter pressed in the optional note (question 2) moves on instead of sending.
     if (step !== 3) { if (step === 2 && answers.goal) show(3); return; }
+    if (sending) return;
     var name = form.elements.name.value.trim();
     var phone = form.elements.phone.value.trim();
     var ok = name && phone.replace(/\D/g, "").length >= 7;
@@ -126,30 +156,60 @@
 
     var text = message(name, phone);
     var subject = "New project: " + answers.service + " (" + name + ")";
-    root.querySelector("[data-message]").textContent = text;
+    fillMessage(text);
+    var first = name.split(/\s+/)[0];
+    root.querySelector("[data-sent-title]").textContent = "Got it, thanks " + first;
 
     // The address is stored in two halves (data-mail + data-host) so scrapers
     // reading the page code can't harvest it.
     var email = root.dataset.mail + "@" + root.dataset.host;
-    var mail = root.querySelector("[data-send-email]");
-    mail.href = "mailto:" + email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(text);
 
-    var sms = (root.dataset.sms || "").replace(/\D/g, "");
-    var smsLink = root.querySelector("[data-send-sms]");
-    if (sms) {
-      smsLink.href = "sms:+" + sms + "?&body=" + encodeURIComponent(text);
-      smsLink.hidden = false;
-    }
-    // Tell PostHog a quote was started: only the service and goal picked, never the name, phone or note.
+    // A bot filled the hidden field: show the thank-you and send nothing.
+    if (honey && honey.value) { show(4); return; }
+
+    // Tell PostHog a quote was sent: only the service and goal picked, never the name, phone or note.
     if (window.posthog && typeof window.posthog.capture === "function") {
       window.posthog.capture("quote_form_submitted", { service: answers.service, goal: answers.goal });
     }
-    show(4);
+
+    var target = (root.dataset.form || "").trim() || email;
+    var payload = {
+      "Service": answers.service,
+      "Goal": answers.goal,
+      "Notes": note.value.trim() || "(none)",
+      "Name": name,
+      "Phone": phone,
+      "_subject": subject,
+      "_template": "table",
+      "_captcha": "false",
+      "_honey": ""
+    };
+
+    setSending(true);
+    var done = false;
+    var timer = setTimeout(function () { if (!done) { done = true; setSending(false); showBackup(email, subject, text); } }, 15000);
+    fetch("https://formsubmit.co/ajax/" + encodeURIComponent(target), {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; });
+    }).then(function (res) {
+      if (done) return;
+      done = true; clearTimeout(timer); setSending(false);
+      // FormSubmit answers {"success":"true"} when the message went out.
+      if (res.ok && String(res.j.success) === "true") { show(4); }
+      else { showBackup(email, subject, text); }
+    }, function () {
+      if (done) return;
+      done = true; clearTimeout(timer); setSending(false);
+      showBackup(email, subject, text);
+    });
   });
 
   root.querySelector("[data-copy]").addEventListener("click", function () {
     var btn = this;
-    var pre = root.querySelector("[data-message]");
+    var pre = root.querySelector('[data-step="5"] [data-message]');
     var done = function () { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy message"; }, 2000); };
     var select = function () {
       var r = document.createRange(); r.selectNodeContents(pre);
