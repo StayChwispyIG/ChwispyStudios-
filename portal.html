@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Client Portal | Chwispy Studio</title>
-  <meta name="description" content="Sign in to see your project, invoices and contracts with Chwispy Studio.">
+  <meta name="description" content="Sign in to see your project, invoices, contracts and files with Chwispy Studio.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#0c0c0e">
@@ -16,8 +16,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20261122p">
-  <link rel="stylesheet" href="css/portal.css?v=20261122p">
+  <link rel="stylesheet" href="css/style.css?v=20261123f">
+  <link rel="stylesheet" href="css/portal.css?v=20261123f">
   <!-- No analytics on the portal: invoices and contracts never go to PostHog. -->
 </head>
 <body>
@@ -41,7 +41,7 @@
         <div class="signin-copy">
           <p class="mono">Chwispy Studio clients</p>
           <h1 id="signin-title">Client portal</h1>
-          <p class="lede">Your project, invoices and contracts in one place. No password to remember.</p>
+          <p class="lede">Your project, invoices, contracts and files in one place. No password to remember.</p>
         </div>
 
         <div class="panel">
@@ -90,6 +90,7 @@
             <button class="tab" type="button" role="tab" id="tab-overview" aria-controls="view-overview" aria-selected="true" data-tab="overview">Overview</button>
             <button class="tab" type="button" role="tab" id="tab-invoices" aria-controls="view-invoices" aria-selected="false" tabindex="-1" data-tab="invoices">Invoices <span class="tab-count" data-count="invoices" hidden></span></button>
             <button class="tab" type="button" role="tab" id="tab-contracts" aria-controls="view-contracts" aria-selected="false" tabindex="-1" data-tab="contracts">Contracts <span class="tab-count" data-count="contracts" hidden></span></button>
+            <button class="tab" type="button" role="tab" id="tab-files" aria-controls="view-files" aria-selected="false" tabindex="-1" data-tab="files">Files</button>
           </div>
         </div>
 
@@ -135,6 +136,11 @@
             <ul class="doc-list" data-contracts></ul>
           </div>
 
+          <!-- Files: logos, photos, videos to download -->
+          <div class="view" id="view-files" role="tabpanel" aria-labelledby="tab-files" tabindex="-1" hidden>
+            <ul class="doc-list file-list" data-files></ul>
+          </div>
+
           <div class="panel help" style="margin-top: clamp(1.25rem, 1rem + 1vw, 2rem)">
             <p>Questions about anything here? Reply to any email from me, or DM <a href="https://www.instagram.com/chwispystudio/" rel="noopener" target="_blank">@chwispystudio</a>.</p>
           </div>
@@ -149,10 +155,10 @@
     </footer>
   </main>
 
-  <script src="js/portal-config.js?v=20261122p"></script>
+  <script src="js/portal-config.js?v=20261123f"></script>
   <script src="js/main.js" defer></script>
-  <script src="js/portal-data.js?v=20261122p" defer></script>
-  <script src="js/portal-signin.js?v=20261122p" defer></script>
-  <script src="js/portal.js?v=20261122p" defer></script>
+  <script src="js/portal-data.js?v=20261123f" defer></script>
+  <script src="js/portal-signin.js?v=20261123f" defer></script>
+  <script src="js/portal.js?v=20261123f" defer></script>
 </body>
 </html>

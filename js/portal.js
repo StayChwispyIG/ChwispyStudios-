@@ -23,7 +23,9 @@
     });
   }
 
+  var current = {};
   function render(b) {
+    current = b;
     var c = b.client, steps = (C.stages[c.kind] || C.stages.web), fin = !!c.done;
     var now = fin ? steps.length : Math.min(c.stage || 0, steps.length - 1);
     var first = (c.name || "").split(" ")[0];
@@ -67,6 +69,9 @@
     var toSign = b.contracts.filter(function (k) { return k.status === "sign"; });
     var ks = b.contracts.slice().sort(function (a, z) { return (a.status === "sign" ? 0 : 1) - (z.status === "sign" ? 0 : 1); });
     $("[data-contracts]").innerHTML = ks.length ? ks.map(contractRow).join("") : '<li class="empty">No contracts yet.</li>';
+
+    /* Files */
+    $("[data-files]").innerHTML = (b.files || []).length ? b.files.map(fileRow).join("") : '<li class="empty">No files yet. Logos, photos and videos I deliver show up here.</li>';
 
     /* Counts on the tabs + Waiting on you */
     count("invoices", open.length); count("contracts", toSign.length);
@@ -113,6 +118,17 @@
       '<div class="doc-actions">' + acts + '</div></li>';
   }
 
+  var KIND = { logo: "Logo", video: "Video", image: "Photo", file: "File" };
+  function fileRow(f) {
+    var meta = [KIND[f.kind] || "File", F.ext(f.file_name), F.size(f.size_bytes), "Added " + F.date((f.created_at || "").slice(0, 10), true)].filter(Boolean).join(" · ");
+    var dl = D.mode === "sample"
+      ? '<a class="btn btn-ghost btn-small" href="assets/portal-sample/' + F.esc(f.file_path.split("/").pop()) + '" target="_blank" rel="noopener">Download</a>'
+      : '<button class="btn btn-ghost btn-small" type="button" data-download="' + F.esc(f.id) + '">Download</button>';
+    return '<li class="doc file"><span class="file-kind file-kind--' + F.esc(f.kind) + '">' + F.fileIcon(f.kind) + '</span>' +
+      '<div><p class="doc-title">' + F.esc(f.title) + '</p><p class="doc-meta">' + F.esc(meta) + '</p></div>' +
+      '<div class="doc-actions">' + dl + '</div></li>';
+  }
+
   /* ---- Tabs (arrow keys move between them) ---- */
   var tabs = $$("[data-tab]");
   function select(name, focus) {
@@ -134,6 +150,17 @@
   app.addEventListener("click", function (e) {
     var go = e.target.closest("[data-go]");
     if (go) { select(go.dataset.go); $(".tabs").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+    var dl = e.target.closest("[data-download]");
+    if (dl) {
+      var row = (current.files || []).filter(function (x) { return x.id === dl.dataset.download; })[0];
+      if (!row) return;
+      dl.disabled = true; dl.textContent = "Preparing…";
+      /* The link lasts 2 minutes and saves the file instead of opening a new page. */
+      D.downloadUrl(row).then(function (url) { location.href = url; dl.textContent = "Download"; })
+        .catch(function () { dl.textContent = "Try again"; })
+        .then(function () { dl.disabled = false; });
+      return;
+    }
     var f = e.target.closest("[data-file]");
     if (f) {
       var w = window.open("", "_blank"); // opened first so phones don't block it
@@ -144,5 +171,5 @@
 
   /* ---- Already signed in? Go straight to the project. ---- */
   var startTab = (location.hash || "").slice(1);
-  gate.resume().then(function (ok) { if (ok && ["invoices", "contracts"].indexOf(startTab) > -1) select(startTab); });
+  gate.resume().then(function (ok) { if (ok && ["invoices", "contracts", "files"].indexOf(startTab) > -1) select(startTab); });
 })();

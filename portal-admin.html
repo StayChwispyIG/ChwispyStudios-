@@ -16,8 +16,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20261122p">
-  <link rel="stylesheet" href="css/portal.css?v=20261122p">
+  <link rel="stylesheet" href="css/style.css?v=20261123f">
+  <link rel="stylesheet" href="css/portal.css?v=20261123f">
   <!-- No analytics on the portal: invoices and contracts never go to PostHog. -->
 </head>
 <body>
@@ -171,6 +171,28 @@
                   </form>
                 </details>
               </article>
+
+              <!-- Files the client can download -->
+              <article class="panel">
+                <p class="panel-label">Files for the client</p>
+                <ul class="doc-list doc-list--desk file-list" data-desk-files></ul>
+                <details class="add-doc">
+                  <summary>Upload a file</summary>
+                  <form class="desk-form" data-file-form novalidate>
+                    <label class="field" for="u-file"><span class="mono">Logo, photo, video, PDF or ZIP. Up to 50 MB.</span><input id="u-file" name="file" type="file" required accept=".png,.jpg,.jpeg,.svg,.webp,.gif,.pdf,.zip,.mp4,.mov,.webm,.ai,.eps"></label>
+                    <div class="desk-row">
+                      <label class="field" for="u-title"><span class="mono">Name the client sees</span><input id="u-title" name="title" type="text" required placeholder="Logo, full colour"></label>
+                      <label class="field" for="u-kind"><span class="mono">Kind</span><select id="u-kind" name="kind"><option value="logo">Logo</option><option value="image">Photo</option><option value="video">Video</option><option value="file">Other file</option></select></label>
+                    </div>
+                    <div class="upload-progress" data-upload-progress hidden>
+                      <div class="upload-bar" role="progressbar" aria-label="Upload progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-upload-bar><span></span></div>
+                      <p class="mono" data-upload-pct>0%</p>
+                    </div>
+                    <button class="btn btn-primary" type="submit" data-upload-button>Upload</button>
+                    <p class="desk-saved" data-saved="file" aria-live="polite"></p>
+                  </form>
+                </details>
+              </article>
             </div>
           </div>
         </div>
@@ -184,10 +206,10 @@
     </footer>
   </main>
 
-  <script src="js/portal-config.js?v=20261122p"></script>
+  <script src="js/portal-config.js?v=20261123f"></script>
   <script src="js/main.js" defer></script>
-  <script src="js/portal-data.js?v=20261122p" defer></script>
-  <script src="js/portal-signin.js?v=20261122p" defer></script>
-  <script src="js/portal-admin.js?v=20261122p" defer></script>
+  <script src="js/portal-data.js?v=20261123f" defer></script>
+  <script src="js/portal-signin.js?v=20261123f" defer></script>
+  <script src="js/portal-admin.js?v=20261123f" defer></script>
 </body>
 </html>

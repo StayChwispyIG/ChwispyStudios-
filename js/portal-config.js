@@ -15,6 +15,18 @@ window.PORTAL_CONFIG = {
   supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlubWdheGZneWRjeHZobXFiYW9uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUzNjc0MTMsImV4cCI6MjExMDk0MzQxM30.Zo_Ge93iEJM0UXwfI6szCD8wUpRwk-qulBovYQkuX08", // public "anon" key, safe in the page
   bucket: "client-files",
 
+  /* Files tab: logos, videos and other deliverables, in their own private
+     bucket. 50 MB is the most the free Supabase plan takes per file; bigger
+     videos go out as a Drive or Dropbox link instead. */
+  filesBucket: "client-deliverables",
+  maxUploadMB: 50,
+  fileTypes: {
+    png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", svg: "image/svg+xml", webp: "image/webp", gif: "image/gif",
+    pdf: "application/pdf", zip: "application/zip",
+    mp4: "video/mp4", mov: "video/quicktime", webm: "video/webm",
+    ai: "application/illustrator", eps: "application/postscript"
+  },
+
   /* The steps each kind of project moves through. The studio desk picks
      one per client; clients see it as their timeline. */
   stages: {

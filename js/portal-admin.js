@@ -51,13 +51,13 @@
 
   function openClient(id) {
     return D.clientBundle(id).then(function (b) {
-      current = b.client; docs = { invoices: b.invoices, contracts: b.contracts };
+      current = b.client; docs = { invoices: b.invoices, contracts: b.contracts, files: b.files || [] };
       fill();
     });
   }
   function newClient() {
     current = { name: "", company: "", email: "", project: "", kind: "web", stage: 0, stage_dates: {}, note: "", note_at: "" };
-    docs = { invoices: [], contracts: [] };
+    docs = { invoices: [], contracts: [], files: [] };
     fill();
   }
 
@@ -126,6 +126,12 @@
         opt("sign", "Needs signature", k.status) + opt("signed", "Signed", k.status) + "</select></label>" +
         '<div class="doc-actions"><button class="text-button" type="button" data-remove="contracts:' + F.esc(k.id) + '">Remove</button></div></li>';
     }).join("") : '<li class="empty">No contracts yet.</li>';
+    $("[data-desk-files]").innerHTML = docs.files.length ? docs.files.map(function (f) {
+      var meta = [F.ext(f.file_name), F.size(f.size_bytes), "Added " + F.date((f.created_at || "").slice(0, 10))].join(" · ");
+      return '<li class="doc file"><span class="file-kind file-kind--' + F.esc(f.kind) + '">' + F.fileIcon(f.kind) + '</span>' +
+        '<div><p class="doc-title">' + F.esc(f.title) + '</p><p class="doc-meta">' + F.esc(meta) + "</p></div>" +
+        '<div class="doc-actions"><button class="text-button" type="button" data-remove="files:' + F.esc(f.id) + '">Remove</button></div></li>';
+    }).join("") : '<li class="empty">No files yet.</li>';
   }
   function opt(v, label, cur) { return '<option value="' + v + '"' + (v === cur ? " selected" : "") + ">" + label + "</option>"; }
 
@@ -143,6 +149,11 @@
     var parts = r.dataset.remove.split(":");
     /* Two taps: the first asks, the second removes. */
     if (r.dataset.armed !== "1") { r.dataset.armed = "1"; r.textContent = "Tap again to remove"; return; }
+    if (parts[0] === "files") {
+      var row = docs.files.filter(function (f) { return f.id === parts[1]; })[0];
+      if (row) D.removeFile(row).then(refresh).catch(function (err) { r.textContent = "Didn’t remove: " + err.message; });
+      return;
+    }
     D.removeDoc(parts[0], parts[1]).then(refresh);
   });
   function refresh() { return openClient(current.id).then(function () { drawList(current.id); }); }
@@ -168,6 +179,51 @@
       return D.addDoc("contracts", { client_id: current.id, title: f.title.value.trim(), status: "sign", sent_on: F.today(), signed_on: null, file_path: path, sign_url: f.sign_url.value.trim() });
     }).then(function () { f.reset(); return refresh(); }).then(function () { $('[data-saved="contract"]').textContent = "Contract added."; })
       .catch(function (err) { out.textContent = "Didn’t add: " + err.message; });
+  });
+
+  /* ---- Files: checked before upload, then sent with a progress bar ---- */
+  var fileForm = $("[data-file-form]"), MAX = (C.maxUploadMB || 50) * 1024 * 1024;
+  function fileProblem(file) {
+    if (!file) return "Pick a file first.";
+    var ext = (/\.([a-z0-9]+)$/i.exec(file.name) || [])[1];
+    if (!ext || !(C.fileTypes || {})[ext.toLowerCase()]) return "That kind of file can’t go in the portal. Use PNG, JPG, SVG, WebP, GIF, PDF, ZIP, MP4, MOV, WebM, AI or EPS.";
+    if (file.size > MAX) return "This file is " + F.size(file.size) + ". The limit is " + (C.maxUploadMB || 50) + " MB, so share bigger videos as a Google Drive or Dropbox link in your note to the client.";
+    return "";
+  }
+  function guessKind(name) {
+    var ext = ((/\.([a-z0-9]+)$/i.exec(name) || [])[1] || "").toLowerCase();
+    if (/^(mp4|mov|webm)$/.test(ext)) return "video";
+    if (/^(svg|ai|eps)$/.test(ext) || /logo/i.test(name)) return "logo";
+    if (/^(png|jpe?g|webp|gif)$/.test(ext)) return "image";
+    return "file";
+  }
+  function fileMsg(text, bad) { var out = $('[data-saved="file"]'); out.textContent = text; out.classList.toggle("is-error", !!bad); }
+  fileForm.file.addEventListener("change", function () {
+    var file = fileForm.file.files[0], problem = file ? fileProblem(file) : "";
+    fileMsg(problem, !!problem);
+    $("[data-upload-button]").disabled = !!problem;
+    if (file && !problem) {
+      fileForm.kind.value = guessKind(file.name);
+      if (!fileForm.title.value.trim()) fileForm.title.value = file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
+    }
+  });
+  function progress(pct) {
+    var bar = $("[data-upload-bar]");
+    bar.firstElementChild.style.width = pct + "%"; bar.setAttribute("aria-valuenow", pct);
+    $("[data-upload-pct]").textContent = pct < 100 ? pct + "%" : "Saving…";
+  }
+  fileForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var file = fileForm.file.files[0], problem = fileProblem(file);
+    if (!problem && !fileForm.title.value.trim()) problem = "Give the file a name the client will see.";
+    if (problem) { fileMsg(problem, true); return; }
+    var btn = $("[data-upload-button]"), box = $("[data-upload-progress]");
+    btn.disabled = true; btn.textContent = "Uploading…"; box.hidden = false; progress(0); fileMsg("");
+    D.addFile(current.id, file, { title: fileForm.title.value.trim(), kind: fileForm.kind.value }, progress)
+      .then(function () { fileForm.reset(); return refresh(); })
+      .then(function () { fileMsg("Uploaded. The client can download it now."); })
+      .catch(function (err) { fileMsg("Didn’t upload: " + err.message, true); })
+      .then(function () { btn.disabled = false; btn.textContent = "Upload"; box.hidden = true; });
   });
 
   /* Sample only: open the client portal as this client. */
