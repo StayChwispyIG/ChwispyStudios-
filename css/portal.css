@@ -34,12 +34,12 @@
 }
 .signin::before { /* the same graded still the other pages use, faded to the right */
   content: ""; position: absolute; z-index: -1; inset: 0 0 0 auto; width: min(60%, 36rem);
-  background: url("../assets/img/graded/headlight.jpg") 50% 40% / cover no-repeat;
+  background: url("../assets/img/graded/headlight.webp") 50% 40% / cover no-repeat;
   opacity: 0.5;
   -webkit-mask-image: linear-gradient(to left, #000 20%, transparent 100%);
   mask-image: linear-gradient(to left, #000 20%, transparent 100%);
 }
-:root[data-theme="light"] .signin::before { background-image: url("../assets/img/cyan/headlight.jpg"); opacity: 0.7; }
+:root[data-theme="light"] .signin::before { background-image: url("../assets/img/cyan/headlight.webp"); opacity: 0.7; }
 .signin .wrap { display: grid; gap: clamp(2.5rem, 5vw, 4rem); align-items: center; }
 @media (min-width: 60em) {
   .signin .wrap { grid-template-columns: minmax(0, 1fr) minmax(0, 27rem); }

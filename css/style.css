@@ -297,10 +297,10 @@ body.menu-open { overflow: hidden; }
 /* Light mode prints the photos as cyanotypes: blacks turn Prussian blue,
    whites stay paper. Prints live in assets/img/cyan/. */
 :root[data-theme="light"] .page-hero::before { opacity: 0.95; }
-:root[data-theme="light"] .page-hero--work { --page-img: url("../assets/img/cyan/indian-walkaround.jpg"); }
-:root[data-theme="light"] .page-hero--services { --page-img: url("../assets/img/cyan/boot-unboxing.jpg"); }
-:root[data-theme="light"] .page-hero--about { --page-img: url("../assets/img/cyan/headlight.jpg"); }
-:root[data-theme="light"] .page-hero--contact { --page-img: url("../assets/img/cyan/tank-badge.jpg"); }
+:root[data-theme="light"] .page-hero--work { --page-img: url("../assets/img/cyan/indian-walkaround.webp"); }
+:root[data-theme="light"] .page-hero--services { --page-img: url("../assets/img/cyan/boot-unboxing.webp"); }
+:root[data-theme="light"] .page-hero--about { --page-img: url("../assets/img/cyan/headlight.webp"); }
+:root[data-theme="light"] .page-hero--contact { --page-img: url("../assets/img/cyan/tank-badge.webp"); }
 /* The video wall swaps to the cyanotype prints in main.js (assets/img/cyan/). */
 
 
@@ -503,14 +503,14 @@ a:hover .arrow::before, a:focus-visible .arrow::before { inset: 4px; }
 .hero-mark {
   margin: clamp(2.5rem, 5vw, 4.5rem) 0 0; max-width: none; padding-bottom: 0.06em;
   padding-inline: calc(var(--gutter) * 0.6);
-  font: 800 16.6vw/0.8 var(--display); font-stretch: 118%;
+  font: 800 15.6vw/0.8 var(--display); font-stretch: 118%;
   text-transform: uppercase; letter-spacing: -0.03em;
   color: var(--text);
   display: flex; flex-wrap: wrap; column-gap: 0.22em;
 }
 .hero-mark span + span { color: var(--studio); }
 @media (min-width: 48em) {
-  .hero-mark { font-size: 9.2vw; flex-wrap: nowrap; }
+  .hero-mark { font-size: 8.6vw; flex-wrap: nowrap; }
 }
 .story-copy .signature { margin-top: 1.5rem; color: var(--text); }
 
@@ -528,10 +528,10 @@ a:hover .arrow::before, a:focus-visible .arrow::before { inset: 4px; }
   -webkit-mask-image: linear-gradient(to left, #000 35%, transparent 100%);
   mask-image: linear-gradient(to left, #000 35%, transparent 100%);
 }
-.page-hero--work { --page-img: url("../assets/img/graded/indian-walkaround.jpg"); }
-.page-hero--services { --page-img: url("../assets/img/graded/boot-unboxing.jpg"); }
-.page-hero--about { --page-img: url("../assets/img/graded/headlight.jpg"); }
-.page-hero--contact { --page-img: url("../assets/img/graded/tank-badge.jpg"); }
+.page-hero--work { --page-img: url("../assets/img/graded/indian-walkaround.webp"); }
+.page-hero--services { --page-img: url("../assets/img/graded/boot-unboxing.webp"); }
+.page-hero--about { --page-img: url("../assets/img/graded/headlight.webp"); }
+.page-hero--contact { --page-img: url("../assets/img/graded/tank-badge.webp"); }
 @media (max-width: 47.99em) { .page-hero::before { opacity: 0.55; } }
 .page-hero .wrap { display: flex; flex-direction: column; }
 .page-hero h1 { font-size: clamp(3rem, 1.4rem + 7vw, 8.5rem); line-height: 0.88; letter-spacing: -0.02em; max-width: 9ch; }
@@ -774,7 +774,7 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 }
 .filters::-webkit-scrollbar { display: none; }
 .filter {
-  flex: none; padding: 0.6rem 1.1rem; border-radius: 999px;
+  flex: none; padding: 0.6rem 1.1rem; border-radius: 6px;
   background: transparent; border: 1px solid var(--line); color: var(--highlight);
   font: 500 var(--fs-small)/1 var(--body); cursor: pointer;
   transition: background-color 0.25s, color 0.25s, border-color 0.25s;
@@ -969,9 +969,9 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 .step { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 1.25rem; }
 /* display:grid would otherwise override the hidden attribute and stack every step. */
 .step[hidden] { display: none; }
-/* Float takes the legend out of the fieldset border slot so it sits in the grid like
-   any other row; the grid gap then spaces it, with nothing extra below. */
-.step legend { padding: 0; margin: 0 0 0.25rem; float: left; width: 100%; }
+/* The legend stays in the fieldset's border slot (border is 0) and spaces itself,
+   so every browser, Safari included, leaves the same room under the question. */
+.step legend { padding: 0; margin: 0 0 1.25rem; width: 100%; }
 .step h2 {
   font-size: clamp(2rem, 1.4rem + 2.6vw, 3.25rem); max-width: 16ch; text-wrap: balance;
   font-weight: 700; font-stretch: 100%; text-transform: none; letter-spacing: -0.02em; line-height: 1.05;
@@ -1045,6 +1045,8 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 .site-footer nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.75rem 1.75rem; }
 .site-footer a { text-decoration: none; color: var(--highlight); }
 .site-footer a:hover { color: var(--text); }
+.site-footer .footer-email { margin-top: 0.5rem; }
+.site-footer .footer-email a { overflow-wrap: anywhere; }
 @media (min-width: 56em) {
   .site-footer .wrap { grid-template-columns: 1fr auto auto; align-items: end; gap: 3rem; }
 }
