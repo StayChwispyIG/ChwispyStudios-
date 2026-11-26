@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600&family=Mrs+Saint+Delafield&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20261126b">
+  <link rel="stylesheet" href="css/style.css?v=20261126c">
   <script src="js/posthog.js?v=20261120b"></script>
   <script src="js/consent.js?v=20261120b" defer></script>
 </head>
@@ -87,24 +87,55 @@
             <p class="best-for">For businesses that need a site or a store that sells, built by the same person who shoots the content for it. <a class="text-link" href="work.html#web">See the builds</a></p>
           </div>
           <div class="package-body">
-            <ul class="tiers">
-              <li class="tier">
-                <div><h3 class="tier-name">Launch page</h3><p>One-page site, video hero, inquiry form, launched on your domain</p></div>
-                <p class="tier-price">$750</p>
+            <!-- Three levels, each includes the one above it. Care plan is monthly and separate. -->
+            <ul class="tiers tiers--levels">
+              <li class="tier tier--level">
+                <div><h3 class="tier-name">Starter</h3><p>One sharp, fast page that gets the basics right and gets you found.</p></div>
+                <p class="tier-price"><span class="tier-from">From</span>$750</p>
+                <ul class="includes level-list">
+                  <li>One page with a simple menu and sections</li>
+                  <li>Your own video or photos up top</li>
+                  <li>Contact form that sends straight to your email</li>
+                  <li>Launched on your domain</li>
+                </ul>
+              </li>
+              <li class="tier tier--level">
+                <div><h3 class="tier-name">Professional</h3><p>A full site built to bring in inquiries and grow with you.</p></div>
+                <p class="tier-price"><span class="tier-from">From</span>$1,495</p>
+                <ul class="includes level-list">
+                  <li class="level-base">Everything in Starter</li>
+                  <li>Up to 5 pages, with a menu that shows where you are</li>
+                  <li>Step-by-step quote form, like the one on this site</li>
+                  <li>Help with the words on every page</li>
+                  <li>A walkthrough so you can make simple edits</li>
+                </ul>
+              </li>
+              <li class="tier tier--level">
+                <div><h3 class="tier-name">Complicated</h3><p>Stores, bookings, portals. Anything with moving parts.</p></div>
+                <p class="tier-price"><span class="tier-from">From</span>$2,495</p>
+                <ul class="includes level-list">
+                  <li class="level-base">Everything in Professional</li>
+                  <li>Shopify store with product pages and checkout</li>
+                  <li>Booking, client logins and custom features</li>
+                  <li>Hooked up to the tools you already use</li>
+                </ul>
               </li>
               <li class="tier">
-                <div><h3 class="tier-name">Business site</h3><p>Up to 5 pages, mobile-first, video and photo placement, edit walkthrough</p></div>
-                <p class="tier-price">$1,495</p>
-              </li>
-              <li class="tier">
-                <div><h3 class="tier-name">Shopify store</h3><p>Store setup, product pages, theme customized to your brand</p></div>
-                <p class="tier-price">$2,495</p>
-              </li>
-              <li class="tier">
-                <div><h3 class="tier-name">Care plan</h3><p>Monthly updates and site checks</p></div>
+                <div><h3 class="tier-name">Care plan</h3><p>Monthly updates and site checks after launch</p></div>
                 <p class="tier-price">$59/mo</p>
               </li>
             </ul>
+            <div class="every-site">
+              <h3 class="mono">Every site includes</h3>
+              <ul class="includes">
+                <li>A custom design built around your business, never a template</li>
+                <li>Mobile-first and fast, built to score 90+ on Google PageSpeed</li>
+                <li>Google basics: titles, descriptions, sitemap and business info</li>
+                <li>Privacy policy, terms and a cookie banner</li>
+                <li>One person to call or text, before and after launch</li>
+              </ul>
+            </div>
+            <p class="tier-note">One call, then a fixed quote for your project.</p>
             <div class="build-links"><a class="btn btn-ghost package-cta" href="contact.html?type=Website#start">Quote a site</a><a class="btn btn-ghost package-cta" href="contact.html?type=Shopify#start">Quote a store</a></div>
           </div>
         </article>

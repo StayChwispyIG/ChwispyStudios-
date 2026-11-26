@@ -873,6 +873,14 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 }
 .tier-price--text { font-family: var(--body); font-weight: 500; font-size: 1rem; line-height: 1.3; white-space: normal; max-width: 9rem; }
 .tier-note { margin: 0; color: var(--steel); font-size: var(--fs-small); }
+/* Website levels: name and price on top, what's included underneath. */
+.tier--level { padding-block: 1.5rem; }
+.tier--level .level-list { grid-column: 1 / -1; margin-top: 0.85rem; gap: 0.45rem; font-size: var(--fs-small); color: var(--highlight); }
+.tier--level .level-list .level-base { color: var(--text); font-weight: 500; }
+.tier-from { display: block; font-family: var(--body); font-weight: 500; font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--steel); margin-bottom: 0.35rem; }
+.every-site { width: 100%; padding-top: 0.5rem; }
+.every-site h3 { font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--steel); margin: 0 0 0.9rem; }
+.every-site .includes { font-size: var(--fs-small); gap: 0.5rem; }
 @media (min-width: 56em) {
   .package { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 3rem; align-items: start; }
 }
