@@ -517,7 +517,7 @@ a:hover .arrow::before, a:focus-visible .arrow::before { inset: 4px; }
   color: var(--text);
   display: flex; flex-wrap: wrap; column-gap: 0.22em;
 }
-.hero-mark span + span { color: var(--studio); }
+.hero-mark > span + span { color: var(--studio); }
 @media (min-width: 48em) {
   .hero-mark { font-size: 8.6vw; flex-wrap: nowrap; }
 }
@@ -1205,6 +1205,22 @@ a:hover .browser-shot img + img, a:focus-visible .browser-shot img + img,
 @media (min-width: 48em) {
   .consent { right: auto; bottom: 1.5rem; }
 }
+
+/* 12b. ANIME.JS MOTION -----------------------------------------------------
+   js/motion.js animates these in. The head script only adds .motion to <html>
+   when the visitor hasn't asked for reduced motion, and takes it off again if
+   the script never loads, so nothing stays hidden. */
+html.motion .tile-copy > *,
+html.motion .hero-grid > .tile:not(.tile-copy),
+html.motion .hero-mark,
+html.motion .page-hero .wrap > *,
+html.motion [data-reveal],
+html.motion :is(.service-cards, .build-rows, .steps, .logos, .quotes) > *,
+html.motion :is(.featured, .work-grid) > .card { opacity: 0; }
+html.motion-on .work-grid .card { animation: none; }
+/* Split words and letters need to be inline blocks to move. */
+.motion-on .hero h1 > span, .motion-on .page-hero h1 > span { will-change: transform; }
+.hero-mark > span { display: inline-block; }
 
 /* 13. REDUCED MOTION -------------------------------------------------------
    No autoplay (handled in main.js), no fades on load, no zooms. */

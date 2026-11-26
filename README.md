@@ -15,6 +15,8 @@ js/posthog.js   PostHog analytics, only starts after the visitor accepts cookies
 js/start.js     The Start a project flow (questions, goals, where the message goes)
 css/style.css   All styles; colors and fonts live in the :root tokens at the top
 js/main.js      Header, mobile menu, reveals, reel, previews, filters, lightbox
+js/motion.js    Animations (Anime.js v4): hero intro, title reveals, scroll reveals, price count-ups, magnetic buttons
+js/vendor/      Anime.js 4.5.0, self-hosted (MIT, licence alongside). Update: npm pack animejs, copy dist/bundles/anime.umd.min.js
 assets/         Images, logos, video, favicon, share image
 tools/og-image.html  Template for the social share image (assets/img/og-share.jpg)
 ```
