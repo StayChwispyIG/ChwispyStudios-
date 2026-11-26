@@ -75,10 +75,7 @@ The site is live from GitHub Pages at **https://chwispystudio.com** (domain regi
 3. IONOS DNS (Domains & SSL → chwispystudio.com → DNS): remove the default A/AAAA records for `@`, add A records for `@` pointing to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`, and a CNAME for `www` pointing to `staychwispyig.github.io`. Leave MX (email) records alone.
 4. Once DNS has taken effect, tick **Enforce HTTPS** in Settings → Pages.
 
-Every push to the branch goes live within a couple of minutes. GitHub Pages ignores `netlify.toml`; it's only there if you ever move to Netlify.
-
-### Alternative: Netlify
-Import the repo at [app.netlify.com](https://app.netlify.com) with no build command (publish directory `.` is set in `netlify.toml`), then add the domain under **Domain management** and follow the DNS records it shows.
+Every push to the branch goes live within a couple of minutes.
 
 ### After launch
 - The domain is chwispystudio.com, set in each page's `<head>`, `robots.txt`, `sitemap.xml` and the `CNAME` file (which GitHub Pages uses; keep it in the repo).
