@@ -1222,6 +1222,121 @@ html.motion-on .work-grid .card { animation: none; }
 .motion-on .hero h1 > span, .motion-on .page-hero h1 > span { will-change: transform; }
 .hero-mark > span { display: inline-block; }
 
+/* 12c. BOLD MOTION (js/bold.js) --------------------------------------------- */
+
+/* Build deck: three screenshots in a loose pile. Grab one and throw it; it
+   tucks under the pile. Static (still a pile) without JS or with reduced motion. */
+.build-deck {
+  position: relative; display: grid; gap: 1rem; justify-items: center;
+  margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+}
+.build-deck-hint { margin: 0; color: var(--on-band-soft); font-size: var(--fs-small); }
+.deck-stage {
+  position: relative; width: min(34rem, 82vw); aspect-ratio: 16 / 11.2;
+  touch-action: pan-y;
+}
+.deck-card {
+  position: absolute; inset: 0; display: block;
+  text-decoration: none; color: var(--text); user-select: none; -webkit-user-select: none;
+  cursor: grab;
+}
+/* The face of the card. js/bold.js wraps the contents in it so the drag moves
+   the face while the card keeps its place in the pile. */
+.deck-card, .deck-inner {
+  display: flex; flex-direction: column;
+}
+.deck-inner { position: absolute; inset: 0; }
+.deck-card > img, .deck-card > .deck-cap { position: relative; }
+.deck-card:not(:has(.deck-inner)), .deck-inner {
+  background: var(--bg); border: 1px solid var(--band-line); border-radius: 6px; overflow: hidden;
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.6);
+}
+.deck-card:nth-child(1) { transform: rotate(-7deg) translate(-4%, 2%); }
+.deck-card:nth-child(2) { transform: rotate(5deg) translate(4%, -1%); }
+.deck-card:nth-child(3) { transform: rotate(-1.5deg); }
+.deck-card img { flex: 1; min-height: 0; width: 100%; object-fit: cover; object-position: top; pointer-events: none; }
+.deck-cap {
+  display: flex; justify-content: space-between; gap: 1rem; padding: 0.65rem 0.9rem;
+  font-size: 0.75rem; background: var(--surface); color: var(--text);
+}
+.deck-cap span { color: var(--steel); }
+.deck-card.is-grabbed { cursor: grabbing; }
+.deck-card.is-grabbed .deck-inner { box-shadow: 0 50px 90px -30px rgba(0, 0, 0, 0.75); }
+
+/* Film strip: the Video work section pins while the reels run sideways
+   through the gate. Only switched on by js/bold.js. */
+.filmstrip.is-strip { padding-block: 0; height: var(--strip-h, 300vh); }
+.filmstrip.is-strip .filmstrip-pin {
+  position: sticky; top: 0; height: 100svh; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+  padding-top: var(--header-h);
+}
+.filmstrip.is-strip .section-head { margin-bottom: clamp(1.25rem, 3vh, 2.5rem); }
+.filmstrip.is-strip .featured {
+  --film: #050507; --film-ink: #f3f2f8; --film-soft: #9b99aa; --hole: var(--bg);
+  display: flex; flex-wrap: nowrap; gap: clamp(0.75rem, 1.5vw, 1.5rem); width: max-content;
+  padding: 2.1rem clamp(0.9rem, 1.5vw, 1.4rem) 2.1rem;
+  background:
+    repeating-linear-gradient(90deg, var(--hole) 0 12px, transparent 12px 28px) 8px 0.7rem / 100% 9px no-repeat,
+    repeating-linear-gradient(90deg, var(--hole) 0 12px, transparent 12px 28px) 8px calc(100% - 0.7rem) / 100% 9px no-repeat,
+    var(--film);
+  will-change: transform;
+}
+:root[data-theme="light"] .filmstrip.is-strip .featured { --film: #0b1d3f; --film-soft: #b9c4d6; }
+.filmstrip.is-strip .featured .card { flex: none; width: min(64vw, calc((100svh - var(--header-h) - 19rem) * 9 / 16)); }
+.filmstrip.is-strip .featured .card-body { color: var(--film-ink); }
+.filmstrip.is-strip .featured .card-body .mono { color: var(--film-soft); }
+.filmstrip.is-strip .featured .card-media { aspect-ratio: 9 / 16; }
+.strip-end {
+  flex: none; width: min(64vw, calc((100svh - var(--header-h) - 19rem) * 9 / 16));
+  display: grid; align-content: center; justify-items: start; gap: 1rem; padding: 1.25rem;
+  border: 1px dashed color-mix(in srgb, var(--film-ink) 35%, transparent);
+  color: var(--film-ink); text-decoration: none; aspect-ratio: 9 / 16; align-self: start;
+}
+.strip-end strong { font: 800 clamp(1.5rem, 1.1rem + 1.4vw, 2.4rem)/0.95 var(--display); font-stretch: 118%; text-transform: uppercase; }
+.strip-end:hover strong { color: var(--accent); }
+.strip-hud {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  margin-top: clamp(1rem, 2.5vh, 1.75rem); font-size: var(--fs-small); color: var(--steel);
+}
+.strip-hud .rec { color: var(--text); }
+.strip-hud .rec::before { content: ""; display: inline-block; width: 0.5rem; height: 0.5rem; margin-right: 0.5rem; border-radius: 50%; background: #ff3b3b; vertical-align: 0.05em; }
+.strip-bar { flex: 1; height: 2px; background: var(--line); position: relative; overflow: hidden; }
+.strip-bar i { position: absolute; inset: 0; background: var(--accent-ink); transform-origin: left; transform: scaleX(0); }
+
+/* Viewfinder cursor: four corner marks that trail the pointer and lock onto
+   whatever you can click. Mouse and trackpad only. */
+.vf-cursor, .vf-dot { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 400; opacity: 0; transition: opacity 0.25s; }
+.vf-on .vf-cursor, .vf-on .vf-dot { opacity: 1; }
+.vf-on .vf-cursor.is-hidden, .vf-on .vf-dot.is-hidden { opacity: 0; }
+.vf-cursor { width: 30px; height: 30px; --c: var(--accent-ink); }
+.vf-cursor i { position: absolute; width: 10px; height: 10px; border: 0 solid var(--c); transition: width 0.3s var(--ease), height 0.3s var(--ease); }
+.vf-cursor i:nth-child(1) { left: 0; top: 0; border-width: 2px 0 0 2px; }
+.vf-cursor i:nth-child(2) { right: 0; top: 0; border-width: 2px 2px 0 0; }
+.vf-cursor i:nth-child(3) { left: 0; bottom: 0; border-width: 0 0 2px 2px; }
+.vf-cursor i:nth-child(4) { right: 0; bottom: 0; border-width: 0 2px 2px 0; }
+.vf-cursor.is-locked i { width: 14px; height: 14px; }
+.vf-label {
+  position: absolute; left: 0; top: calc(100% + 8px); white-space: nowrap;
+  font: 600 0.6875rem/1 var(--mono, ui-monospace, monospace); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--on-accent); background: var(--accent); padding: 0.3rem 0.45rem; opacity: 0; transition: opacity 0.2s;
+}
+.vf-cursor.has-label .vf-label { opacity: 1; }
+.vf-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: var(--accent-ink); }
+html.vf-on, html.vf-on body, html.vf-on a, html.vf-on button, html.vf-on label, html.vf-on summary, html.vf-on [role="switch"] { cursor: none; }
+html.vf-on .deck-card { cursor: none; }
+
+/* Header logo: inline copy of the lockup so the brackets and type can move. */
+.wordmark-svg { display: block; height: 2.5rem; width: auto; overflow: visible; transition: height 0.4s var(--ease);
+  --lg-ink: #f3f2f8; --lg-dot: #3df5b4; --lg-soft: #9b99aa; }
+:root[data-theme="light"] .wordmark-svg { --lg-ink: #0b1d3f; --lg-dot: #e0440a; --lg-soft: #4c5a70; }
+.is-scrolled .wordmark-svg { height: 2.25rem; }
+@media (max-width: 55.99em) {
+  .wordmark-svg { height: 1.85rem; }
+  .is-scrolled .wordmark-svg { height: 1.75rem; }
+}
+.wordmark.has-svg img, :root[data-theme="light"] .wordmark.has-svg img { display: none !important; }
+
 /* 13. REDUCED MOTION -------------------------------------------------------
    No autoplay (handled in main.js), no fades on load, no zooms. */
 @media (prefers-reduced-motion: reduce) {
