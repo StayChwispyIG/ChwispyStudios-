@@ -36,7 +36,7 @@
         tools = val("tools"), content = val("content"), start = val("start"), look = val("look");
     var level = "starter";
     if (store > 0 || features >= 2 || tools >= 2 || pages >= 3) level = "complicated";
-    else if (pages >= 1 || features === 1 || tools === 1 || content === 1 || start === 1 || look === 1) level = "pro";
+    else if (pages >= 1 || tools === 1 || content === 1 || start === 1 || look === 1) level = "pro";
 
     levelEl.textContent = levels[level].name;
     priceEl.textContent = levels[level].price;
