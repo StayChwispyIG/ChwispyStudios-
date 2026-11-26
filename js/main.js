@@ -322,6 +322,16 @@
     });
   }
 
+  /* ---- Email links -------------------------------------------------------
+     The address sits in the page as two halves (data-email + data-email-host)
+     and is put together here, so people see it but scrapers reading the page
+     code don't. Without JavaScript the link still goes to the project form. */
+  document.querySelectorAll("[data-email]").forEach(function (a) {
+    var addr = a.getAttribute("data-email") + "@" + a.getAttribute("data-email-host");
+    a.href = "mailto:" + addr;
+    a.textContent = addr;
+  });
+
   /* ---- Footer year ----------------------------------------------------- */
   document.querySelectorAll("[data-year]").forEach(function (el) {
     el.textContent = new Date().getFullYear();
