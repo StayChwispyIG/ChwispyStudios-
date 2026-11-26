@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600&family=Mrs+Saint+Delafield&display=swap">
   <link rel="preload" as="image" href="assets/img/graded/dean-speed-pegs.webp">
-  <link rel="stylesheet" href="css/style.css?v=20261126f">
+  <link rel="stylesheet" href="css/style.css?v=20261126g">
   <script src="js/posthog.js?v=20261120b"></script>
   <script src="js/consent.js?v=20261120b" defer></script>
 
@@ -175,6 +175,16 @@
         <div class="section-head" data-reveal>
           <h2 id="builds-title"><span class="tag" aria-hidden="true">(01)</span>Recent builds</h2>
           <a class="text-link" href="work.html#web">Case studies <span class="arrow" aria-hidden="true"></span></a>
+        </div>
+        <!-- Build deck: screenshots you can grab and fling (js/bold.js). Decorative:
+             the rows underneath carry the real links. Top card is the last one here. -->
+        <div class="build-deck" aria-hidden="true">
+          <p class="build-deck-hint mono">Grab a build and throw it</p>
+          <div class="deck-stage">
+            <a class="deck-card" href="work.html#por-vida" tabindex="-1" draggable="false"><img src="assets/img/web/por-vida-home.webp" alt="" width="1280" height="800" loading="lazy" decoding="async" draggable="false"><span class="deck-cap mono">Por Vida Kustoms <span>Shopify</span></span></a>
+            <a class="deck-card" href="work.html#navi-media" tabindex="-1" draggable="false"><img src="assets/img/web/navi-media-home.webp" alt="" width="1280" height="800" loading="lazy" decoding="async" draggable="false"><span class="deck-cap mono">NAVI Media <span>Website</span></span></a>
+            <a class="deck-card" href="work.html#torque-tamp" tabindex="-1" draggable="false"><img src="assets/img/web/torque-tamp-home.webp" alt="" width="1280" height="800" loading="lazy" decoding="async" draggable="false"><span class="deck-cap mono">Torque &amp; Tamp <span>Concept</span></span></a>
+          </div>
         </div>
         <ul class="build-rows">
           <li><a class="build-row" href="work.html#torque-tamp">
@@ -469,6 +479,7 @@
 
   <script src="js/vendor/anime.umd.min.js?v=4.5.0" defer></script>
   <script src="js/motion.js?v=20261126a" defer></script>
+  <script src="js/bold.js?v=20261126a" defer></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>
