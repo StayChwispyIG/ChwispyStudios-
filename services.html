@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Hanken+Grotesk:wght@400;500;600&family=Mrs+Saint+Delafield&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20261126c">
+  <link rel="stylesheet" href="css/style.css?v=20261126d">
   <script src="js/posthog.js?v=20261120b"></script>
   <script src="js/consent.js?v=20261120b" defer></script>
 </head>
@@ -137,6 +137,69 @@
             </div>
             <p class="tier-note">One call, then a fixed quote for your project.</p>
             <div class="build-links"><a class="btn btn-ghost package-cta" href="contact.html?type=Website#start">Quote a site</a><a class="btn btn-ghost package-cta" href="contact.html?type=Shopify#start">Quote a store</a></div>
+          </div>
+        </article>
+        <!-- DIAL IT IN: seven settings estimate which website level a project lands on.
+             Logic in js/desk.js. A rough read only; the CTA goes to the quote form. -->
+        <article class="package package--desk" id="dial-in" data-reveal>
+          <div class="package-head">
+            <h2>Dial in your site</h2>
+            <p class="best-for">Seven settings, like a camera before a shoot. Slide each one to match your project and see which level it lands on.</p>
+          </div>
+          <div class="package-body">
+            <form class="desk" data-desk aria-label="Website price estimate" hidden>
+              <div class="desk-controls">
+                <div class="desk-row" data-hint="Each page gets its own layout and words. One page sits at the lower end, and the number climbs past five.">
+                  <div class="desk-label"><span class="mono">01</span><label for="desk-pages">Pages</label><output class="desk-val" for="desk-pages">One page</output></div>
+                  <input type="range" id="desk-pages" name="pages" min="0" max="3" step="1" value="0" data-stops="One page|2 to 5 pages|6 to 10 pages|More than 10">
+                  <div class="desk-ends mono" aria-hidden="true"><span>One page</span><span>More than 10</span></div>
+                </div>
+                <div class="desk-row" data-hint="Galleries, booking, client logins, quote tools. Moving parts take longer to build and test.">
+                  <div class="desk-label"><span class="mono">02</span><label for="desk-features">Features</label><output class="desk-val" for="desk-features">Just the basics</output></div>
+                  <input type="range" id="desk-features" name="features" min="0" max="3" step="1" value="0" data-stops="Just the basics|A gallery or two|Booking or logins|Something custom">
+                  <div class="desk-ends mono" aria-hidden="true"><span>Just the basics</span><span>Something custom</span></div>
+                </div>
+                <div class="desk-row" data-hint="Product pages, cart, checkout and payments. A store is its own build.">
+                  <div class="desk-label"><span class="mono">03</span><label for="desk-store">Store</label><output class="desk-val" for="desk-store">No store</output></div>
+                  <input type="range" id="desk-store" name="store" min="0" max="2" step="1" value="0" data-stops="No store|A few products|Full Shopify store">
+                  <div class="desk-ends mono" aria-hidden="true"><span>No store</span><span>Full Shopify store</span></div>
+                </div>
+                <div class="desk-row" data-hint="Email lists, booking apps, payments, your CRM. Each one gets connected and tested.">
+                  <div class="desk-label"><span class="mono">04</span><label for="desk-tools">Hookups</label><output class="desk-val" for="desk-tools">None</output></div>
+                  <input type="range" id="desk-tools" name="tools" min="0" max="2" step="1" value="0" data-stops="None|One tool|A few tools">
+                  <div class="desk-ends mono" aria-hidden="true"><span>None</span><span>A few tools</span></div>
+                </div>
+                <div class="desk-row" data-hint="Your own words and photos keep it lean. I can help write it, or shoot the video and photos myself.">
+                  <div class="desk-label"><span class="mono">05</span><label for="desk-content">Words and photos</label><output class="desk-val" for="desk-content">I&rsquo;ve got them</output></div>
+                  <input type="range" id="desk-content" name="content" min="0" max="2" step="1" value="0" data-stops="I&rsquo;ve got them|Help with the words|Shoot them for me">
+                  <div class="desk-ends mono" aria-hidden="true"><span>I&rsquo;ve got them</span><span>Shoot them for me</span></div>
+                </div>
+                <div class="desk-row" data-hint="Moving posts, products or pages off an old site is done by hand, so it adds time.">
+                  <div class="desk-label"><span class="mono">06</span><label for="desk-start">Starting point</label><output class="desk-val" for="desk-start">Fresh start</output></div>
+                  <input type="range" id="desk-start" name="start" min="0" max="1" step="1" value="0" data-stops="Fresh start|Moving an old site">
+                  <div class="desk-ends mono" aria-hidden="true"><span>Fresh start</span><span>Moving an old site</span></div>
+                </div>
+                <div class="desk-row" data-hint="Custom animation and touches like the pop-up builds on this site take more time.">
+                  <div class="desk-label"><span class="mono">07</span><label for="desk-look">Look</label><output class="desk-val" for="desk-look">Clean and on brand</output></div>
+                  <input type="range" id="desk-look" name="look" min="0" max="1" step="1" value="0" data-stops="Clean and on brand|Custom motion and extras">
+                  <div class="desk-ends mono" aria-hidden="true"><span>Clean and on brand</span><span>Custom motion and extras</span></div>
+                </div>
+              </div>
+              <div class="desk-readout">
+                <div class="desk-frame" aria-live="polite">
+                  <p class="mono desk-rec"><span class="rec-dot" aria-hidden="true"></span>Looks like</p>
+                  <p class="desk-level" data-desk-level>Starter</p>
+                  <p class="desk-price" data-desk-price>From $750</p>
+                  <ul class="desk-extras" data-desk-extras></ul>
+                </div>
+                <p class="desk-hint" data-desk-hint><span class="mono" data-desk-hint-title>01 Pages</span><span data-desk-hint-text>Each page gets its own layout and words. One page sits at the lower end, and the number climbs past five.</span></p>
+                <p class="mono">A rough read, not a quote. One call gets you a fixed price.</p>
+                <div class="desk-actions">
+                  <a class="btn btn-primary" data-desk-cta href="contact.html?type=Website#start">Get my real number</a>
+                  <button class="btn btn-ghost" type="reset">Reset</button>
+                </div>
+              </div>
+            </form>
           </div>
         </article>
         <article class="package" id="social" data-reveal>
@@ -429,5 +492,6 @@
   </footer>
 
   <script src="js/main.js" defer></script>
+  <script src="js/desk.js" defer></script>
 </body>
 </html>
